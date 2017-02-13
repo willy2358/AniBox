@@ -30,7 +30,8 @@ namespace AniBox.Controls.HtmlStaticImage
 
         public override string GetHtmlFile()
         {
-            string htmlFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "qwert1234.html");
+            string htmFile = System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.GetTempFileName());
+            string htmlFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), htmFile + ".html");
             string htmlText = GetHtmlText();
 
             try
@@ -44,7 +45,6 @@ namespace AniBox.Controls.HtmlStaticImage
             }
 
             return htmlFile;
-
         }
     }
 }

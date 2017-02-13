@@ -94,7 +94,7 @@ namespace AniBox
 
         private void CreateWPFControl(Canvas canvas, WPFAniControl aniControl)
         {
-            UserControl control = aniControl as UserControl;
+            UserControl control = Activator.CreateInstance(aniControl.GetType()) as UserControl;
             control.Width = 300;
             control.Height = 300;
             Canvas.SetLeft(control, 20);
@@ -107,23 +107,13 @@ namespace AniBox
 
         private void CreateHtmlControl(Canvas canvas, HtmlAniControl aniControl)
         {
-            ChromiumWebBrowser webControl = new ChromiumWebBrowser();
-            webControl.IsBrowserInitializedChanged += (sender, e) =>
-                {
-                    //ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
-
-                    //WebBrowserExtensions.LoadHtml(browser, html, "www.myhtml.com");
-                    //browser.Load("www.myhtml.com");
-                };
-            webControl.Width = 500;
-            webControl.Height = 500;
-            //webControl.Address = "www.baidu.com";
-            Canvas.SetLeft(webControl, 100);
-            Canvas.SetTop(webControl, 10);
-            webControl.Address = aniControl.GetHtmlFile();
-            
-
-            canvas.Children.Add(webControl);
+            HtmlAniControl webControl = Activator.CreateInstance(aniControl.GetType()) as HtmlAniControl;
+            ContentControl control = webControl.GetWPFControl();
+            control.Width = 500;
+            control.Height = 500;
+            Canvas.SetLeft(control, 100);
+            Canvas.SetTop(control, 10);
+            canvas.Children.Add(control);
         }
 
         private void lstControls_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
