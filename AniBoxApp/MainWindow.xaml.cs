@@ -64,12 +64,6 @@ namespace AniBox
             }
         }
 
-        private void lstControls_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //Object item = e.AddedItems[0];
-            //lstProperties.SelectedObject = item;
-        }
-
         private void Grid_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent("AniControl"))
@@ -114,6 +108,8 @@ namespace AniBox
             Canvas.SetLeft(control, 100);
             Canvas.SetTop(control, 10);
             canvas.Children.Add(control);
+
+            lstProperties.SelectedObject = webControl;
         }
 
         private void lstControls_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

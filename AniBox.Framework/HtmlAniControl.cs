@@ -14,6 +14,8 @@ namespace AniBox.Framework
         public HtmlAniControl()
         {
             _webBrowser = new ChromiumWebBrowser();
+            ScrollViewer.SetHorizontalScrollBarVisibility(_webBrowser, ScrollBarVisibility.Hidden);
+            ScrollViewer.SetVerticalScrollBarVisibility(_webBrowser, ScrollBarVisibility.Hidden);
             _webBrowser.IsBrowserInitializedChanged += _webBrowser_IsBrowserInitializedChanged;
         }
 
@@ -22,6 +24,7 @@ namespace AniBox.Framework
             if ((bool)e.NewValue)
             {
                 ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
+
                 browser.Load(GetHtmlFile());
             }
         }
@@ -36,6 +39,19 @@ namespace AniBox.Framework
             {
                 return null;
             }
+        }
+
+        protected void UpdateDomElementAttribute(string elemId, string attrName, string attrValue)
+        {
+            if (null == _webBrowser)
+            {
+                return;
+            }
+
+            //string script = "$(\"#thisBtn\").value='234';";
+            string script = " var elem = document.getElementById('" + elemId + "');"
+                          + " if (null != elem) { elem." + attrName + "='" + attrValue + "';}";
+            CefSharp.WebBrowserExtensions.ExecuteScriptAsync(_webBrowser, script);
         }
 
         public abstract string GetHtmlText();

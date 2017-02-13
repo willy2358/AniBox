@@ -13,7 +13,7 @@ namespace AniBox.Controls.HtmlStaticImage
     [Export(typeof(AniBox.Framework.IAniControl))]
     public class StaticImgage : HtmlAniControl
     {
-
+        private string _imageFile;
         public override string ControlName
         {
             get { return "HtmlStaticImage"; }
@@ -45,6 +45,21 @@ namespace AniBox.Controls.HtmlStaticImage
             }
 
             return htmlFile;
+        }
+
+        [AniProperty]
+        public string ImageFile
+        {
+            get
+            {
+                return _imageFile;
+            }
+            set
+            {
+                _imageFile = value;
+                string imgSrc = _imageFile.Replace('\\', '/');
+                UpdateDomElementAttribute("myImg", "src", imgSrc);
+            }
         }
     }
 }

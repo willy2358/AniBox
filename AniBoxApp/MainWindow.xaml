@@ -32,7 +32,6 @@
             <TabItem Header="Controls">
                 <Grid Background="Transparent">
                     <ListBox x:Name="lstControls" DisplayMemberPath="ControlName" 
-                             SelectionChanged="lstControls_SelectionChanged"
                              PreviewMouseLeftButtonDown="lstControls_PreviewMouseLeftButtonDown"
                              PreviewMouseMove="lstControls_PreviewMouseMove"
                              ></ListBox>

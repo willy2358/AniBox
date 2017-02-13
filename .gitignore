@@ -3,3 +3,5 @@ packages
 obj
 /AniBox.Framework/obj
 bin
+CefSharp-master
+/testData
