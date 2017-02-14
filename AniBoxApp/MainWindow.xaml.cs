@@ -64,12 +64,6 @@ namespace AniBox
             }
         }
 
-        private void lstControls_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //Object item = e.AddedItems[0];
-            //lstProperties.SelectedObject = item;
-        }
-
         private void Grid_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent("AniControl"))
@@ -94,7 +88,7 @@ namespace AniBox
 
         private void CreateWPFControl(Canvas canvas, WPFAniControl aniControl)
         {
-            UserControl control = aniControl as UserControl;
+            UserControl control = Activator.CreateInstance(aniControl.GetType()) as UserControl;
             control.Width = 300;
             control.Height = 300;
             Canvas.SetLeft(control, 20);
@@ -107,23 +101,15 @@ namespace AniBox
 
         private void CreateHtmlControl(Canvas canvas, HtmlAniControl aniControl)
         {
-            ChromiumWebBrowser webControl = new ChromiumWebBrowser();
-            webControl.IsBrowserInitializedChanged += (sender, e) =>
-                {
-                    //ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
+            HtmlAniControl webControl = Activator.CreateInstance(aniControl.GetType()) as HtmlAniControl;
+            ContentControl control = webControl.GetWPFControl();
+            control.Width = 500;
+            control.Height = 500;
+            Canvas.SetLeft(control, 100);
+            Canvas.SetTop(control, 10);
+            canvas.Children.Add(control);
 
-                    //WebBrowserExtensions.LoadHtml(browser, html, "www.myhtml.com");
-                    //browser.Load("www.myhtml.com");
-                };
-            webControl.Width = 500;
-            webControl.Height = 500;
-            //webControl.Address = "www.baidu.com";
-            Canvas.SetLeft(webControl, 100);
-            Canvas.SetTop(webControl, 10);
-            webControl.Address = aniControl.GetHtmlFile();
-            
-
-            canvas.Children.Add(webControl);
+            lstProperties.SelectedObject = webControl;
         }
 
         private void lstControls_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

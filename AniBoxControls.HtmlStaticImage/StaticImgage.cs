@@ -13,7 +13,7 @@ namespace AniBox.Controls.HtmlStaticImage
     [Export(typeof(AniBox.Framework.IAniControl))]
     public class StaticImgage : HtmlAniControl
     {
-
+        private string _imageFile;
         public override string ControlName
         {
             get { return "HtmlStaticImage"; }
@@ -30,7 +30,8 @@ namespace AniBox.Controls.HtmlStaticImage
 
         public override string GetHtmlFile()
         {
-            string htmlFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "qwert1234.html");
+            string htmFile = System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.GetTempFileName());
+            string htmlFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), htmFile + ".html");
             string htmlText = GetHtmlText();
 
             try
@@ -44,7 +45,21 @@ namespace AniBox.Controls.HtmlStaticImage
             }
 
             return htmlFile;
+        }
 
+        [AniProperty]
+        public string ImageFile
+        {
+            get
+            {
+                return _imageFile;
+            }
+            set
+            {
+                _imageFile = value;
+                string imgSrc = _imageFile.Replace('\\', '/');
+                UpdateDomElementAttribute("myImg", "src", imgSrc);
+            }
         }
     }
 }

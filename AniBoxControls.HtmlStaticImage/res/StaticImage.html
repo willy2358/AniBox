@@ -1,6 +1,22 @@
 <html>
+<head>
+
+<script type="text/javascript">
+function testJquery(){
+	//$("h3").value = 'adafa';
+	//alert("111");
+	//var x = document.getElementById("thisBtn");
+	//alert(x.innerHTML)
+	//x.value = 'afsa';
+	//alert($("#thisBtn").value);
+	$("#thisBtn").value = "hello";
+}
+</script>
+
+</head>
 <body>
-    <!--<img src="C:\Users\willy\Documents\Visual Studio 2013\Projects\AniBox\AniBoxControls.HtmlStaticImage\res\library.jpg" width="50%">-->
-    <h3>aaaaaaa</h3>
+    <img id="myImg" src="C:\Users\willy\Documents\Visual Studio 2013\Projects\AniBox\AniBoxControls.HtmlStaticImage\res\library.jpg" width="50%">
+    <h3 id="myHeader">aaaaaa</h3>
+	<input id="thisBtn" type="button" width="100px" onclick="testJquery()" value="test jq"/>
 </body>
 </html>
