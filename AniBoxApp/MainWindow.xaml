@@ -37,6 +37,14 @@
                              ></ListBox>
                 </Grid>
             </TabItem>
+            <TabItem Header="Regions">
+                <ListBox x:Name="lstRegions" PreviewMouseLeftButtonDown="lstRegion_PreviewMouseLeftButtonDown"
+                         DisplayMemberPath="RegionTypeName"
+                        PreviewMouseMove="lstRegion_PreviewMouseMove" >
+                    <!--<ListBoxItem>ColoredRegion</ListBoxItem>
+                    <ListBoxItem>ImagedRegion</ListBoxItem>-->
+                </ListBox>
+            </TabItem>
         </TabControl>
         <!--<GridSplitter Grid.Column="1" Width="2"></GridSplitter>-->
         <Canvas x:Name="myCanvas" Grid.Column="1" Drop="Grid_Drop" AllowDrop="True" Background="Transparent"

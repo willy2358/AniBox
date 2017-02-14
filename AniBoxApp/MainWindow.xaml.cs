@@ -19,6 +19,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using CefSharp.Wpf;
 using CefSharp;
+using AniBox.Framework.Region;
 
 namespace AniBox
 {
@@ -27,13 +28,20 @@ namespace AniBox
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string DRAGED_CONTROL_DATA = "DragedControlType";
+        private const string DRAGED_REGION_DATA = "DragedRegionType";
+
         public const string CONTROLS_FOLDER = "controls";
         private CompositionContainer _container;
 
         [ImportMany]
-        IEnumerable<IAniControl> controls;
+        IEnumerable<IAniControl> _controlTypes;
 
-        private Point _startPoint;
+        [ImportMany]
+        IEnumerable<IAniRegion> _regionTypes;
+
+        private Point _startControlLstPoint;
+        private Point _StartRegionLstPoint;
 
         public MainWindow()
         {
@@ -43,7 +51,8 @@ namespace AniBox
 
             lstProperties.PropertyFilterType = typeof(AniBox.Framework.AniPropertyAttribute);
 
-            this.lstControls.ItemsSource = controls;
+            this.lstControls.ItemsSource = _controlTypes;
+            this.lstRegions.ItemsSource = _regionTypes;
         }
 
         private void InitializeAggregateCatalog()
@@ -66,10 +75,15 @@ namespace AniBox
 
         private void Grid_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent("AniControl"))
+            if (e.Data.GetDataPresent(DRAGED_CONTROL_DATA))
             {
-                IAniControl aniControl = e.Data.GetData("AniControl") as IAniControl;
+                IAniControl aniControl = e.Data.GetData(DRAGED_CONTROL_DATA) as IAniControl;
                 CreateControl(myCanvas, aniControl);
+            }
+            else if (e.Data.GetDataPresent(DRAGED_REGION_DATA))
+            {
+                IAniRegion aniRegion = e.Data.GetData(DRAGED_REGION_DATA) as IAniRegion;
+                CreateRegion(myCanvas, aniRegion);
             }
         }
 
@@ -83,7 +97,11 @@ namespace AniBox
             {
                 CreateHtmlControl(canvas, aniControl as HtmlAniControl);
             }
+        }
 
+        private void CreateRegion(Canvas canvas, IAniRegion aniRegion)
+        {
+            System.Diagnostics.Debug.WriteLine("");
         }
 
         private void CreateWPFControl(Canvas canvas, WPFAniControl aniControl)
@@ -114,7 +132,7 @@ namespace AniBox
 
         private void lstControls_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _startPoint = e.GetPosition(null);
+            _startControlLstPoint = e.GetPosition(null);
         }
 
         private void lstControls_PreviewMouseMove(object sender, MouseEventArgs e)
@@ -125,7 +143,7 @@ namespace AniBox
             }
 
             Point mousePos = e.GetPosition(null);
-            Vector diff = _startPoint - mousePos;
+            Vector diff = _startControlLstPoint - mousePos;
             if (e.LeftButton == MouseButtonState.Pressed
                 && (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance
                     ||Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
@@ -142,7 +160,7 @@ namespace AniBox
                 //IAniControl aniControl = controls.ElementAt(0);
 
                 // Initialize the drag & drop operation
-                DataObject dragData = new DataObject("AniControl", aniControl);
+                DataObject dragData = new DataObject(DRAGED_CONTROL_DATA, aniControl);
                 DragDrop.DoDragDrop(lstControls, dragData, DragDropEffects.Move);
             } 
         }
@@ -163,12 +181,17 @@ namespace AniBox
 
         private void Grid_DragEnter(object sender, DragEventArgs e)
         {
-            if (!e.Data.GetDataPresent("AniControl") || sender == e.Source)
+            if (!e.Data.GetDataPresent(DRAGED_CONTROL_DATA) || sender == e.Source)
             {
                 e.Effects = DragDropEffects.None;
             }
         }
 
+        /// <summary>
+        /// Control - T Test
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.T 
@@ -191,6 +214,40 @@ namespace AniBox
         private void lstProperties_PropertyValueChanged(object sender, System.Windows.Controls.WpfPropertyGrid.PropertyValueChangedEventArgs e)
         {
             //System.Diagnostics.Debugger.Break();
+        }
+
+        private void lstRegion_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _StartRegionLstPoint = e.GetPosition(null);
+        }
+
+        private void lstRegion_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (lstRegions.SelectedItems.Count < 1)
+            {
+                return;
+            }
+
+            Point mousePos = e.GetPosition(null);
+            Vector diff = _StartRegionLstPoint - mousePos;
+            if (e.LeftButton == MouseButtonState.Pressed
+                && (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance
+                    || Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+                )
+            {
+                // Get the dragged ListViewItem
+                ListBox listView = sender as ListBox;
+                ListBoxItem listViewItem =
+                    FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+
+                // Find the data behind the ListViewItem
+                IAniRegion aniRegion = (IAniRegion)listView.ItemContainerGenerator.
+                    ItemFromContainer(listViewItem);
+
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject(DRAGED_REGION_DATA, aniRegion);
+                DragDrop.DoDragDrop(lstControls, dragData, DragDropEffects.Move);
+            } 
         }
 
     }
