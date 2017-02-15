@@ -14,8 +14,8 @@ namespace AniBox.Framework.Region
 
         double YPos { get; set; }
 
-        double Width { get; set; }
+        double RegionWidth { get; set; }
 
-        double Height { get; set; }
+        double RegionHeight { get; set; }
     }
 }

@@ -5,19 +5,7 @@
         xmlns:cefsharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         Title="MainWindow" Height="350" Width="800" WindowState="Maximized" KeyDown="Window_KeyDown">
     <Window.Resources>
-        <Style TargetType="TabItem">
-            <Setter Property="HeaderTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <ContentPresenter Content="{TemplateBinding Content}">
-                            <ContentPresenter.LayoutTransform>
-                                <RotateTransform Angle="90" />
-                            </ContentPresenter.LayoutTransform>
-                        </ContentPresenter>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -29,6 +17,21 @@
             
         </Grid.ColumnDefinitions>
         <TabControl Grid.Column="0" TabStripPlacement="Left" >
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{TemplateBinding Content}">
+                                    <ContentPresenter.LayoutTransform>
+                                        <RotateTransform Angle="90" />
+                                    </ContentPresenter.LayoutTransform>
+                                </ContentPresenter>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
             <TabItem Header="Controls">
                 <Grid Background="Transparent">
                     <ListBox x:Name="lstControls" DisplayMemberPath="ControlName" 
@@ -47,12 +50,14 @@
             </TabItem>
         </TabControl>
         <!--<GridSplitter Grid.Column="1" Width="2"></GridSplitter>-->
-        <Canvas x:Name="myCanvas" Grid.Column="1" Drop="Grid_Drop" AllowDrop="True" Background="Transparent"
+        <!--<Canvas x:Name="myCanvas" Grid.Column="1" Drop="Grid_Drop" AllowDrop="True" Background="Transparent"
               DragEnter="Grid_DragEnter">
-            <!--<cefsharp:ChromiumWebBrowser Width="500" Height="500"
+            --><!--<cefsharp:ChromiumWebBrowser Width="500" Height="500"
                           x:Name="Browser"
-                          Address="http://www.baidu.com" />-->
-        </Canvas>
+                          Address="http://www.baidu.com" />--><!--
+        </Canvas>-->
+        <TabControl x:Name="tabRegions" Grid.Column="1" Drop="Grid_Drop" AllowDrop="True" Background="Transparent"
+              DragEnter="TabReions_DragEnter"></TabControl>
         <!--<GridSplitter Grid.Column="3" Width="3"></GridSplitter>-->
         <pg:PropertyGrid x:Name="lstProperties" Grid.Column="2" PropertyFilterVisibility="Collapsed"
                         PropertyChanged="lstProperties_PropertyChanged"

@@ -20,6 +20,7 @@ using System.Reflection;
 using CefSharp.Wpf;
 using CefSharp;
 using AniBox.Framework.Region;
+using AniBox.Framework.Share;
 
 namespace AniBox
 {
@@ -28,17 +29,17 @@ namespace AniBox
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string DRAGED_CONTROL_DATA = "DragedControlType";
-        private const string DRAGED_REGION_DATA = "DragedRegionType";
-
-        public const string CONTROLS_FOLDER = "controls";
+        public const string CONTROL_TYPES_FOLDER = "controls";
+        public const string REGION_TYPES_FOLDER = "regions";
         private CompositionContainer _container;
 
         [ImportMany]
-        IEnumerable<IAniControl> _controlTypes;
+        IEnumerable<IAniControl> _controlTypes = null;
 
         [ImportMany]
-        IEnumerable<IAniRegion> _regionTypes;
+        IEnumerable<IAniRegion> _regionTypes = null;
+
+        List<AniRegion> _userRegions = new List<AniRegion>();
 
         private Point _startControlLstPoint;
         private Point _StartRegionLstPoint;
@@ -58,11 +59,14 @@ namespace AniBox
         private void InitializeAggregateCatalog()
         {
             var catalog = new AggregateCatalog();
-
-            string controlsDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONTROLS_FOLDER);
-            catalog.Catalogs.Add(new DirectoryCatalog(controlsDir));
+            string controlTypesDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONTROL_TYPES_FOLDER);
+            string regionTypesDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, REGION_TYPES_FOLDER);
+            catalog.Catalogs.Add(new DirectoryCatalog(controlTypesDir));
+            if (System.IO.Directory.Exists(regionTypesDir))
+            {
+                catalog.Catalogs.Add(new DirectoryCatalog(regionTypesDir));
+            }
             _container = new CompositionContainer(catalog);
-
             try
             {
                 this._container.ComposeParts(this);
@@ -75,59 +79,26 @@ namespace AniBox
 
         private void Grid_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DRAGED_CONTROL_DATA))
+            if (e.Data.GetDataPresent(CommConst.DRAGED_REGION_DATA))
             {
-                IAniControl aniControl = e.Data.GetData(DRAGED_CONTROL_DATA) as IAniControl;
-                CreateControl(myCanvas, aniControl);
-            }
-            else if (e.Data.GetDataPresent(DRAGED_REGION_DATA))
-            {
-                IAniRegion aniRegion = e.Data.GetData(DRAGED_REGION_DATA) as IAniRegion;
-                CreateRegion(myCanvas, aniRegion);
+                IAniRegion aniRegion = e.Data.GetData(CommConst.DRAGED_REGION_DATA) as IAniRegion;
+                CreateRegion(aniRegion);
             }
         }
 
-        private void CreateControl(Canvas canvas, IAniControl aniControl)
+        private void CreateRegion(IAniRegion aniRegion)
         {
-            if (aniControl is WPFAniControl)
+            TabItem regionItem= new TabItem();
+            regionItem.Header = string.Format("region{0}", this.tabRegions.Items.Count + 1);
+
+            AniRegion newRegion = Activator.CreateInstance(aniRegion.GetType()) as AniRegion;
+            newRegion.OnSelectedControlChanged = (sender, e) =>
             {
-                CreateWPFControl(canvas, aniControl as WPFAniControl);
-            }
-            else if (aniControl is HtmlAniControl)
-            {
-                CreateHtmlControl(canvas, aniControl as HtmlAniControl);
-            }
-        }
+                this.lstProperties.SelectedObject = e.SelectedControl;
+            };
+            regionItem.Content = newRegion;
 
-        private void CreateRegion(Canvas canvas, IAniRegion aniRegion)
-        {
-            System.Diagnostics.Debug.WriteLine("");
-        }
-
-        private void CreateWPFControl(Canvas canvas, WPFAniControl aniControl)
-        {
-            UserControl control = Activator.CreateInstance(aniControl.GetType()) as UserControl;
-            control.Width = 300;
-            control.Height = 300;
-            Canvas.SetLeft(control, 20);
-            Canvas.SetTop(control, 20);
-            canvas.Children.Add(control);
-
-            lstProperties.SelectedObject = control;
-        }
-
-
-        private void CreateHtmlControl(Canvas canvas, HtmlAniControl aniControl)
-        {
-            HtmlAniControl webControl = Activator.CreateInstance(aniControl.GetType()) as HtmlAniControl;
-            ContentControl control = webControl.GetWPFControl();
-            control.Width = 500;
-            control.Height = 500;
-            Canvas.SetLeft(control, 100);
-            Canvas.SetTop(control, 10);
-            canvas.Children.Add(control);
-
-            lstProperties.SelectedObject = webControl;
+            this.tabRegions.Items.Add(regionItem);
         }
 
         private void lstControls_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -149,18 +120,18 @@ namespace AniBox
                     ||Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
                 )
             {
-                // Get the dragged ListViewItem
                 ListBox listView = sender as ListBox;
-                ListBoxItem listViewItem =
-                    FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+                ListBoxItem listViewItem = FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+                if (null == listViewItem)
+                {
+                    return;
+                }
 
-                // Find the data behind the ListViewItem
                 IAniControl aniControl = (IAniControl)listView.ItemContainerGenerator.
                     ItemFromContainer(listViewItem);
-                //IAniControl aniControl = controls.ElementAt(0);
 
                 // Initialize the drag & drop operation
-                DataObject dragData = new DataObject(DRAGED_CONTROL_DATA, aniControl);
+                DataObject dragData = new DataObject(CommConst.DRAGED_CONTROL_DATA, aniControl);
                 DragDrop.DoDragDrop(lstControls, dragData, DragDropEffects.Move);
             } 
         }
@@ -179,9 +150,9 @@ namespace AniBox
             return null;
         }
 
-        private void Grid_DragEnter(object sender, DragEventArgs e)
+        private void TabReions_DragEnter(object sender, DragEventArgs e)
         {
-            if (!e.Data.GetDataPresent(DRAGED_CONTROL_DATA) || sender == e.Source)
+            if (!e.Data.GetDataPresent(CommConst.DRAGED_REGION_DATA) || sender == e.Source)
             {
                 e.Effects = DragDropEffects.None;
             }
@@ -235,17 +206,17 @@ namespace AniBox
                     || Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
                 )
             {
-                // Get the dragged ListViewItem
                 ListBox listView = sender as ListBox;
-                ListBoxItem listViewItem =
-                    FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+                ListBoxItem listViewItem = FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+                if (null == listViewItem)
+                {
+                    return;
+                }
 
-                // Find the data behind the ListViewItem
                 IAniRegion aniRegion = (IAniRegion)listView.ItemContainerGenerator.
                     ItemFromContainer(listViewItem);
 
-                // Initialize the drag & drop operation
-                DataObject dragData = new DataObject(DRAGED_REGION_DATA, aniRegion);
+                DataObject dragData = new DataObject(CommConst.DRAGED_REGION_DATA, aniRegion);
                 DragDrop.DoDragDrop(lstControls, dragData, DragDropEffects.Move);
             } 
         }
