@@ -9,9 +9,16 @@ namespace AniBox.Framework
 {
     public abstract class WPFAniControl : UserControl,IAniControl
     {
-        public abstract string ControlName
+        public abstract string ControlTypeName
         {
             get;
+        }
+
+        [AniProperty]
+        public string ControlName
+        {
+            get;
+            set;
         }
 
         [AniProperty]
@@ -41,5 +48,8 @@ namespace AniBox.Framework
             get;
             set;
         }
+
+
+
     }
 }

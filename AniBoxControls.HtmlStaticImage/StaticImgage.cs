@@ -14,7 +14,7 @@ namespace AniBox.Controls.HtmlStaticImage
     public class StaticImgage : HtmlAniControl
     {
         private string _imageFile;
-        public override string ControlName
+        public override string ControlTypeName
         {
             get { return "HtmlStaticImage"; }
         }

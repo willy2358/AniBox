@@ -21,14 +21,18 @@ using CefSharp.Wpf;
 using CefSharp;
 using AniBox.Framework.Region;
 using AniBox.Framework.Share;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace AniBox
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
+
         public const string CONTROL_TYPES_FOLDER = "controls";
         public const string REGION_TYPES_FOLDER = "regions";
         private CompositionContainer _container;
@@ -39,10 +43,65 @@ namespace AniBox
         [ImportMany]
         IEnumerable<IAniRegion> _regionTypes = null;
 
-        List<AniRegion> _userRegions = new List<AniRegion>();
+        ObservableCollection<AniRegion> _userRegions = new ObservableCollection<AniRegion>();
+        
 
         private Point _startControlLstPoint;
         private Point _StartRegionLstPoint;
+
+        private AniRegion _currentRegion = null;
+
+        #region codes for bindableBase
+        /// <summary>
+        ///     Multicast event for property change notifications.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        ///     Checks if a property already matches a desired value.  Sets the property and
+        ///     notifies listeners only when necessary.
+        /// </summary>
+        /// <typeparam name="T">Type of the property.</typeparam>
+        /// <param name="storage">Reference to a property with both getter and setter.</param>
+        /// <param name="value">Desired value for the property.</param>
+        /// <param name="propertyName">
+        ///     Name of the property used to notify listeners.  This
+        ///     value is optional and can be provided automatically when invoked from compilers that
+        ///     support CallerMemberName.
+        /// </param>
+        /// <returns>
+        ///     True if the value was changed, false if the existing value matched the
+        ///     desired value.
+        /// </returns>
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(storage, value))
+            {
+                return false;
+            }
+
+            storage = value;
+            this.OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        /// <summary>
+        ///     Notifies listeners that a property value has changed.
+        /// </summary>
+        /// <param name="propertyName">
+        ///     Name of the property used to notify listeners.  This
+        ///     value is optional and can be provided automatically when invoked from compilers
+        ///     that support <see cref="CallerMemberNameAttribute" />.
+        /// </param>
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler eventHandler = this.PropertyChanged;
+            if (eventHandler != null)
+            {
+                eventHandler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion 
 
         public MainWindow()
         {
@@ -50,10 +109,32 @@ namespace AniBox
 
             InitializeComponent();
 
+            this.DataContext = this;
+
             lstProperties.PropertyFilterType = typeof(AniBox.Framework.AniPropertyAttribute);
 
             this.lstControls.ItemsSource = _controlTypes;
             this.lstRegions.ItemsSource = _regionTypes;
+        }
+
+        public ObservableCollection<AniRegion> UserRegions
+        {
+            get
+            {
+                return _userRegions;
+            }
+        }
+
+        public AniRegion CurrentRegion
+        {
+            get
+            {
+                return _currentRegion;
+            }
+            set
+            {
+                SetProperty(ref _currentRegion, value, "CurrentRegion");
+            }
         }
 
         private void InitializeAggregateCatalog()
@@ -88,17 +169,16 @@ namespace AniBox
 
         private void CreateRegion(IAniRegion aniRegion)
         {
-            TabItem regionItem= new TabItem();
-            regionItem.Header = string.Format("region{0}", this.tabRegions.Items.Count + 1);
-
             AniRegion newRegion = Activator.CreateInstance(aniRegion.GetType()) as AniRegion;
             newRegion.OnSelectedControlChanged = (sender, e) =>
             {
                 this.lstProperties.SelectedObject = e.SelectedControl;
             };
-            regionItem.Content = newRegion;
+            newRegion.RegionName = string.Format("region{0}", this.tabRegions.Items.Count + 1);
+            this.UserRegions.Insert(0, newRegion);
 
-            this.tabRegions.Items.Add(regionItem);
+            tabRegions.SelectedItem = newRegion;
+            this.CurrentRegion = newRegion;
         }
 
         private void lstControls_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -219,6 +299,21 @@ namespace AniBox
                 DataObject dragData = new DataObject(CommConst.DRAGED_REGION_DATA, aniRegion);
                 DragDrop.DoDragDrop(lstControls, dragData, DragDropEffects.Move);
             } 
+        }
+
+        private void testRun_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void deployRun_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void tabRegions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
     }

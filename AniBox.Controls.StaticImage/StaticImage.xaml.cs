@@ -31,7 +31,7 @@ namespace AniBox.Controls
         }
 
 
-        public override string ControlName
+        public override string ControlTypeName
         {
             get { return "StaticImage"; }
         }

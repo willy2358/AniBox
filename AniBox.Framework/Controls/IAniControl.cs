@@ -8,9 +8,9 @@ namespace AniBox.Framework
 {
     public interface IAniControl
     {
+        string ControlTypeName { get; }
 
-
-        string ControlName { get; }
+        string ControlName { get; set; }
 
         double X { get; set; }
 

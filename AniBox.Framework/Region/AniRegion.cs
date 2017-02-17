@@ -2,6 +2,7 @@
 using AniBox.Framework.Share;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace AniBox.Framework.Region
     public abstract class AniRegion : UserControl,IAniRegion
     {
         public EventHandler<SelectControlEventArgs> OnSelectedControlChanged;
+
+        private ObservableCollection<IAniControl> _aniControls = new ObservableCollection<IAniControl>();
         public AniRegion()
         {
             this.AllowDrop = true;
@@ -20,6 +23,52 @@ namespace AniBox.Framework.Region
             this.DragEnter += AniRegion_DragEnter;
 
             this.Drop += AniRegion_Drop;
+        }
+
+
+        protected abstract Canvas MyCanvas { get; }
+
+        public abstract string RegionTypeName { get; }
+
+
+        [AniProperty]
+        public string RegionName
+        {
+            get;
+            set;
+        }
+
+        public ObservableCollection<IAniControl> AniControls
+        {
+            get
+            {
+                return _aniControls;
+            }
+        }
+
+
+        public double XPos
+        {
+            get;
+            set;
+        }
+
+        public double YPos
+        {
+            get;
+            set;
+        }
+
+        public double RegionWidth
+        {
+            get;
+            set;
+        }
+
+        public double RegionHeight
+        {
+            get;
+            set;
         }
 
         void AniRegion_DragEnter(object sender, System.Windows.DragEventArgs e)
@@ -36,10 +85,11 @@ namespace AniBox.Framework.Region
             {
                 IAniControl aniControl = e.Data.GetData(CommConst.DRAGED_CONTROL_DATA) as IAniControl;
                 CreateControl(MyCanvas, aniControl);
-
+                aniControl.ControlName = aniControl.ControlTypeName;
+                this.AniControls.Add(aniControl);
                 e.Handled = true;
             }
-            
+
         }
 
         private void CreateControl(Canvas canvas, IAniControl aniControl)
@@ -84,34 +134,6 @@ namespace AniBox.Framework.Region
             {
                 OnSelectedControlChanged(this, new SelectControlEventArgs(aniControl));
             }
-        }
-
-        protected abstract Canvas MyCanvas { get; }
-
-        public abstract string RegionTypeName{ get;}
-
-        public double XPos
-        {
-            get;
-            set;
-        }
-
-        public double YPos
-        {
-            get;
-            set;
-        }
-
-        public double RegionWidth
-        {
-            get;
-            set;
-        }
-
-        public double RegionHeight
-        {
-            get;
-            set;
         }
     }
 }

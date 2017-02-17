@@ -57,7 +57,14 @@ namespace AniBox.Framework
         public abstract string GetHtmlText();
         public abstract string GetHtmlFile();
 
-        public abstract string ControlName
+        [AniProperty]
+        public string ControlName
+        {
+            get;
+            set;
+        }
+
+        public abstract string ControlTypeName
         {
             get;
         }
