@@ -31,22 +31,7 @@ namespace AniBox.Framework.Region
             this.DragEnter += AniRegion_DragEnter;
 
             this.Drop += AniRegion_Drop;
-
-            MouseLeftButtonDown += AniRegion_MouseLeftButtonDown;
-
-            MouseMove += AniRegion_MouseMove;
         }
-
-        void AniRegion_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            //if ()
-        }
-
-        void AniRegion_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("AniRegion_MouseLeftButtonDown");
-        }
-
 
         protected abstract Canvas MyCanvas { get; }
 
