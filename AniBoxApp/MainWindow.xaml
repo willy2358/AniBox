@@ -5,52 +5,88 @@
         xmlns:cefsharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         Title="MainWindow" Height="350" Width="800" WindowState="Maximized" KeyDown="Window_KeyDown">
     <Window.Resources>
-        <Style TargetType="TabItem">
-            <Setter Property="HeaderTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <ContentPresenter Content="{TemplateBinding Content}">
-                            <ContentPresenter.LayoutTransform>
-                                <RotateTransform Angle="90" />
-                            </ContentPresenter.LayoutTransform>
-                        </ContentPresenter>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <!--<ColumnDefinition Width="*"></ColumnDefinition>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <ToolBar DockPanel.Dock="Top">
+                <Button x:Name="testRun" Click="testRun_Click">测试运行</Button>
+                <Button x:Name="deployRun" Click="deployRun_Click">部署运行</Button>
+            </ToolBar>
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <!--<ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>-->
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            
-        </Grid.ColumnDefinitions>
-        <TabControl Grid.Column="0" TabStripPlacement="Left" >
-            <TabItem Header="Controls">
-                <Grid Background="Transparent">
-                    <ListBox x:Name="lstControls" DisplayMemberPath="ControlName" 
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+
+            <TabControl Grid.Column="0" TabStripPlacement="Left" >
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{TemplateBinding Content}">
+                                        <ContentPresenter.LayoutTransform>
+                                            <RotateTransform Angle="90" />
+                                        </ContentPresenter.LayoutTransform>
+                                    </ContentPresenter>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+                <TabItem Header="Regions">
+                    <ListBox x:Name="lstRegions" PreviewMouseLeftButtonDown="lstRegion_PreviewMouseLeftButtonDown"
+                         DisplayMemberPath="RegionTypeName"
+                        PreviewMouseMove="lstRegion_PreviewMouseMove" >
+                    </ListBox>
+                </TabItem>
+                <TabItem Header="Controls">
+                    <Grid Background="Transparent">
+                        <ListBox x:Name="lstControls" DisplayMemberPath="ControlTypeName" 
                              PreviewMouseLeftButtonDown="lstControls_PreviewMouseLeftButtonDown"
                              PreviewMouseMove="lstControls_PreviewMouseMove"
                              ></ListBox>
-                </Grid>
-            </TabItem>
-        </TabControl>
-        <!--<GridSplitter Grid.Column="1" Width="2"></GridSplitter>-->
-        <Canvas x:Name="myCanvas" Grid.Column="1" Drop="Grid_Drop" AllowDrop="True" Background="Transparent"
-              DragEnter="Grid_DragEnter">
-            <!--<cefsharp:ChromiumWebBrowser Width="500" Height="500"
-                          x:Name="Browser"
-                          Address="http://www.baidu.com" />-->
-        </Canvas>
-        <!--<GridSplitter Grid.Column="3" Width="3"></GridSplitter>-->
-        <pg:PropertyGrid x:Name="lstProperties" Grid.Column="2" PropertyFilterVisibility="Collapsed"
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="MyRegions">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <ListBox x:Name="lstUserRegions" Grid.Row="0" DisplayMemberPath="RegionName" 
+                                 ItemsSource="{Binding UserRegions}" ></ListBox>
+                        <ListBox x:Name="lstRegionControls" Grid.Row="1" ItemsSource="{Binding CurrentRegion.AniControls}"
+                                 DisplayMemberPath="ControlName"
+                                 ></ListBox>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+            <TabControl x:Name="tabRegions" Grid.Column="1" Drop="Grid_Drop" AllowDrop="True" Background="Transparent"
+               ItemsSource="{Binding UserRegions}" DragEnter="TabReions_DragEnter" SelectionChanged="tabRegions_SelectionChanged">
+                <TabControl.ItemContainerStyle>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Header" Value="{Binding RegionName}"/>
+                    </Style>
+                </TabControl.ItemContainerStyle>
+            </TabControl>
+            <pg:PropertyGrid x:Name="lstProperties" Grid.Column="2" PropertyFilterVisibility="Collapsed"
                         PropertyChanged="lstProperties_PropertyChanged"
                         PropertyEditingFinished="lstProperties_PropertyEditingFinished"
                         PropertyValueChanged="lstProperties_PropertyValueChanged" ></pg:PropertyGrid>
-        
-        <!--<Button x:Name="testBtn" Grid.Column="1" Width="80" Height="20" Click="testBtn_Click">Test</Button>-->
+        </Grid>
     </Grid>
 </Window>
