@@ -1,4 +1,5 @@
-﻿using AniBox.Framework;
+﻿using AniBox.Framework.Attributes;
+using AniBox.Framework.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AniBox.Controls.HtmlStaticImage
 {
-    [Export(typeof(AniBox.Framework.IAniControl))]
+    [Export(typeof(AniBox.Framework.Controls.AniControl))]
     public class StaticImgage : HtmlAniControl
     {
         private string _imageFile;

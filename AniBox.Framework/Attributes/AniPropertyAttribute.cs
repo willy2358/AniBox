@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniBox.Framework
+namespace AniBox.Framework.Attributes
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
     public class AniPropertyAttribute : Attribute

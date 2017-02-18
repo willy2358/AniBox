@@ -10,9 +10,9 @@ namespace AniBox.Framework.Region
     {
         string RegionTypeName { get; }
 
-        double XPos { get; set; }
+        double XScreenPos { get; set; }
 
-        double YPos { get; set; }
+        double YScreenPos { get; set; }
 
         double RegionWidth { get; set; }
 

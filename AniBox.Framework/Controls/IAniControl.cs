@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniBox.Framework
+namespace AniBox.Framework.Controls
 {
     public interface IAniControl
     {
+        
         string ControlTypeName { get; }
 
         string ControlName { get; set; }
@@ -19,5 +20,8 @@ namespace AniBox.Framework
         double ControlWidth { get; set; }
 
         double ControlHeight { get; set; }
+
+        bool IsSelected { get; set; }
+
     }
 }

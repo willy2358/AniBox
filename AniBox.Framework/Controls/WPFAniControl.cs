@@ -1,55 +1,28 @@
-﻿using System;
+﻿using AniBox.Framework.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace AniBox.Framework
+namespace AniBox.Framework.Controls
 {
-    public abstract class WPFAniControl : UserControl,IAniControl
+    public abstract class WPFAniControl : AniControl
     {
-        public abstract string ControlTypeName
-        {
-            get;
-        }
+        //public WPFAniControl()
+        //{
+        //    ContentControl control = GetWPFControl();
+        //    if (null != control)
+        //    {
+        //        control.MouseLeftButtonDown += control_MouseLeftButtonDown;
+        //    }
+        //}
 
-        [AniProperty]
-        public string ControlName
-        {
-            get;
-            set;
-        }
-
-        [AniProperty]
-        public double X
-        {
-            get;
-            set;
-        }
-
-        [AniProperty]
-        public double Y
-        {
-            get;
-            set;
-        }
-
-        [AniProperty]
-        public double ControlWidth
-        {
-            get;
-            set;
-        }
-
-        [AniProperty]
-        public double ControlHeight
-        {
-            get;
-            set;
-        }
-
-
-
+        //void control_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        //{
+        //    IsSelected = true;
+        //}
+    
     }
 }

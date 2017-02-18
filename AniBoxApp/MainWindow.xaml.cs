@@ -24,6 +24,7 @@ using AniBox.Framework.Share;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using AniBox.Framework.Controls;
 
 namespace AniBox
 {
@@ -38,7 +39,7 @@ namespace AniBox
         private CompositionContainer _container;
 
         [ImportMany]
-        IEnumerable<IAniControl> _controlTypes = null;
+        IEnumerable<AniControl> _controlTypes = null;
 
         [ImportMany]
         IEnumerable<IAniRegion> _regionTypes = null;
@@ -111,7 +112,7 @@ namespace AniBox
 
             this.DataContext = this;
 
-            lstProperties.PropertyFilterType = typeof(AniBox.Framework.AniPropertyAttribute);
+            lstProperties.PropertyFilterType = typeof(AniBox.Framework.Attributes.AniPropertyAttribute);
 
             this.lstControls.ItemsSource = _controlTypes;
             this.lstRegions.ItemsSource = _regionTypes;
@@ -134,6 +135,7 @@ namespace AniBox
             set
             {
                 SetProperty(ref _currentRegion, value, "CurrentRegion");
+                this.lstProperties.SelectedObject = _currentRegion;
             }
         }
 
@@ -143,6 +145,7 @@ namespace AniBox
             string controlTypesDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONTROL_TYPES_FOLDER);
             string regionTypesDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, REGION_TYPES_FOLDER);
             catalog.Catalogs.Add(new DirectoryCatalog(controlTypesDir));
+            //catalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory));
             if (System.IO.Directory.Exists(regionTypesDir))
             {
                 catalog.Catalogs.Add(new DirectoryCatalog(regionTypesDir));

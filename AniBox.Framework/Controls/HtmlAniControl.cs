@@ -6,17 +6,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace AniBox.Framework
+namespace AniBox.Framework.Controls
 {
-    public abstract class HtmlAniControl : IAniControl
+    public abstract class HtmlAniControl : AniControl
     {
-        private ChromiumWebBrowser _webBrowser = null;
+        private ChromiumWebBrowser _webBrowser = new ChromiumWebBrowser();
         public HtmlAniControl()
         {
-            _webBrowser = new ChromiumWebBrowser();
             ScrollViewer.SetHorizontalScrollBarVisibility(_webBrowser, ScrollBarVisibility.Hidden);
             ScrollViewer.SetVerticalScrollBarVisibility(_webBrowser, ScrollBarVisibility.Hidden);
             _webBrowser.IsBrowserInitializedChanged += _webBrowser_IsBrowserInitializedChanged;
+            _webBrowser.MouseLeftButtonDown += _webBrowser_MouseLeftButtonDown;
+        }
+
+        void _webBrowser_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            IsSelected = true;
         }
 
         void _webBrowser_IsBrowserInitializedChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
@@ -29,7 +34,7 @@ namespace AniBox.Framework
             }
         }
 
-        public ContentControl GetWPFControl()
+        public override ContentControl GetWPFControl()
         {
             if (null != _webBrowser)
             {
@@ -57,44 +62,57 @@ namespace AniBox.Framework
         public abstract string GetHtmlText();
         public abstract string GetHtmlFile();
 
-        [AniProperty]
-        public string ControlName
-        {
-            get;
-            set;
-        }
+        //[AniProperty]
+        //public string ControlName
+        //{
+        //    get;
+        //    set;
+        //}
 
-        public abstract string ControlTypeName
-        {
-            get;
-        }
+        //public abstract string ControlTypeName
+        //{
+        //    get;
+        //}
 
-        [AniProperty]
-        public double X
-        {
-            get;
-            set;
-        }
+        //[AniProperty]
+        //public double X
+        //{
+        //    get;
+        //    set;
+        //}
 
-        [AniProperty]
-        public double Y
-        {
-            get;
-            set;
-        }
+        //[AniProperty]
+        //public double Y
+        //{
+        //    get;
+        //    set;
+        //}
 
-        [AniProperty]
-        public double ControlWidth
-        {
-            get;
-            set;
-        }
+        //[AniProperty]
+        //public double ControlWidth
+        //{
+        //    get;
+        //    set;
+        //}
 
-        [AniProperty]
-        public double ControlHeight
-        {
-            get;
-            set;
-        }
+        //[AniProperty]
+        //public double ControlHeight
+        //{
+        //    get;
+        //    set;
+        //}
+
+
+        //public bool IsSelected
+        //{
+        //    get
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //    set
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
     }
 }
