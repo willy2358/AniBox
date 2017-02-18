@@ -24,22 +24,7 @@ namespace AniBox.Framework.Controls
 
         public AniControl()
         {
-            ContentControl control = GetWPFControl();
-            if (null != control)
-            {
-                //control.MouseLeftButtonDown += control_MouseLeftButtonDown;
-                control.PreviewMouseLeftButtonDown += control_PreviewMouseLeftButtonDown;
-            }
-        }
 
-        void control_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            IsSelected = true;
-        }
-
-        void control_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            IsSelected = true;
         }
 
         public abstract string ControlTypeName
@@ -109,15 +94,7 @@ namespace AniBox.Framework.Controls
                     return;
                 }
                 _isSelected = value;
-                if (null != SelectStateChanged)
-                {
-                    ControlSelectStateEventArgs arg = new ControlSelectStateEventArgs()
-                    {
-                        NewState = _isSelected ? SelectState.Selected : SelectState.UnSelected,
-                        OldState = (!_isSelected) ? SelectState.Selected : SelectState.UnSelected
-                    };
-                    SelectStateChanged(this, arg);
-                }
+
             }
         }
     }

@@ -162,6 +162,10 @@ namespace AniBox.Framework.Region
             border.Width = 300;
             border.Height = 300;
             border.Child = actControl;
+            border.PreviewMouseLeftButtonDown += (sender, e) =>
+                {
+                    SelectedControl = control;
+                };
 
             Canvas.SetLeft(border, 20);
             Canvas.SetTop(border, 20);
@@ -169,14 +173,7 @@ namespace AniBox.Framework.Region
 
             SelectedControl = control;
 
-            control.SelectStateChanged += (sender, e) =>
-            {
-                if (e.NewState == SelectState.Selected)
-                {
-                    SelectedControl = sender as AniControl;
-                }
-            };
         }
-             
+            
     }
 }
