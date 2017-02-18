@@ -91,15 +91,27 @@ namespace AniBox.Framework.Region
         [AniProperty]
         public double RegionWidth
         {
-            get;
-            set;
+            get
+            {
+                return this.Width;
+            }
+            set
+            {
+                this.Width = value;
+            }
         }
 
         [AniProperty]
         public double RegionHeight
         {
-            get;
-            set;
+            get
+            {
+                return this.Height;
+            }
+            set
+            {
+                this.Height = value;
+            }
         }
 
         void AniRegion_DragEnter(object sender, System.Windows.DragEventArgs e)

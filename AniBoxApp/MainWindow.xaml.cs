@@ -25,6 +25,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using AniBox.Framework.Controls;
+using AniBox.Framework.Utility;
 
 namespace AniBox
 {
@@ -178,9 +179,23 @@ namespace AniBox
                 this.lstProperties.SelectedObject = e.SelectedControl;
             };
             newRegion.RegionName = string.Format("region{0}", this.tabRegions.Items.Count + 1);
+            ScrollViewer scrollViewer = new ScrollViewer();
+            scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            scrollViewer.Height = this.tabRegions.Height;
+            scrollViewer.Content = newRegion;
+            TabItem tabItem = new TabItem();
+            tabItem.Header = newRegion.RegionName;
+            tabItem.Content = scrollViewer;
+
+            tabRegions.Items.Insert(0, tabItem);
+
             this.UserRegions.Insert(0, newRegion);
 
-            tabRegions.SelectedItem = newRegion;
+            newRegion.RegionWidth = tabRegions.Width;
+            newRegion.RegionHeight = tabRegions.Height;
+            tabRegions.SelectedItem = tabItem;
+
             this.CurrentRegion = newRegion;
         }
 
@@ -200,11 +215,11 @@ namespace AniBox
             Vector diff = _startControlLstPoint - mousePos;
             if (e.LeftButton == MouseButtonState.Pressed
                 && (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance
-                    ||Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+                    || Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
                 )
             {
                 ListBox listView = sender as ListBox;
-                ListBoxItem listViewItem = FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+                ListBoxItem listViewItem = UiSearchHelper.FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
                 if (null == listViewItem)
                 {
                     return;
@@ -216,22 +231,10 @@ namespace AniBox
                 // Initialize the drag & drop operation
                 DataObject dragData = new DataObject(CommConst.DRAGED_CONTROL_DATA, aniControl);
                 DragDrop.DoDragDrop(lstControls, dragData, DragDropEffects.Move);
-            } 
+            }
         }
 
-        private static T FindAnchestor<T>(DependencyObject current) where T : DependencyObject
-        {
-            do
-            {
-                if (current is T)
-                {
-                    return (T)current;
-                }
-                current = VisualTreeHelper.GetParent(current);
-            }
-            while (current != null);
-            return null;
-        }
+
 
         private void TabReions_DragEnter(object sender, DragEventArgs e)
         {
@@ -290,7 +293,7 @@ namespace AniBox
                 )
             {
                 ListBox listView = sender as ListBox;
-                ListBoxItem listViewItem = FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+                ListBoxItem listViewItem = UiSearchHelper.FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
                 if (null == listViewItem)
                 {
                     return;
@@ -306,7 +309,9 @@ namespace AniBox
 
         private void testRun_Click(object sender, RoutedEventArgs e)
         {
-
+            RegionsScreen screen = new RegionsScreen();
+            this.Hide();
+            screen.Show();
         }
 
         private void deployRun_Click(object sender, RoutedEventArgs e)
