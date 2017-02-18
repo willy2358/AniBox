@@ -307,16 +307,99 @@ namespace AniBox
             } 
         }
 
+        bool test_run = true;
+        Dictionary<AniRegion, ScrollViewer> _regionOriHostRel = new Dictionary<AniRegion, ScrollViewer>();
         private void testRun_Click(object sender, RoutedEventArgs e)
         {
-            RegionsScreen screen = new RegionsScreen();
-            this.Hide();
+            test_run = true;
+            double width, height;
+            CalculateRegionsLayoutSize(out width, out height);
+
+            RegionsScreen screen = MoveRegionsToScreenWindow(width, height);
+            screen.Left = 0;
+            screen.Top = 0;
             screen.Show();
+            this.Hide();
+        }
+
+        private RegionsScreen MoveRegionsToScreenWindow(double screenTotalWidth, double screenTotalHeight)
+        {
+            RegionsScreen screen = new RegionsScreen();
+            screen.KeyDown += screen_KeyDown;
+            screen.Width = screenTotalWidth;
+            screen.Height = screenTotalHeight;
+
+            for (int i = 0; i < UserRegions.Count; i++)
+            {
+                AniRegion region = UserRegions[i];
+                ScrollViewer container = region.Parent as ScrollViewer;
+                if (!_regionOriHostRel.ContainsKey(region))
+                {
+                    _regionOriHostRel.Add(region, container);
+                }
+                container.Content = null;
+                screen.myCanvas.Children.Add(region);
+                Canvas.SetTop(region, region.YScreenPos);
+                Canvas.SetLeft(region, region.XScreenPos);
+            }
+
+            return screen;
+        }
+
+        void screen_KeyDown(object sender, KeyEventArgs e)
+        {
+            RegionsScreen window = sender as RegionsScreen;
+            if(e.Key == Key.Escape)
+            {
+                window.myCanvas.Children.Clear();
+                foreach(var v in _regionOriHostRel)
+                {
+                    v.Value.Content = v.Key;
+                }
+
+                window.Close();
+
+                if (test_run)
+                {
+                    this.Show();
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
         }
 
         private void deployRun_Click(object sender, RoutedEventArgs e)
         {
+            test_run = false;
+            double width, height;
+            CalculateRegionsLayoutSize(out width, out height);
 
+            RegionsScreen screen = MoveRegionsToScreenWindow(width, height);
+            screen.Left = 0;
+            screen.Top = 0;
+            screen.Show();
+            this.Hide();
+        }
+
+        private void CalculateRegionsLayoutSize(out double width, out double height)
+        {
+            width = 0;
+            height = 0;
+            for(int i = 0; i < UserRegions.Count; i++)
+            {
+                AniRegion region = UserRegions[i];
+                if (region.XScreenPos + region.RegionWidth > width)
+                {
+                    width = region.XScreenPos + region.RegionWidth;
+                }
+
+                if (region.YScreenPos + region.RegionHeight > height)
+                {
+                    height = region.YScreenPos + region.RegionHeight;
+                }
+            }
         }
 
         private void tabRegions_SelectionChanged(object sender, SelectionChangedEventArgs e)
