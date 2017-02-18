@@ -49,7 +49,12 @@ namespace AniBox.Framework.Controls
             set
             {
                 _x = value;
-                Canvas.SetLeft(this.GetWPFControl().Parent as Border, _x);
+
+                Border border = this.GetWPFControl().Parent as Border;
+                if (null != border)
+                {
+                    Canvas.SetLeft(border, _x);
+                }
             }
         }
 
@@ -63,7 +68,11 @@ namespace AniBox.Framework.Controls
             set
             {
                 _y = value;
-                Canvas.SetTop(this.GetWPFControl().Parent as Border, _y);
+                Border border = this.GetWPFControl().Parent as Border;
+                if (null != border)
+                {
+                    Canvas.SetTop(border, _y);
+                }
             }
         }
 

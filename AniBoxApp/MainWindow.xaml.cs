@@ -178,6 +178,8 @@ namespace AniBox
             {
                 this.lstProperties.SelectedObject = e.SelectedControl;
             };
+            newRegion.MouseDoubleClick += newRegion_MouseDoubleClick;
+
             newRegion.RegionName = string.Format("region{0}", this.tabRegions.Items.Count + 1);
             ScrollViewer scrollViewer = new ScrollViewer();
             scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
@@ -188,20 +190,37 @@ namespace AniBox
             tabItem.Header = newRegion.RegionName;
             tabItem.Content = scrollViewer;
 
-            tabRegions.Items.Insert(0, tabItem);
+            SetNewCreateRegionSize(newRegion);
 
+            tabRegions.Items.Insert(0, tabItem);
             this.UserRegions.Insert(0, newRegion);
 
-            newRegion.RegionWidth = tabRegions.Width;
-            newRegion.RegionHeight = tabRegions.Height;
             tabRegions.SelectedItem = tabItem;
-
             this.CurrentRegion = newRegion;
+        }
+
+        void newRegion_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            this.lstProperties.SelectedObject = sender;
         }
 
         private void lstControls_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _startControlLstPoint = e.GetPosition(null);
+        }
+
+        private void SetNewCreateRegionSize(AniRegion newRegion)
+        {
+            if (UserRegions.Count > 0)
+            {
+                newRegion.RegionWidth = UserRegions[0].RegionWidth;
+                newRegion.RegionHeight = UserRegions[0].RegionHeight;
+            }
+            else
+            {
+                newRegion.RegionWidth = tabRegions.ActualWidth;
+                newRegion.RegionHeight = tabRegions.ActualHeight;
+            }
         }
 
         private void lstControls_PreviewMouseMove(object sender, MouseEventArgs e)
