@@ -9,10 +9,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniBox.Controls.HtmlStaticImage
+namespace AniBox.Controls
 {
-    [Export(typeof(AniBox.Framework.Controls.AniControl))]
-    public class StaticImgage : HtmlAniControl
+    [Export(typeof(AniControl))]
+    class HtmlStaticImage : HtmlAniControl
     {
         private string _imageFile;
         public override string ControlTypeName
@@ -23,10 +23,15 @@ namespace AniBox.Controls.HtmlStaticImage
         public override string GetHtmlText()
         {
             Assembly _assembly;
+            string htmlText = "";
             _assembly = Assembly.GetExecutingAssembly();
-            StreamReader _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream("AniBox.Controls.HtmlStaticImage.res.StaticImage.html"));
-            string html = _textStreamReader.ReadToEnd();
-            return html;
+            string htmlFile = "AniBox.Controls.res." + "StaticImage.html";
+            if(_assembly.GetManifestResourceNames().Contains(htmlFile))
+            {
+                StreamReader _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream(htmlFile));
+                htmlText = _textStreamReader.ReadToEnd();
+            }
+            return htmlText;
         }
 
         public override string GetHtmlFile()
@@ -38,11 +43,11 @@ namespace AniBox.Controls.HtmlStaticImage
             try
             {
                 System.IO.File.WriteAllText(htmlFile, htmlText, Encoding.UTF8);
-                
+
             }
-            catch(Exception)
+            catch (Exception)
             {
-                
+
             }
 
             return htmlFile;

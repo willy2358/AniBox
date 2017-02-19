@@ -18,8 +18,6 @@ namespace AniBox.Framework.Controls
         private double _x = 0;
         private double _y = 0;
 
-        
-
         public abstract ContentControl GetWPFControl();
 
         public AniControl()
@@ -49,7 +47,12 @@ namespace AniBox.Framework.Controls
             set
             {
                 _x = value;
-                Canvas.SetLeft(this.GetWPFControl().Parent as Border, _x);
+
+                Border border = this.GetWPFControl().Parent as Border;
+                if (null != border)
+                {
+                    Canvas.SetLeft(border, _x);
+                }
             }
         }
 
@@ -63,22 +66,50 @@ namespace AniBox.Framework.Controls
             set
             {
                 _y = value;
-                Canvas.SetTop(this.GetWPFControl().Parent as Border, _y);
+                Border border = this.GetWPFControl().Parent as Border;
+                if (null != border)
+                {
+                    Canvas.SetTop(border, _y);
+                }
             }
         }
 
+        private double _controlWidth; 
         [AniProperty]
         public double ControlWidth
         {
-            get;
-            set;
+            get
+            {
+                return _controlWidth;
+            }
+            set
+            {
+                _controlWidth = value;
+                Border border = this.GetWPFControl().Parent as Border;
+                if (null != border)
+                {
+                    border.Width = _controlWidth;
+                }
+            }
         }
 
+        private double _controlHeight = 0;
         [AniProperty]
         public double ControlHeight
         {
-            get;
-            set;
+            get
+            {
+                return _controlHeight;
+            }
+            set
+            {
+                _controlHeight = value;
+                Border border = this.GetWPFControl().Parent as Border;
+                if (null != border)
+                {
+                    border.Height = _controlHeight;
+                }
+            }
         }
 
         public bool IsSelected

@@ -17,6 +17,8 @@ namespace AniBox.Framework.Region
 {
     public abstract class AniRegion : UserControl,IAniRegion
     {
+        private const double DEFAULT_CONTROL_WIDTH = 300;
+        private const double DEFAULT_CONTROL_HEIGHT = 300;
         private SolidColorBrush CONTROL_SELECTED_BORDER_BRUSH = Brushes.LightGreen;
 
         public EventHandler<SelectControlEventArgs> OnSelectedControlChanged;
@@ -24,6 +26,8 @@ namespace AniBox.Framework.Region
         private AniControl _selectedControl;
 
         private ObservableCollection<IAniControl> _aniControls = new ObservableCollection<IAniControl>();
+
+        private Dictionary<Border, AniControl> _hostAndControlsRel = new Dictionary<Border, AniControl>();
         public AniRegion()
         {
             this.AllowDrop = true;
@@ -31,6 +35,7 @@ namespace AniBox.Framework.Region
             this.DragEnter += AniRegion_DragEnter;
 
             this.Drop += AniRegion_Drop;
+
         }
 
         protected abstract Canvas MyCanvas { get; }
@@ -91,15 +96,27 @@ namespace AniBox.Framework.Region
         [AniProperty]
         public double RegionWidth
         {
-            get;
-            set;
+            get
+            {
+                return this.Width;
+            }
+            set
+            {
+                this.Width = value;
+            }
         }
 
         [AniProperty]
         public double RegionHeight
         {
-            get;
-            set;
+            get
+            {
+                return this.Height;
+            }
+            set
+            {
+                this.Height = value;
+            }
         }
 
         void AniRegion_DragEnter(object sender, System.Windows.DragEventArgs e)
@@ -147,26 +164,38 @@ namespace AniBox.Framework.Region
         private void CreateControl(Canvas canvas, AniControl aniControl, Point postion)
         {
             AniControl control = Activator.CreateInstance(aniControl.GetType()) as AniControl;
+            control.X = postion.X;
+            control.Y = postion.Y;
+            control.ControlWidth = DEFAULT_CONTROL_WIDTH;
+            control.ControlHeight = DEFAULT_CONTROL_HEIGHT;
+            Border border = CreateControlContainer(control);
+
+            canvas.Children.Add(border);
+            _hostAndControlsRel.Add(border, control);
+ 
+            SelectedControl = control;
+        }
+
+        private Border CreateControlContainer(AniControl aniControl)
+        {
             Border border = new Border();
             border.BorderThickness = new Thickness(2);
             border.BorderBrush = CONTROL_SELECTED_BORDER_BRUSH;
-            ContentControl actControl = control.GetWPFControl();
-            border.Width = 300;
-            border.Height = 300;
+            ContentControl actControl = aniControl.GetWPFControl();
+            border.Width = aniControl.ControlWidth;
+            border.Height = aniControl.ControlHeight;
             border.Child = actControl;
             border.PreviewMouseLeftButtonDown += (sender, e) =>
-                {
-                    SelectedControl = control;
-                };
-
-            Canvas.SetLeft(border, postion.X);
-            Canvas.SetTop(border, postion.Y);
-            canvas.Children.Add(border);
-
+            {
+                SelectedControl = aniControl;
+            };
             border.PreviewMouseLeftButtonDown += Element_MouseLeftButtonDown;
             border.PreviewMouseMove += Element_MouseMove;
             border.PreviewMouseLeftButtonUp += Element_MouseLeftButtonUp;
-            SelectedControl = control;
+
+            Canvas.SetLeft(border, aniControl.X);
+            Canvas.SetTop(border, aniControl.Y);
+            return border;
         }
 
         #region Move Controls
@@ -182,6 +211,22 @@ namespace AniBox.Framework.Region
                 currEle.SetValue(Canvas.LeftProperty, xPos);
                 currEle.SetValue(Canvas.TopProperty, yPos);
                 _movePos = e.GetPosition(null);
+
+                AniControl aniControl = _hostAndControlsRel[sender as Border];
+                aniControl.X = xPos;
+                aniControl.Y = yPos;
+
+                RefreshControlProperties();
+            }
+        }
+
+        private void RefreshControlProperties()
+        {
+            if (null != OnSelectedControlChanged)
+            {
+                OnSelectedControlChanged(this, new SelectControlEventArgs(null));
+
+                OnSelectedControlChanged(this, new SelectControlEventArgs(_selectedControl));
             }
         }
 

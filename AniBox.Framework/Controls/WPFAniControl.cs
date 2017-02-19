@@ -23,6 +23,9 @@ namespace AniBox.Framework.Controls
         //{
         //    IsSelected = true;
         //}
-    
+
+        //public abstract ContentControl GetWPFControl();
+
+
     }
 }
