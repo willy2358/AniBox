@@ -68,6 +68,16 @@
   <ItemGroup>
     <Compile Include="Controls\AniControl.cs" />
     <Compile Include="Attributes\AniPropertyAttribute.cs" />
+    <Compile Include="DataSource\DataMatcher.cs" />
+    <Compile Include="DataSource\DataSource.cs" />
+    <Compile Include="DataSource\DataMatcher_JsonPath.cs" />
+    <Compile Include="DataSource\DataMatcher_Regex.cs" />
+    <Compile Include="DataSource\DataMatcher_XPath.cs" />
+    <Compile Include="DataSource\DataSource_LocalFile.cs" />
+    <Compile Include="DataSource\DataSource_WebUrl.cs" />
+    <Compile Include="DataSource\IMatchData.cs" />
+    <Compile Include="DataSource\IDataSource.cs" />
+    <Compile Include="DataSource\IUpdateData.cs" />
     <Compile Include="Events\ControlSelectStateEventArgs.cs" />
     <Compile Include="Events\SelectControlEventArgs.cs" />
     <Compile Include="Region\AniRegion.cs" />

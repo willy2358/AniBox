@@ -1,5 +1,6 @@
 ﻿using AniBox.Framework.Attributes;
 using AniBox.Framework.Controls;
+using AniBox.Framework.DataSource;
 using AniBox.Framework.Events;
 using AniBox.Framework.Share;
 using System;
@@ -12,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace AniBox.Framework.Region
 {
@@ -160,6 +162,28 @@ namespace AniBox.Framework.Region
                 newSelectedCtrl.IsSelected = true;
             }
         }
+
+        private void OnDataUpdaterTick(Object sender, EventArgs e)
+        {
+            DispatcherTimer timer = sender as DispatcherTimer;
+            foreach(var control in _aniControls)
+            {
+                IUpdateData updater = GetControlDataUpdater(control, timer);
+                if (null != updater)
+                {
+                    Object newData = updater.DataSource.GetUpdate();
+                    updater.UpdateData(newData);
+                }
+
+            }
+        }
+
+        private IUpdateData GetControlDataUpdater(IAniControl ctrl, DispatcherTimer timer)
+        {
+            return null;
+        }
+
+        
 
         private void CreateControl(Canvas canvas, AniControl aniControl, Point postion)
         {
