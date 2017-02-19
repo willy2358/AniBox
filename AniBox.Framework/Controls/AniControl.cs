@@ -18,8 +18,6 @@ namespace AniBox.Framework.Controls
         private double _x = 0;
         private double _y = 0;
 
-        
-
         public abstract ContentControl GetWPFControl();
 
         public AniControl()
@@ -76,18 +74,42 @@ namespace AniBox.Framework.Controls
             }
         }
 
+        private double _controlWidth; 
         [AniProperty]
         public double ControlWidth
         {
-            get;
-            set;
+            get
+            {
+                return _controlWidth;
+            }
+            set
+            {
+                _controlWidth = value;
+                Border border = this.GetWPFControl().Parent as Border;
+                if (null != border)
+                {
+                    border.Width = _controlWidth;
+                }
+            }
         }
 
+        private double _controlHeight = 0;
         [AniProperty]
         public double ControlHeight
         {
-            get;
-            set;
+            get
+            {
+                return _controlHeight;
+            }
+            set
+            {
+                _controlHeight = value;
+                Border border = this.GetWPFControl().Parent as Border;
+                if (null != border)
+                {
+                    border.Height = _controlHeight;
+                }
+            }
         }
 
         public bool IsSelected
