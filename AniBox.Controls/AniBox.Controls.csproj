@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D71E4979-F709-4059-BD23-1DF00A418008}</ProjectGuid>
+    <ProjectGuid>{4DFA3300-CE05-4F5A-A495-6ADF29222F10}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AniBox.Controls.HtmlStaticImage</RootNamespace>
-    <AssemblyName>AniBox.Controls.HtmlStaticImage</AssemblyName>
+    <RootNamespace>AniBox.Controls</RootNamespace>
+    <AssemblyName>AniBox.Controls</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\AniBoxApp\bin\Debug\controls\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -63,20 +63,31 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StaticImgage.cs" />
+    <Compile Include="HtmlStaticImage.cs" />
+    <Compile Include="StaticImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="res\library.jpg" />
-    <EmbeddedResource Include="res\StaticImage.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <Compile Include="StaticImageControl.xaml.cs">
+      <DependentUpon>StaticImageControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AniBox.Framework\AniBox.Framework.csproj">
       <Project>{14e95999-3100-473b-a096-f814835aa719}</Project>
       <Name>AniBox.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="StaticImageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\DemoImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\library.jpg" />
+    <EmbeddedResource Include="res\StaticImage.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

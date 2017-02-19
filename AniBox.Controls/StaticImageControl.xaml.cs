@@ -1,8 +1,5 @@
-﻿using AniBox.Framework;
-using AniBox.Framework.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,16 +16,13 @@ using System.Windows.Shapes;
 namespace AniBox.Controls
 {
     /// <summary>
-    /// StaticImage.xaml 的交互逻辑
+    /// StaticImageControl.xaml 的交互逻辑
     /// </summary>
-    /// 
-    public partial class UserControl1 : UserControl
+    public partial class StaticImageControl : UserControl
     {
-        
-        public UserControl1()
+        public StaticImageControl()
         {
             InitializeComponent();
         }
-
     }
 }

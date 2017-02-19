@@ -1,10 +1,13 @@
-﻿using CefSharp.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+
+using CefSharp.Wpf;
+using CefSharp;
+
 
 namespace AniBox.Framework.Controls
 {
@@ -29,7 +32,8 @@ namespace AniBox.Framework.Controls
             if ((bool)e.NewValue)
             {
                 ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
-
+                //ChromiumWebBrowserExtension 
+                //browser.LoadHtml(GetHtmlText(), "http://myhtml/test");
                 browser.Load(GetHtmlFile());
             }
         }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("StaticImage")]
+[assembly: AssemblyTitle("AniBox.Controls")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("StaticImage")]
+[assembly: AssemblyProduct("AniBox.Controls")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("a7d2e777-ca3a-41ea-8ecb-8e2799c19f06")]
+[assembly: Guid("1baeb2de-e154-40c4-b320-8319da7530ab")]
 
 // 程序集的版本信息由下面四个值组成: 
 //
