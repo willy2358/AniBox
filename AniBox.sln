@@ -11,10 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfPropertyGrid", "WpfPrope
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{4B530220-969D-4C39-B799-08F94FFAB9EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniBox.Controls.StaticImage", "AniBox.Controls.StaticImage\AniBox.Controls.StaticImage.csproj", "{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniBox.Controls.HtmlStaticImage", "AniBoxControls.HtmlStaticImage\AniBox.Controls.HtmlStaticImage.csproj", "{D71E4979-F709-4059-BD23-1DF00A418008}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniBox.Controls", "AniBox.Controls\AniBox.Controls.csproj", "{4DFA3300-CE05-4F5A-A495-6ADF29222F10}"
 EndProject
 Global
@@ -63,30 +59,6 @@ Global
 		{5A48B67F-1E7E-4ED6-A201-F6CC8E7E6788}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5A48B67F-1E7E-4ED6-A201-F6CC8E7E6788}.Release|x64.ActiveCfg = Release|x64
 		{5A48B67F-1E7E-4ED6-A201-F6CC8E7E6788}.Release|x64.Build.0 = Release|x64
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Debug|x64.ActiveCfg = Debug|x64
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Debug|x64.Build.0 = Debug|x64
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Release|x64.ActiveCfg = Release|x64
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D}.Release|x64.Build.0 = Release|x64
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Debug|x64.ActiveCfg = Debug|x64
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Debug|x64.Build.0 = Debug|x64
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Release|x64.ActiveCfg = Release|x64
-		{D71E4979-F709-4059-BD23-1DF00A418008}.Release|x64.Build.0 = Release|x64
 		{4DFA3300-CE05-4F5A-A495-6ADF29222F10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4DFA3300-CE05-4F5A-A495-6ADF29222F10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DFA3300-CE05-4F5A-A495-6ADF29222F10}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -103,8 +75,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{865E55F8-FF8A-47C2-8961-9CB2E866DB0D} = {4B530220-969D-4C39-B799-08F94FFAB9EC}
-		{D71E4979-F709-4059-BD23-1DF00A418008} = {4B530220-969D-4C39-B799-08F94FFAB9EC}
 		{4DFA3300-CE05-4F5A-A495-6ADF29222F10} = {4B530220-969D-4C39-B799-08F94FFAB9EC}
 	EndGlobalSection
 EndGlobal
