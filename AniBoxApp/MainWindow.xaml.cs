@@ -26,6 +26,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using AniBox.Framework.Controls;
 using AniBox.Framework.Utility;
+using AniBox.Framework.SyncUpdate;
 
 namespace AniBox
 {
@@ -50,6 +51,7 @@ namespace AniBox
 
         private Point _startControlLstPoint;
         private Point _StartRegionLstPoint;
+        private Point _startTimerLstPoint;
 
         private AniRegion _currentRegion = null;
 
@@ -424,6 +426,40 @@ namespace AniBox
         private void tabRegions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void lstRegionTimers_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _startTimerLstPoint = e.GetPosition(null);
+        }
+
+        private void lstRegionTimers_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (lstRegionTimers.SelectedItems.Count < 1)
+            {
+                return;
+            }
+
+            Point mousePos = e.GetPosition(null);
+            Vector diff = _startTimerLstPoint - mousePos;
+            if (e.LeftButton == MouseButtonState.Pressed
+                && (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance
+                    || Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+                )
+            {
+                ListBox listView = sender as ListBox;
+                ListBoxItem listViewItem = UiSearchHelper.FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+                if (null == listViewItem)
+                {
+                    return;
+                }
+
+                UITimer timer = (UITimer)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
+
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject(CommConst.DRAGED_TIMER_DATA, timer);
+                DragDrop.DoDragDrop(lstRegionTimers, dragData, DragDropEffects.Move);
+            }
         }
 
     }

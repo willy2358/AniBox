@@ -149,12 +149,17 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"></RowDefinition>
                             <RowDefinition Height="4*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <ListBox x:Name="lstUserRegions" Grid.Row="0" DisplayMemberPath="RegionName" 
                                  ItemsSource="{Binding UserRegions}" ></ListBox>
                         <ListBox x:Name="lstRegionControls" Grid.Row="1" ItemsSource="{Binding CurrentRegion.AniControls}"
                                  DisplayMemberPath="ControlName"
                                  ></ListBox>
+                        <ListBox x:Name="lstRegionTimers" Grid.Row="2" ItemsSource="{Binding CurrentRegion.Timers}"
+                                 PreviewMouseLeftButtonDown="lstRegionTimers_PreviewMouseLeftButtonDown"
+                                 PreviewMouseMove="lstRegionTimers_PreviewMouseMove"
+                                 DisplayMemberPath="Name"></ListBox>
                     </Grid>
                 </TabItem>
             </TabControl>

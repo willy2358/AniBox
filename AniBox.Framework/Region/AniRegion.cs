@@ -3,6 +3,8 @@ using AniBox.Framework.Controls;
 using AniBox.Framework.DataSource;
 using AniBox.Framework.Events;
 using AniBox.Framework.Share;
+using AniBox.Framework.SyncUpdate;
+using AniBox.Framework.xamls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,6 +32,8 @@ namespace AniBox.Framework.Region
         private ObservableCollection<IAniControl> _aniControls = new ObservableCollection<IAniControl>();
 
         private Dictionary<Border, AniControl> _hostAndControlsRel = new Dictionary<Border, AniControl>();
+
+        private ObservableCollection<UITimer> _timers = new ObservableCollection<UITimer>();
         public AniRegion()
         {
             this.AllowDrop = true;
@@ -38,6 +42,7 @@ namespace AniBox.Framework.Region
 
             this.Drop += AniRegion_Drop;
 
+            this.ContextMenu = GetContextMenu();
         }
 
         protected abstract Canvas MyCanvas { get; }
@@ -78,6 +83,14 @@ namespace AniBox.Framework.Region
             get
             {
                 return _aniControls;
+            }
+        }
+
+        public ObservableCollection<UITimer> Timers
+        {
+            get
+            {
+                return _timers;
             }
         }
 
@@ -141,6 +154,26 @@ namespace AniBox.Framework.Region
             }
         }
 
+        private ContextMenu GetContextMenu()
+        {
+            ContextMenu ctxMenu = new ContextMenu();
+
+            MenuItem menuItem = new MenuItem(){ Header = "Add Timer"};
+            menuItem.Click += menuItem_Click;
+            
+            ctxMenu.Items.Add(menuItem);
+
+            return ctxMenu;
+        }
+
+        void menuItem_Click(object sender, RoutedEventArgs e)
+        {
+            UITimer timer = new UITimer();
+            timer.Name = "Timer" + (Timers.Count + 1).ToString();
+
+            Timers.Add(timer);
+        }
+
         private void UpdateControlSelectState(AniControl lastSelectedCtrl, AniControl newSelectedCtrl)
         {
             if (null != lastSelectedCtrl)
@@ -193,22 +226,42 @@ namespace AniBox.Framework.Region
             control.ControlWidth = DEFAULT_CONTROL_WIDTH;
             control.ControlHeight = DEFAULT_CONTROL_HEIGHT;
             Border border = CreateControlContainer(control);
-
+            border.Tag = aniControl;
             canvas.Children.Add(border);
             _hostAndControlsRel.Add(border, control);
- 
+
+            control.OnSizeChanged += (sender, e) =>
+            {
+                border.Width = (sender as AniControl).ControlWidth;
+                border.Height = (sender as AniControl).ControlHeight;
+            };
+            control.OnPositionChanged += (sender, e) =>
+            {
+                AniControl aniCtrl = sender as AniControl;
+                Canvas.SetTop(border, aniCtrl.Y);
+                Canvas.SetLeft(border, aniCtrl.X);
+            };
+
             SelectedControl = control;
         }
 
         private Border CreateControlContainer(AniControl aniControl)
         {
+            ContentControl actControl = aniControl.GetWPFControl();
+
+            Grid grid = new Grid();
+            grid.Children.Add(actControl);
+
             Border border = new Border();
             border.BorderThickness = new Thickness(2);
             border.BorderBrush = CONTROL_SELECTED_BORDER_BRUSH;
-            ContentControl actControl = aniControl.GetWPFControl();
+            border.AllowDrop = true;
+            border.Drop += actControl_Drop;
+            border.DragEnter += actControl_DragEnter;
+
             border.Width = aniControl.ControlWidth;
             border.Height = aniControl.ControlHeight;
-            border.Child = actControl;
+            border.Child = grid;
             border.PreviewMouseLeftButtonDown += (sender, e) =>
             {
                 SelectedControl = aniControl;
@@ -220,6 +273,47 @@ namespace AniBox.Framework.Region
             Canvas.SetLeft(border, aniControl.X);
             Canvas.SetTop(border, aniControl.Y);
             return border;
+        }
+
+        void actControl_DragEnter(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(CommConst.DRAGED_TIMER_DATA) || sender == e.Source)
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private AniControl GetActualControl(Border container)
+        {
+            return container.Tag as AniControl;
+        }
+
+        void actControl_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(CommConst.DRAGED_TIMER_DATA))
+            {
+                UITimer timer = e.Data.GetData(CommConst.DRAGED_TIMER_DATA) as UITimer;
+                Border border = sender as Border;
+                AniControl control = GetActualControl(border);
+                if (control is IUpdateData)
+                {
+                    timer.AddUptateControl(control);
+                    AddTimerIndicatorToControl(border.Child as Grid);
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void AddTimerIndicatorToControl(Grid grid)
+        {
+            if (null == grid)
+            {
+                return;
+            }
+            Timer timer = new Timer();
+            timer.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            timer.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            grid.Children.Add(timer);
         }
 
         #region Move Controls

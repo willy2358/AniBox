@@ -13,6 +13,8 @@ namespace AniBox.Framework.Controls
     public abstract class AniControl : IAniControl
     {
         public EventHandler<ControlSelectStateEventArgs> SelectStateChanged;
+        public EventHandler OnPositionChanged;
+        public EventHandler OnSizeChanged;
         protected bool _isSelected = false;
 
         private double _x = 0;
@@ -47,11 +49,9 @@ namespace AniBox.Framework.Controls
             set
             {
                 _x = value;
-
-                Border border = this.GetWPFControl().Parent as Border;
-                if (null != border)
+                if (null != OnPositionChanged)
                 {
-                    Canvas.SetLeft(border, _x);
+                    OnPositionChanged(this, new EventArgs());
                 }
             }
         }
@@ -66,10 +66,9 @@ namespace AniBox.Framework.Controls
             set
             {
                 _y = value;
-                Border border = this.GetWPFControl().Parent as Border;
-                if (null != border)
+                if (null != OnPositionChanged)
                 {
-                    Canvas.SetTop(border, _y);
+                    OnPositionChanged(this, new EventArgs());
                 }
             }
         }
@@ -85,10 +84,9 @@ namespace AniBox.Framework.Controls
             set
             {
                 _controlWidth = value;
-                Border border = this.GetWPFControl().Parent as Border;
-                if (null != border)
+                if (null != OnSizeChanged)
                 {
-                    border.Width = _controlWidth;
+                    OnSizeChanged(this, new EventArgs());
                 }
             }
         }
@@ -104,10 +102,9 @@ namespace AniBox.Framework.Controls
             set
             {
                 _controlHeight = value;
-                Border border = this.GetWPFControl().Parent as Border;
-                if (null != border)
+                if (null != OnSizeChanged)
                 {
-                    border.Height = _controlHeight;
+                    OnSizeChanged(this, new EventArgs());
                 }
             }
         }

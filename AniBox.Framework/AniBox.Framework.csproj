@@ -78,6 +78,7 @@
     <Compile Include="DataSource\IMatchData.cs" />
     <Compile Include="DataSource\IDataSource.cs" />
     <Compile Include="DataSource\IUpdateData.cs" />
+    <Compile Include="SyncUpdate\UITimer.cs" />
     <Compile Include="Events\ControlSelectStateEventArgs.cs" />
     <Compile Include="Events\SelectControlEventArgs.cs" />
     <Compile Include="Region\AniRegion.cs" />
@@ -94,6 +95,9 @@
     <Compile Include="Controls\WPFAniControl.cs" />
     <Compile Include="Share\CommConst.cs" />
     <Compile Include="Utility\UiSearchHelper.cs" />
+    <Compile Include="xamls\Timer.xaml.cs">
+      <DependentUpon>Timer.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -107,11 +111,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="xamls\Timer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="res\timer.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="res\image1.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\cef.redist.x86.3.2883.1552\build\cef.redist.x86.targets" Condition="Exists('..\packages\cef.redist.x86.3.2883.1552\build\cef.redist.x86.targets')" />
   <Import Project="..\packages\cef.redist.x64.3.2883.1552\build\cef.redist.x64.targets" Condition="Exists('..\packages\cef.redist.x64.3.2883.1552\build\cef.redist.x64.targets')" />
