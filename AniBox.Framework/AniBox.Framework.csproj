@@ -95,7 +95,7 @@
     <Compile Include="Controls\WPFAniControl.cs" />
     <Compile Include="Share\CommConst.cs" />
     <Compile Include="Utility\UiSearchHelper.cs" />
-    <Compile Include="xamls\Timer.xaml.cs">
+    <Compile Include="UI\Timer.xaml.cs">
       <DependentUpon>Timer.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -111,7 +111,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="xamls\Timer.xaml">
+    <Page Include="UI\Timer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
