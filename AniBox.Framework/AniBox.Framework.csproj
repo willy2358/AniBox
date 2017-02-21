@@ -68,16 +68,16 @@
   <ItemGroup>
     <Compile Include="Controls\AniControl.cs" />
     <Compile Include="Attributes\AniPropertyAttribute.cs" />
-    <Compile Include="DataSource\DataMatcher.cs" />
-    <Compile Include="DataSource\DataSource.cs" />
-    <Compile Include="DataSource\DataMatcher_JsonPath.cs" />
-    <Compile Include="DataSource\DataMatcher_Regex.cs" />
-    <Compile Include="DataSource\DataMatcher_XPath.cs" />
-    <Compile Include="DataSource\DataSource_LocalFile.cs" />
-    <Compile Include="DataSource\DataSource_WebUrl.cs" />
-    <Compile Include="DataSource\IMatchData.cs" />
-    <Compile Include="DataSource\IDataSource.cs" />
-    <Compile Include="DataSource\IUpdateData.cs" />
+    <Compile Include="Data\DataMatcher.cs" />
+    <Compile Include="Data\DataSource.cs" />
+    <Compile Include="Data\DataMatcher_JsonPath.cs" />
+    <Compile Include="Data\DataMatcher_Regex.cs" />
+    <Compile Include="Data\DataMatcher_XPath.cs" />
+    <Compile Include="Data\DataSource_LocalFile.cs" />
+    <Compile Include="Data\DataSource_WebUrl.cs" />
+    <Compile Include="Data\IMatchData.cs" />
+    <Compile Include="Data\IDataSource.cs" />
+    <Compile Include="Data\IUpdateData.cs" />
     <Compile Include="SyncUpdate\UITimer.cs" />
     <Compile Include="Events\ControlSelectStateEventArgs.cs" />
     <Compile Include="Events\SelectControlEventArgs.cs" />
@@ -94,9 +94,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\WPFAniControl.cs" />
     <Compile Include="Share\CommConst.cs" />
+    <Compile Include="UI\SetDataSourceWindow.xaml.cs">
+      <DependentUpon>SetDataSourceWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\UiSearchHelper.cs" />
-    <Compile Include="UI\Timer.xaml.cs">
-      <DependentUpon>Timer.xaml</DependentUpon>
+    <Compile Include="UI\TimerImage.xaml.cs">
+      <DependentUpon>TimerImage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +114,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Timer.xaml">
+    <Page Include="UI\SetDataSourceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\TimerImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

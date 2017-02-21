@@ -1,10 +1,10 @@
 ﻿using AniBox.Framework.Attributes;
 using AniBox.Framework.Controls;
-using AniBox.Framework.DataSource;
+using AniBox.Framework.Data;
 using AniBox.Framework.Events;
 using AniBox.Framework.Share;
 using AniBox.Framework.SyncUpdate;
-using AniBox.Framework.xamls;
+using AniBox.Framework.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -172,6 +172,8 @@ namespace AniBox.Framework.Region
             timer.Name = "Timer" + (Timers.Count + 1).ToString();
 
             Timers.Add(timer);
+
+            timer.Start();
         }
 
         private void UpdateControlSelectState(AniControl lastSelectedCtrl, AniControl newSelectedCtrl)
@@ -226,6 +228,7 @@ namespace AniBox.Framework.Region
             control.ControlWidth = DEFAULT_CONTROL_WIDTH;
             control.ControlHeight = DEFAULT_CONTROL_HEIGHT;
             Border border = CreateControlContainer(control);
+            border.ContextMenu = CreateControlContextMenu(control);
             border.Tag = aniControl;
             canvas.Children.Add(border);
             _hostAndControlsRel.Add(border, control);
@@ -243,6 +246,28 @@ namespace AniBox.Framework.Region
             };
 
             SelectedControl = control;
+        }
+
+        private ContextMenu CreateControlContextMenu(AniControl aniControl)
+        {
+            if (aniControl is IUpdateData)
+            {
+                ContextMenu menu = new ContextMenu();
+                MenuItem item = new MenuItem() { Header = "设置数据源" };
+                item.Click += SetDataSource_Click;
+                menu.Items.Add(item);
+
+                return menu;
+            }
+
+            return null;
+        }
+
+        void SetDataSource_Click(object sender, RoutedEventArgs e)
+        {
+            SetDataSourceWindow dlg = new SetDataSourceWindow();
+            
+            dlg.ShowDialog();
         }
 
         private Border CreateControlContainer(AniControl aniControl)
@@ -297,7 +322,7 @@ namespace AniBox.Framework.Region
                 AniControl control = GetActualControl(border);
                 if (control is IUpdateData)
                 {
-                    timer.AddUptateControl(control);
+                    timer.AddUptateControl(control as IUpdateData);
                     AddTimerIndicatorToControl(border.Child as Grid);
                     e.Handled = true;
                 }
@@ -310,7 +335,7 @@ namespace AniBox.Framework.Region
             {
                 return;
             }
-            Timer timer = new Timer();
+            TimerImage timer = new TimerImage();
             timer.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             timer.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             grid.Children.Add(timer);

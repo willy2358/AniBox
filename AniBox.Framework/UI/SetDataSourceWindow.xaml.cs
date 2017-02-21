@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AniBox.Framework.UI
 {
     /// <summary>
-    /// Timer.xaml 的交互逻辑
+    /// SetDataSourceWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class Timer : UserControl
+    public partial class SetDataSourceWindow : Window
     {
-        public Timer()
+        public SetDataSourceWindow()
         {
             InitializeComponent();
         }
