@@ -8,9 +8,14 @@ namespace AniBox.Framework.Data
 {
     public class DataMatcher_JsonPath : DataMatcher
     {
-        public override object FilterData(object inData)
+        public override String FilterData(String inData)
         {
             throw new NotImplementedException();
+        }
+
+        public override string MatcherType
+        {
+            get { return "Json Path"; }
         }
     }
 }

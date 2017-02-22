@@ -8,7 +8,7 @@ namespace AniBox.Framework.Data
 {
     public interface IUpdateData
     {
-        void UpdateData(Object source);
+        void UpdateData(String source);
 
         DataSource DataSource { get; set; }
 

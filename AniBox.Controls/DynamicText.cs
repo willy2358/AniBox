@@ -17,7 +17,7 @@ namespace AniBox.Controls
             get { return "DynamicText"; }
         }
 
-        public void UpdateData(object source)
+        public void UpdateData(String source)
         {
             string textStr = source.ToString();
             this.Text = textStr;
@@ -26,14 +26,8 @@ namespace AniBox.Controls
 
         public DataSource DataSource
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
     }
 }

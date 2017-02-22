@@ -77,7 +77,7 @@ namespace AniBox.Framework.SyncUpdate
                     DataSource ds = _updateObjs[i].DataSource;
                     if (null != ds)
                     {
-                        Object data = ds.GetUpdate();
+                        string data = ds.GetUpdate();
                         if (null != data)
                         {
                             _updateObjs[i].UpdateData(data);

@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace AniBox.Framework.Data
 {
-    public class DataMatcher_Regex : DataMatcher
+    class DataMatcher_NoFilter : DataMatcher
     {
-        public override String FilterData(String inData)
+        public override string FilterData(string inData)
         {
-            throw new NotImplementedException();
+            return inData;
         }
 
         public override string MatcherType
         {
-            get { return "Regex"; }
+            get { return "Pass Through"; }
         }
     }
 }

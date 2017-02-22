@@ -1,30 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AniBox.Framework.Data
 {
+    [Export(typeof(DataSource))]
     public class DataSource_WebUrl : DataSource
     {
-        public override object QueryData()
+        private string _address = "http://";
+        public override String QueryData()
         {
             //throw new NotImplementedException();
-            return new object();
+            return "";
+        }
+
+        public override string SourceTypeName
+        {
+            get { return "Web Url"; }
         }
 
 
-        //public IMatchData DataMatcher
-        //{
-        //    get
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //    set
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //}
+        public override string SourceSetting
+        {
+            get
+            {
+                return _address;
+            }
+            set
+            {
+                _address = value;
+            }
+        }
     }
 }

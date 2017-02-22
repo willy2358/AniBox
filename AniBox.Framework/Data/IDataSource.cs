@@ -8,9 +8,9 @@ namespace AniBox.Framework.Data
 {
     public interface IDataSource
     {
-        string DataPath { get; set; }
+        string SourceSetting { get; set; }
 
-        Object QueryData();
+        String QueryData();
 
         IMatchData DataMatcher { get; set; }
     }

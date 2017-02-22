@@ -8,9 +8,14 @@ namespace AniBox.Framework.Data
 {
     public class DataMatcher_XPath : DataMatcher
     {
-        public override object FilterData(object inData)
+        public override String FilterData(String inData)
         {
-            throw new NotImplementedException();
+            return inData;
+        }
+
+        public override string MatcherType
+        {
+            get { return "XPath"; }
         }
     }
 }

@@ -8,6 +8,7 @@ using AniBox.Framework.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,9 @@ namespace AniBox.Framework.Region
         private Dictionary<Border, AniControl> _hostAndControlsRel = new Dictionary<Border, AniControl>();
 
         private ObservableCollection<UITimer> _timers = new ObservableCollection<UITimer>();
+
+        private List<DataSource> _dataSourceTypes { set; get; }
+
         public AniRegion()
         {
             this.AllowDrop = true;
@@ -83,6 +87,14 @@ namespace AniBox.Framework.Region
             get
             {
                 return _aniControls;
+            }
+        }
+
+        public List<DataSource> DataSourceTypes
+        {
+            get
+            {
+                return _dataSourceTypes;
             }
         }
 
@@ -147,9 +159,9 @@ namespace AniBox.Framework.Region
             if (e.Data.GetDataPresent(CommConst.DRAGED_CONTROL_DATA))
             {
                 AniControl aniControl = e.Data.GetData(CommConst.DRAGED_CONTROL_DATA) as AniControl;
-                CreateControl(MyCanvas, aniControl, e.GetPosition(this));
-                aniControl.ControlName = aniControl.ControlTypeName;
-                this.AniControls.Add(aniControl);
+                AniControl newControl = CreateControl(MyCanvas, aniControl, e.GetPosition(this));
+                newControl.ControlName = aniControl.ControlTypeName;
+                this.AniControls.Add(newControl);
                 e.Handled = true;
             }
         }
@@ -198,38 +210,36 @@ namespace AniBox.Framework.Region
             }
         }
 
-        private void OnDataUpdaterTick(Object sender, EventArgs e)
+        //private void OnDataUpdaterTick(Object sender, EventArgs e)
+        //{
+        //    DispatcherTimer timer = sender as DispatcherTimer;
+        //    foreach(var control in _aniControls)
+        //    {
+        //        IUpdateData updater = GetControlDataUpdater(control, timer);
+        //        if (null != updater)
+        //        {
+        //            String newData = updater.DataSource.GetUpdate();
+        //            updater.UpdateData(newData);
+        //        }
+
+        //    }
+        //}
+
+        //private IUpdateData GetControlDataUpdater(IAniControl ctrl, DispatcherTimer timer)
+        //{
+        //    return null;
+        //}
+
+        private AniControl CreateControl(Canvas canvas, AniControl aniControlTemplate, Point postion)
         {
-            DispatcherTimer timer = sender as DispatcherTimer;
-            foreach(var control in _aniControls)
-            {
-                IUpdateData updater = GetControlDataUpdater(control, timer);
-                if (null != updater)
-                {
-                    Object newData = updater.DataSource.GetUpdate();
-                    updater.UpdateData(newData);
-                }
-
-            }
-        }
-
-        private IUpdateData GetControlDataUpdater(IAniControl ctrl, DispatcherTimer timer)
-        {
-            return null;
-        }
-
-        
-
-        private void CreateControl(Canvas canvas, AniControl aniControl, Point postion)
-        {
-            AniControl control = Activator.CreateInstance(aniControl.GetType()) as AniControl;
+            AniControl control = Activator.CreateInstance(aniControlTemplate.GetType()) as AniControl;
             control.X = postion.X;
             control.Y = postion.Y;
             control.ControlWidth = DEFAULT_CONTROL_WIDTH;
             control.ControlHeight = DEFAULT_CONTROL_HEIGHT;
             Border border = CreateControlContainer(control);
             border.ContextMenu = CreateControlContextMenu(control);
-            border.Tag = aniControl;
+            border.Tag = control;
             canvas.Children.Add(border);
             _hostAndControlsRel.Add(border, control);
 
@@ -246,6 +256,7 @@ namespace AniBox.Framework.Region
             };
 
             SelectedControl = control;
+            return control;
         }
 
         private ContextMenu CreateControlContextMenu(AniControl aniControl)
@@ -254,9 +265,10 @@ namespace AniBox.Framework.Region
             {
                 ContextMenu menu = new ContextMenu();
                 MenuItem item = new MenuItem() { Header = "设置数据源" };
+                item.Tag = aniControl;
                 item.Click += SetDataSource_Click;
-                menu.Items.Add(item);
 
+                menu.Items.Add(item);
                 return menu;
             }
 
@@ -265,9 +277,13 @@ namespace AniBox.Framework.Region
 
         void SetDataSource_Click(object sender, RoutedEventArgs e)
         {
+            MenuItem menuItem = sender as MenuItem;
             SetDataSourceWindow dlg = new SetDataSourceWindow();
-            
-            dlg.ShowDialog();
+            bool? ret = dlg.ShowDialog();
+            if (ret.HasValue && ret.Value)
+            {
+                (menuItem.Tag as IUpdateData).DataSource = dlg.CurrentDataSource;
+            }
         }
 
         private Border CreateControlContainer(AniControl aniControl)

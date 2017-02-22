@@ -8,8 +8,10 @@ namespace AniBox.Framework.Data
 {
     public abstract class DataMatcher : IMatchData
     {
-        public abstract object FilterData(object inData);
+        public abstract String FilterData(String inData);
 
         public string Filter { get; set; }
+
+        public abstract String MatcherType { get; }
     }
 }

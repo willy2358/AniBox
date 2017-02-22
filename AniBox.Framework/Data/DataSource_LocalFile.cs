@@ -1,29 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AniBox.Framework.Data
 {
+    [Export(typeof(DataSource))]
     public class DataSource_LocalFile : DataSource
     {
-        public override object QueryData()
+        string _localPath = "";
+        public override String QueryData()
         {
-            return new object();
+            return "";
+        }
+
+        public override string SourceTypeName
+        {
+            get { return "Local File"; }
         }
 
 
-        //public IMatchData DataMatcher
-        //{
-        //    get
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //    set
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //}
+        public override string SourceSetting
+        {
+            get
+            {
+                return _localPath;
+            }
+            set
+            {
+                _localPath = value;
+            }
+        }
     }
 }

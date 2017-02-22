@@ -69,11 +69,13 @@
     <Compile Include="Controls\AniControl.cs" />
     <Compile Include="Attributes\AniPropertyAttribute.cs" />
     <Compile Include="Data\DataMatcher.cs" />
+    <Compile Include="Data\DataMatcher_NoFilter.cs" />
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\DataMatcher_JsonPath.cs" />
     <Compile Include="Data\DataMatcher_Regex.cs" />
     <Compile Include="Data\DataMatcher_XPath.cs" />
     <Compile Include="Data\DataSource_LocalFile.cs" />
+    <Compile Include="Data\DataSource_RandomGenerator.cs" />
     <Compile Include="Data\DataSource_WebUrl.cs" />
     <Compile Include="Data\IMatchData.cs" />
     <Compile Include="Data\IDataSource.cs" />

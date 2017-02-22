@@ -9,16 +9,13 @@ namespace AniBox.Framework.Data
 {
     public abstract class DataSource : IDataSource
     {
-        [AniProperty]
-        public string DataPath
-        {
-            get;
-            set;
-        }
+        public abstract string SourceSetting{ get; set; }
 
-        public Object GetUpdate()
+        public abstract String SourceTypeName { get; }
+
+        public String GetUpdate()
         {
-            Object data = this.QueryData();
+            string data = this.QueryData();
 
             if (null != DataMatcher)
             {
@@ -28,18 +25,9 @@ namespace AniBox.Framework.Data
             return data;
         }
 
-        public abstract object QueryData();
+        public abstract String QueryData();
 
-        public IMatchData DataMatcher
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public IMatchData DataMatcher { get; set; }
+
     }
 }
