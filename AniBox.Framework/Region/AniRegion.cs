@@ -209,34 +209,14 @@ namespace AniBox.Framework.Region
                 newSelectedCtrl.IsSelected = true;
             }
         }
-
-        //private void OnDataUpdaterTick(Object sender, EventArgs e)
-        //{
-        //    DispatcherTimer timer = sender as DispatcherTimer;
-        //    foreach(var control in _aniControls)
-        //    {
-        //        IUpdateData updater = GetControlDataUpdater(control, timer);
-        //        if (null != updater)
-        //        {
-        //            String newData = updater.DataSource.GetUpdate();
-        //            updater.UpdateData(newData);
-        //        }
-
-        //    }
-        //}
-
-        //private IUpdateData GetControlDataUpdater(IAniControl ctrl, DispatcherTimer timer)
-        //{
-        //    return null;
-        //}
-
+    
         private AniControl CreateControl(Canvas canvas, AniControl aniControlTemplate, Point postion)
         {
             AniControl control = Activator.CreateInstance(aniControlTemplate.GetType()) as AniControl;
             control.X = postion.X;
             control.Y = postion.Y;
-            control.ControlWidth = DEFAULT_CONTROL_WIDTH;
-            control.ControlHeight = DEFAULT_CONTROL_HEIGHT;
+            control.ControlWidth = control.ControlWidth;
+            control.ControlHeight = control.ControlHeight;
             Border border = CreateControlContainer(control);
             border.ContextMenu = CreateControlContextMenu(control);
             border.Tag = control;

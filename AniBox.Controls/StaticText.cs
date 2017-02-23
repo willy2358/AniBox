@@ -14,6 +14,14 @@ namespace AniBox.Controls
     public class StaticText : WPFAniControl
     {
         StaticTextControl _textControl = new StaticTextControl();
+
+        public StaticText()
+        {
+            ControlHeight = 50;
+            ControlWidth = 100;
+            Text = "静态文本";
+        }
+
         public override System.Windows.Controls.ContentControl GetWPFControl()
         {
             return _textControl;

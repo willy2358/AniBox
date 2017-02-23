@@ -12,6 +12,8 @@ namespace AniBox.Framework.Controls
 {
     public abstract class AniControl : IAniControl
     {
+        public const double DEFAULT_CONTROL_HEIGHT = 200;
+        public const double DEFAULT_CONTROL_WIDTH = 300;
         public EventHandler<ControlSelectStateEventArgs> SelectStateChanged;
         public EventHandler OnPositionChanged;
         public EventHandler OnSizeChanged;
@@ -24,7 +26,23 @@ namespace AniBox.Framework.Controls
 
         public AniControl()
         {
-
+            ContentControl actualControl = GetWPFControl();
+            if (actualControl.Width != double.NaN)
+            {
+                this.ControlWidth = actualControl.Width;
+            }
+            else
+            {
+                this.ControlWidth = DEFAULT_CONTROL_WIDTH;
+            }
+            if (actualControl.Height != double.NaN)
+            {
+                this.ControlHeight = actualControl.Height;
+            }
+            else
+            {
+                this.ControlHeight = DEFAULT_CONTROL_HEIGHT;
+            }
         }
 
         public abstract string ControlTypeName
@@ -73,7 +91,7 @@ namespace AniBox.Framework.Controls
             }
         }
 
-        private double _controlWidth; 
+        private double _controlWidth = 200; 
         [AniProperty]
         public double ControlWidth
         {
@@ -91,7 +109,7 @@ namespace AniBox.Framework.Controls
             }
         }
 
-        private double _controlHeight = 0;
+        private double _controlHeight = 200;
         [AniProperty]
         public double ControlHeight
         {

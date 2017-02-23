@@ -12,6 +12,10 @@ namespace AniBox.Controls
     [Export(typeof(AniControl))]
     public class DynamicText : StaticText, IUpdateData
     {
+        public DynamicText()
+        {
+            Text = "动态文本";
+        }
         public override string ControlTypeName
         {
             get { return "DynamicText"; }
