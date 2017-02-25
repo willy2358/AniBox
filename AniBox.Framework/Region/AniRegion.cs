@@ -192,7 +192,7 @@ namespace AniBox.Framework.Region
         {
             if (null != lastSelectedCtrl)
             {
-                Border border = lastSelectedCtrl.GetWPFControl().Parent as Border;
+                Border border = GetControlBorder(lastSelectedCtrl);
                 if (null != border)
                 {
                     border.BorderBrush = Brushes.Transparent;
@@ -201,7 +201,7 @@ namespace AniBox.Framework.Region
             }
             if (null != newSelectedCtrl)
             {
-                Border border = newSelectedCtrl.GetWPFControl().Parent as Border;
+                Border border = GetControlBorder(newSelectedCtrl);
                 if (null != border)
                 {
                     border.BorderBrush = CONTROL_SELECTED_BORDER_BRUSH;
@@ -325,6 +325,30 @@ namespace AniBox.Framework.Region
             }
         }
 
+        private Border GetControlBorder(AniControl aniControl)
+        {
+            foreach(var v in _hostAndControlsRel)
+            {
+                if (v.Value == aniControl)
+                {
+                    return v.Key;
+                }
+            }
+
+            return null;
+        }
+
+        private AniControl GetBorderControl(Border border)
+        {
+            if (_hostAndControlsRel.ContainsKey(border))
+            {
+                return _hostAndControlsRel[border];
+            }
+
+            return null;
+        }
+
+
         private void AddTimerIndicatorToControl(Grid grid)
         {
             if (null == grid)
@@ -351,7 +375,7 @@ namespace AniBox.Framework.Region
                 currEle.SetValue(Canvas.TopProperty, yPos);
                 _movePos = e.GetPosition(null);
 
-                AniControl aniControl = _hostAndControlsRel[sender as Border];
+                AniControl aniControl = GetBorderControl(sender as Border);
                 aniControl.X = xPos;
                 aniControl.Y = yPos;
 

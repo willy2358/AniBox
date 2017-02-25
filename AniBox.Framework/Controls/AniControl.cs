@@ -27,7 +27,7 @@ namespace AniBox.Framework.Controls
         public AniControl()
         {
             ContentControl actualControl = GetWPFControl();
-            if (actualControl.Width != double.NaN)
+            if (!double.IsNaN(actualControl.Width))
             {
                 this.ControlWidth = actualControl.Width;
             }
@@ -35,7 +35,7 @@ namespace AniBox.Framework.Controls
             {
                 this.ControlWidth = DEFAULT_CONTROL_WIDTH;
             }
-            if (actualControl.Height != double.NaN)
+            if (!double.IsNaN( actualControl.Height))
             {
                 this.ControlHeight = actualControl.Height;
             }
