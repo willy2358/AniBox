@@ -69,6 +69,7 @@
     <Compile Include="Controls\AniControl.cs" />
     <Compile Include="Attributes\AniPropertyAttribute.cs" />
     <Compile Include="Controls\HtmlResItem.cs" />
+    <Compile Include="Controls\WebBrowser.cs" />
     <Compile Include="Data\DataMatcher.cs" />
     <Compile Include="Data\DataMatcher_NoFilter.cs" />
     <Compile Include="Data\DataSource.cs" />

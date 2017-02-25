@@ -97,7 +97,7 @@ namespace AniBox.Framework.Controls
 
             return "";
         }
-        //public abstract string GetHtmlText();
+
         public virtual string GetHtmlFile()
         {
             return "";
