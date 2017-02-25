@@ -7,6 +7,8 @@ using System.Windows.Controls;
 
 using CefSharp.Wpf;
 using CefSharp;
+using System.Reflection;
+using System.IO;
 
 
 namespace AniBox.Framework.Controls
@@ -32,9 +34,20 @@ namespace AniBox.Framework.Controls
             if ((bool)e.NewValue)
             {
                 ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
-                //ChromiumWebBrowserExtension 
+                string html = GetHtmlFile();
+                if (string.IsNullOrEmpty(html))
+                {
+                    html = GetHtmlFromEmbeddedResource();
+                }
+
+                if (string.IsNullOrEmpty(html))
+                {
+                    //log error
+                    return;
+                }
+
                 //browser.LoadHtml(GetHtmlText(), "http://myhtml/test");
-                browser.Load(GetHtmlFile());
+                browser.Load(html);
             }
         }
 
@@ -63,60 +76,90 @@ namespace AniBox.Framework.Controls
             CefSharp.WebBrowserExtensions.ExecuteScriptAsync(_webBrowser, script);
         }
 
-        public abstract string GetHtmlText();
-        public abstract string GetHtmlFile();
+        private string GetHtmlFromEmbeddedResource()
+        {
+            string error;
+            string html = ReadHtmlResource(HtmlResName, out error);
+            if (!string.IsNullOrEmpty(html))
+            {
+                if ( null != HtmlReferedResources)
+                {
+                    foreach(var v in HtmlReferedResources)
+                    {
+                        if(!ReadReferedResource(v.ResPath, v.FileName, out error))
+                        {
+                            //log error
+                        }
+                    }
+                }
+                return html;
+            }
 
-        //[AniProperty]
-        //public string ControlName
-        //{
-        //    get;
-        //    set;
-        //}
+            return "";
+        }
+        //public abstract string GetHtmlText();
+        public virtual string GetHtmlFile()
+        {
+            return "";
+        }
 
-        //public abstract string ControlTypeName
-        //{
-        //    get;
-        //}
+        protected abstract string HtmlResName { get; }
+        protected abstract List<HtmlResItem> HtmlReferedResources { get; }
 
-        //[AniProperty]
-        //public double X
-        //{
-        //    get;
-        //    set;
-        //}
+        private bool SaveEmbeddedResourceToTmpFile(string resPath, string saveFile, out string error)
+        {
+            error = "";
+            Assembly _assembly = this.GetType().Assembly;
+            if (!_assembly.GetManifestResourceNames().Contains(resPath))
+            {
+                error = "Not existed resource:" + resPath;
+            }
 
-        //[AniProperty]
-        //public double Y
-        //{
-        //    get;
-        //    set;
-        //}
+            try
+            {
+                using (BinaryReader sr = new BinaryReader(_assembly.GetManifestResourceStream(resPath)))
+                {
+                    using (FileStream sw = File.Create(saveFile, (int)sr.BaseStream.Length))
+                    {
+                        byte[] bytes = new byte[sr.BaseStream.Length];
+                        sr.Read(bytes, 0, (int)sr.BaseStream.Length);
+                        sw.Write(bytes, 0, bytes.Length);
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                return false;
+            }
+        }
 
-        //[AniProperty]
-        //public double ControlWidth
-        //{
-        //    get;
-        //    set;
-        //}
+        protected bool ReadReferedResource(string resPath, string fileName, out String error)
+        {
+            error = "";
+            string resName = resPath + "." + fileName;
+            string savedFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), fileName);
 
-        //[AniProperty]
-        //public double ControlHeight
-        //{
-        //    get;
-        //    set;
-        //}
+            return SaveEmbeddedResourceToTmpFile(resName, savedFile, out error);
+        }
 
+        protected string ReadHtmlResource(string htmlResName, out string error)
+        {
+            if (string.IsNullOrEmpty(htmlResName))
+            {
+                error = "No html resource";
+                return "";
+            }
+            string htmFile = System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.GetTempFileName());
+            string htmlPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), htmFile + ".html");
 
-        //public bool IsSelected
-        //{
-        //    get
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //    set
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //}
+            if(SaveEmbeddedResourceToTmpFile(htmlResName, htmlPath, out error))
+            {
+                return htmlPath;
+            }
+
+            return "";
+        }
     }
 }

@@ -20,38 +20,38 @@ namespace AniBox.Controls
             get { return "HtmlStaticImage"; }
         }
 
-        public override string GetHtmlText()
-        {
-            Assembly _assembly;
-            string htmlText = "";
-            _assembly = Assembly.GetExecutingAssembly();
-            string htmlFile = "AniBox.Controls.res." + "StaticImage.html";
-            if(_assembly.GetManifestResourceNames().Contains(htmlFile))
-            {
-                StreamReader _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream(htmlFile));
-                htmlText = _textStreamReader.ReadToEnd();
-            }
-            return htmlText;
-        }
+        //public override string GetHtmlText()
+        //{
+        //    Assembly _assembly;
+        //    string htmlText = "";
+        //    _assembly = Assembly.GetExecutingAssembly();
+        //    string htmlFile = "AniBox.Controls.res." + "StaticImage.html";
+        //    if(_assembly.GetManifestResourceNames().Contains(htmlFile))
+        //    {
+        //        StreamReader _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream(htmlFile));
+        //        htmlText = _textStreamReader.ReadToEnd();
+        //    }
+        //    return htmlText;
+        //}
 
-        public override string GetHtmlFile()
-        {
-            string htmFile = System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.GetTempFileName());
-            string htmlFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), htmFile + ".html");
-            string htmlText = GetHtmlText();
+        //public override string GetHtmlFile()
+        //{
+        //    string htmFile = System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.GetTempFileName());
+        //    string htmlFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), htmFile + ".html");
+        //    string htmlText = GetHtmlText();
 
-            try
-            {
-                System.IO.File.WriteAllText(htmlFile, htmlText, Encoding.UTF8);
+        //    try
+        //    {
+        //        System.IO.File.WriteAllText(htmlFile, htmlText, Encoding.UTF8);
 
-            }
-            catch (Exception)
-            {
+        //    }
+        //    catch (Exception)
+        //    {
 
-            }
+        //    }
 
-            return htmlFile;
-        }
+        //    return htmlFile;
+        //}
 
         [AniProperty]
         public string ImageFile
@@ -66,6 +66,16 @@ namespace AniBox.Controls
                 string imgSrc = _imageFile.Replace('\\', '/');
                 UpdateDomElementAttribute("myImg", "src", imgSrc);
             }
+        }
+
+        protected override string HtmlResName
+        {
+            get { return "AniBox.Controls.res." + "StaticImage.html"; }
+        }
+
+        protected override List<HtmlResItem> HtmlReferedResources
+        {
+            get { return null; }
         }
     }
 }

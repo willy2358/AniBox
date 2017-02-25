@@ -63,6 +63,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Html\RotateCogs.cs" />
     <Compile Include="WPF\DynamicText.cs" />
     <Compile Include="Html\HtmlStaticImage.cs" />
     <Compile Include="WPF\StaticImage.cs" />
@@ -97,6 +98,10 @@
   <ItemGroup>
     <Resource Include="res\library.jpg" />
     <EmbeddedResource Include="res\StaticImage.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\cogs.png" />
+    <EmbeddedResource Include="res\sprite_cog.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
