@@ -12,7 +12,11 @@ namespace AniBox.Framework.Controls
 {
     public abstract class AniControl : IAniControl
     {
+        public const double DEFAULT_CONTROL_HEIGHT = 200;
+        public const double DEFAULT_CONTROL_WIDTH = 300;
         public EventHandler<ControlSelectStateEventArgs> SelectStateChanged;
+        public EventHandler OnPositionChanged;
+        public EventHandler OnSizeChanged;
         protected bool _isSelected = false;
 
         private double _x = 0;
@@ -22,7 +26,18 @@ namespace AniBox.Framework.Controls
 
         public AniControl()
         {
-
+            ContentControl actualControl = GetWPFControl();
+            if (this.ControlWidth == DEFAULT_CONTROL_WIDTH
+                && !double.IsNaN(actualControl.Width))
+            {
+                this.ControlWidth = actualControl.Width;
+            }
+           
+            if (this.ControlHeight == DEFAULT_CONTROL_HEIGHT
+                && !double.IsNaN(actualControl.Height))
+            {
+                this.ControlHeight = actualControl.Height;
+            }
         }
 
         public abstract string ControlTypeName
@@ -47,11 +62,9 @@ namespace AniBox.Framework.Controls
             set
             {
                 _x = value;
-
-                Border border = this.GetWPFControl().Parent as Border;
-                if (null != border)
+                if (null != OnPositionChanged)
                 {
-                    Canvas.SetLeft(border, _x);
+                    OnPositionChanged(this, new EventArgs());
                 }
             }
         }
@@ -66,15 +79,14 @@ namespace AniBox.Framework.Controls
             set
             {
                 _y = value;
-                Border border = this.GetWPFControl().Parent as Border;
-                if (null != border)
+                if (null != OnPositionChanged)
                 {
-                    Canvas.SetTop(border, _y);
+                    OnPositionChanged(this, new EventArgs());
                 }
             }
         }
 
-        private double _controlWidth; 
+        private double _controlWidth = DEFAULT_CONTROL_WIDTH; 
         [AniProperty]
         public double ControlWidth
         {
@@ -85,34 +97,32 @@ namespace AniBox.Framework.Controls
             set
             {
                 _controlWidth = value;
-                Border border = this.GetWPFControl().Parent as Border;
-                if (null != border)
+                if (null != OnSizeChanged)
                 {
-                    border.Width = _controlWidth;
+                    OnSizeChanged(this, new EventArgs());
                 }
             }
         }
 
-        private double _controlHeight = 0;
+        private double _controlHeight = DEFAULT_CONTROL_HEIGHT;
         [AniProperty]
         public double ControlHeight
         {
-            get
+            get                                                                                                                                                                                                                                                                                                                                                                                                                                                         
             {
                 return _controlHeight;
             }
             set
             {
                 _controlHeight = value;
-                Border border = this.GetWPFControl().Parent as Border;
-                if (null != border)
+                if (null != OnSizeChanged)
                 {
-                    border.Height = _controlHeight;
+                    OnSizeChanged(this, new EventArgs());
                 }
             }
         }
 
-        public bool IsSelected
+        public bool                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             IsSelected
         {
             get
             {

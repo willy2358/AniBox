@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Canvas x:Name="myCanvas">
         <Canvas.Background>
-            <ImageBrush ImageSource="..\res\image1.jpg"></ImageBrush>
+            <ImageBrush x:Name="backImg" ImageSource="..\res\image1.jpg"></ImageBrush>
         </Canvas.Background>
     </Canvas>
 </local:AniRegion>
