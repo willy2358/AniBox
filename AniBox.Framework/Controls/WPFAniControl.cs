@@ -10,22 +10,6 @@ namespace AniBox.Framework.Controls
 {
     public abstract class WPFAniControl : AniControl
     {
-        //public WPFAniControl()
-        //{
-        //    ContentControl control = GetWPFControl();
-        //    if (null != control)
-        //    {
-        //        control.MouseLeftButtonDown += control_MouseLeftButtonDown;
-        //    }
-        //}
-
-        //void control_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        //{
-        //    IsSelected = true;
-        //}
-
-        //public abstract ContentControl GetWPFControl();
-
 
     }
 }

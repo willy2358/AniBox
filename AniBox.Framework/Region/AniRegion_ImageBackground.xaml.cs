@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AniBox.Framework.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace AniBox.Framework.Region
      [Export(typeof(IAniRegion))]
     public partial class AniRegion_ImageBackground : AniRegion
     {
+        public string _imagePath;
         public AniRegion_ImageBackground()
         {
             InitializeComponent();
@@ -39,6 +41,27 @@ namespace AniBox.Framework.Region
         protected override Canvas MyCanvas
         {
             get { return myCanvas; }
+        }
+
+        [AniProperty]
+        public string BackgroundImagePath
+        {
+            get
+            {
+                return _imagePath;
+            }
+            set
+            {
+                _imagePath = value;
+                try
+                {
+                    this.backImg.ImageSource = (new ImageSourceConverter()).ConvertFrom(_imagePath) as ImageSource;
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
         }
     }
 }

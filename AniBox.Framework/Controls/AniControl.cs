@@ -27,21 +27,16 @@ namespace AniBox.Framework.Controls
         public AniControl()
         {
             ContentControl actualControl = GetWPFControl();
-            if (!double.IsNaN(actualControl.Width))
+            if (this.ControlWidth == DEFAULT_CONTROL_WIDTH
+                && !double.IsNaN(actualControl.Width))
             {
                 this.ControlWidth = actualControl.Width;
             }
-            else
-            {
-                this.ControlWidth = DEFAULT_CONTROL_WIDTH;
-            }
-            if (!double.IsNaN( actualControl.Height))
+           
+            if (this.ControlHeight == DEFAULT_CONTROL_HEIGHT
+                && !double.IsNaN(actualControl.Height))
             {
                 this.ControlHeight = actualControl.Height;
-            }
-            else
-            {
-                this.ControlHeight = DEFAULT_CONTROL_HEIGHT;
             }
         }
 
@@ -91,7 +86,7 @@ namespace AniBox.Framework.Controls
             }
         }
 
-        private double _controlWidth = 200; 
+        private double _controlWidth = DEFAULT_CONTROL_WIDTH; 
         [AniProperty]
         public double ControlWidth
         {
@@ -109,11 +104,11 @@ namespace AniBox.Framework.Controls
             }
         }
 
-        private double _controlHeight = 200;
+        private double _controlHeight = DEFAULT_CONTROL_HEIGHT;
         [AniProperty]
         public double ControlHeight
         {
-            get
+            get                                                                                                                                                                                                                                                                                                                                                                                                                                                         
             {
                 return _controlHeight;
             }
@@ -127,7 +122,7 @@ namespace AniBox.Framework.Controls
             }
         }
 
-        public bool IsSelected
+        public bool                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             IsSelected
         {
             get
             {

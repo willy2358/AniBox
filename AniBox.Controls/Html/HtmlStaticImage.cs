@@ -19,39 +19,7 @@ namespace AniBox.Controls
         {
             get { return "HtmlStaticImage"; }
         }
-
-        //public override string GetHtmlText()
-        //{
-        //    Assembly _assembly;
-        //    string htmlText = "";
-        //    _assembly = Assembly.GetExecutingAssembly();
-        //    string htmlFile = "AniBox.Controls.res." + "StaticImage.html";
-        //    if(_assembly.GetManifestResourceNames().Contains(htmlFile))
-        //    {
-        //        StreamReader _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream(htmlFile));
-        //        htmlText = _textStreamReader.ReadToEnd();
-        //    }
-        //    return htmlText;
-        //}
-
-        //public override string GetHtmlFile()
-        //{
-        //    string htmFile = System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.GetTempFileName());
-        //    string htmlFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), htmFile + ".html");
-        //    string htmlText = GetHtmlText();
-
-        //    try
-        //    {
-        //        System.IO.File.WriteAllText(htmlFile, htmlText, Encoding.UTF8);
-
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //    }
-
-        //    return htmlFile;
-        //}
+        
 
         [AniProperty]
         public string ImageFile

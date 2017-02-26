@@ -138,7 +138,7 @@ namespace AniBox.Framework.Controls
         protected bool ReadReferedResource(string resPath, string fileName, out String error)
         {
             error = "";
-            string resName = resPath + "." + fileName;
+            string resName = resPath;
             string savedFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), fileName);
 
             return SaveEmbeddedResourceToTmpFile(resName, savedFile, out error);

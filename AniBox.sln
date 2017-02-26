@@ -69,7 +69,8 @@ Global
 		{4DFA3300-CE05-4F5A-A495-6ADF29222F10}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4DFA3300-CE05-4F5A-A495-6ADF29222F10}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4DFA3300-CE05-4F5A-A495-6ADF29222F10}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{4DFA3300-CE05-4F5A-A495-6ADF29222F10}.Release|x64.ActiveCfg = Release|Any CPU
+		{4DFA3300-CE05-4F5A-A495-6ADF29222F10}.Release|x64.ActiveCfg = Release|x64
+		{4DFA3300-CE05-4F5A-A495-6ADF29222F10}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

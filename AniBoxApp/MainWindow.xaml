@@ -99,8 +99,8 @@
 
         <DockPanel Grid.Row="0">
             <ToolBar DockPanel.Dock="Top">
-                <Button x:Name="testRun" Click="testRun_Click">测试运行</Button>
-                <Button x:Name="deployRun" Click="deployRun_Click">部署运行</Button>
+                <Button x:Name="testRun" Click="testRun_Click" ToolTip="ESC退出测试">测试运行</Button>
+                <Button x:Name="deployRun" Click="deployRun_Click" ToolTip="ESC关闭程序">部署运行</Button>
             </ToolBar>
         </DockPanel>
         <Grid Grid.Row="1">
@@ -175,7 +175,7 @@
 
                 
             </TabControl>
-            <pg:PropertyGrid x:Name="lstProperties" Grid.Column="2" PropertyFilterVisibility="Collapsed"
+            <pg:PropertyGrid x:Name="lstProperties" Grid.Column="2" PropertyFilterVisibility="Collapsed" Width="240"
                         PropertyChanged="lstProperties_PropertyChanged"
                         PropertyEditingFinished="lstProperties_PropertyEditingFinished"
                         PropertyValueChanged="lstProperties_PropertyValueChanged" ></pg:PropertyGrid>

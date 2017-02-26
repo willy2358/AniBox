@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AniBox.Framework.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace AniBox.Framework.Region
     [Export(typeof(IAniRegion))]
     public partial class AniRegion_ColorBackground : AniRegion
     {
+        private Color _backgroundColor = Colors.Blue;
         public AniRegion_ColorBackground()
         {
             InitializeComponent();
@@ -36,6 +38,20 @@ namespace AniBox.Framework.Region
         protected override Canvas MyCanvas
         {
             get { return myCanvas; }
+        }
+
+        [AniProperty]
+        public Color BackgroundColor
+        {
+            get
+            {
+                return _backgroundColor;
+            }
+            set
+            {
+                _backgroundColor = value;
+                this.myCanvas.Background = new SolidColorBrush(_backgroundColor);
+            }
         }
     }
 }

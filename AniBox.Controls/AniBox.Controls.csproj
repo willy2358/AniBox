@@ -40,7 +40,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
+    <OutputPath>..\AniBoxApp\bin\x64\Release\controls\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -63,6 +63,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Html\OverlapImages.cs" />
     <Compile Include="Html\RotateCogs.cs" />
     <Compile Include="WPF\DynamicText.cs" />
     <Compile Include="Html\HtmlStaticImage.cs" />
@@ -102,6 +103,14 @@
   <ItemGroup>
     <EmbeddedResource Include="res\cogs.png" />
     <EmbeddedResource Include="res\sprite_cog.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\CasImgs.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\overlap_1.jpg" />
+    <EmbeddedResource Include="res\overlap_2.jpg" />
+    <EmbeddedResource Include="res\overlap_3.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

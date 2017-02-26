@@ -38,6 +38,9 @@ namespace AniBox.Framework.Region
 
         private List<DataSource> _dataSourceTypes { set; get; }
 
+        private double _regionWidth = 0;
+        private double _regionHeight = 0;
+
         public AniRegion()
         {
             this.AllowDrop = true;
@@ -125,11 +128,12 @@ namespace AniBox.Framework.Region
         {
             get
             {
-                return this.Width;
+                return this._regionWidth;
             }
             set
             {
-                this.Width = value;
+                this._regionWidth = value;
+                this.Width = value + 50;
             }
         }
 
@@ -138,11 +142,12 @@ namespace AniBox.Framework.Region
         {
             get
             {
-                return this.Height;
+                return this._regionHeight;
             }
             set
             {
-                this.Height = value;
+                this._regionHeight = value;
+                this.Height = value + 50;
             }
         }
 
