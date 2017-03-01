@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Html\OverlapImages.cs" />
     <Compile Include="Html\RotateCogs.cs" />
+    <Compile Include="Html\SwitchImage_HorzPush.cs" />
     <Compile Include="WPF\DynamicText.cs" />
     <Compile Include="Html\HtmlStaticImage.cs" />
     <Compile Include="WPF\StaticImage.cs" />
@@ -111,6 +112,9 @@
     <EmbeddedResource Include="res\overlap_1.jpg" />
     <EmbeddedResource Include="res\overlap_2.jpg" />
     <EmbeddedResource Include="res\overlap_3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\HorScroll.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

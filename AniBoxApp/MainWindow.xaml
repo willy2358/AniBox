@@ -101,6 +101,9 @@
             <ToolBar DockPanel.Dock="Top">
                 <Button x:Name="testRun" Click="testRun_Click" ToolTip="ESC退出测试">测试运行</Button>
                 <Button x:Name="deployRun" Click="deployRun_Click" ToolTip="ESC关闭程序">部署运行</Button>
+                
+                <RadioButton x:Name="radioMoveControl" GroupName="MouseFunc" Click="radioMoveControl_Click" Width="100">Move</RadioButton>
+                <RadioButton x:Name="radioSelect" GroupName="MouseFunc" Click="radioSelect_Click" Width="100">Select</RadioButton>
             </ToolBar>
         </DockPanel>
         <Grid Grid.Row="1">

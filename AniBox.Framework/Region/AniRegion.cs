@@ -2,6 +2,7 @@
 using AniBox.Framework.Controls;
 using AniBox.Framework.Data;
 using AniBox.Framework.Events;
+using AniBox.Framework.Interact;
 using AniBox.Framework.Share;
 using AniBox.Framework.SyncUpdate;
 using AniBox.Framework.UI;
@@ -400,11 +401,15 @@ namespace AniBox.Framework.Region
 
         void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            FrameworkElement fEle = sender as FrameworkElement;
-            isDragDropInEffect = true;
-            _movePos = e.GetPosition(null);
-            fEle.CaptureMouse();
-            fEle.Cursor = Cursors.Hand;
+            if (Service.CurrentOperation == Service.OP_Type.MoveControl)
+            {
+                FrameworkElement fEle = sender as FrameworkElement;
+                isDragDropInEffect = true;
+                _movePos = e.GetPosition(null);
+                fEle.CaptureMouse();
+                fEle.Cursor = Cursors.Hand;
+            }
+
         }
 
         void Element_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

@@ -28,6 +28,7 @@ using AniBox.Framework.Controls;
 using AniBox.Framework.Utility;
 using AniBox.Framework.SyncUpdate;
 using AniBox.Framework.Data;
+using AniBox.Framework.Interact;
 
 namespace AniBox
 {
@@ -461,6 +462,16 @@ namespace AniBox
                 DataObject dragData = new DataObject(CommConst.DRAGED_TIMER_DATA, timer);
                 DragDrop.DoDragDrop(lstRegionTimers, dragData, DragDropEffects.Move);
             }
+        }
+
+        private void radioMoveControl_Click(object sender, RoutedEventArgs e)
+        {
+            Service.CurrentOperation = Service.OP_Type.MoveControl;
+        }
+
+        private void radioSelect_Click(object sender, RoutedEventArgs e)
+        {
+            Service.CurrentOperation = Service.OP_Type.SelectControl;
         }
 
     }

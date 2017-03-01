@@ -82,6 +82,7 @@
     <Compile Include="Data\IMatchData.cs" />
     <Compile Include="Data\IDataSource.cs" />
     <Compile Include="Data\IUpdateData.cs" />
+    <Compile Include="Interact\Service.cs" />
     <Compile Include="SyncUpdate\UITimer.cs" />
     <Compile Include="Events\ControlSelectStateEventArgs.cs" />
     <Compile Include="Events\SelectControlEventArgs.cs" />
