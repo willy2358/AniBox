@@ -79,6 +79,9 @@
     <Compile Include="Data\DataSource_LocalFile.cs" />
     <Compile Include="Data\DataSource_RandomGenerator.cs" />
     <Compile Include="Data\DataSource_WebUrl.cs" />
+    <Compile Include="Data\ProcessText_XmlAttribute.cs" />
+    <Compile Include="Data\ProcessText_XmlInner.cs" />
+    <Compile Include="Data\IProcessText.cs" />
     <Compile Include="Data\IMatchData.cs" />
     <Compile Include="Data\IDataSource.cs" />
     <Compile Include="Data\IUpdateData.cs" />
