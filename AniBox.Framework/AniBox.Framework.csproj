@@ -99,8 +99,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\WPFAniControl.cs" />
     <Compile Include="Share\CommConst.cs" />
+    <Compile Include="UI\AddFieldView.xaml.cs">
+      <DependentUpon>AddFieldView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\SetDataSourceWindow.xaml.cs">
       <DependentUpon>SetDataSourceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SetItemsSourceView.xaml.cs">
+      <DependentUpon>SetItemsSourceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility\UiSearchHelper.cs" />
     <Compile Include="UI\TimerImage.xaml.cs">
@@ -119,7 +125,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\AddFieldView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\SetDataSourceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\SetItemsSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

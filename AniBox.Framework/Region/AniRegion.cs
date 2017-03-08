@@ -177,14 +177,24 @@ namespace AniBox.Framework.Region
             ContextMenu ctxMenu = new ContextMenu();
 
             MenuItem menuItem = new MenuItem(){ Header = "Add Timer"};
-            menuItem.Click += menuItem_Click;
-            
+            menuItem.Click += AddTimer_Click;
+            ctxMenu.Items.Add(menuItem);
+
+            menuItem = new MenuItem() { Header = "Add ArrayItem" };
+            menuItem.Click += AddArrayItem_Click;
             ctxMenu.Items.Add(menuItem);
 
             return ctxMenu;
         }
 
-        void menuItem_Click(object sender, RoutedEventArgs e)
+        void AddArrayItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetItemsSourceView view = new SetItemsSourceView();
+            view.Owner = Application.Current.MainWindow;
+            view.ShowDialog();
+        }
+
+        void AddTimer_Click(object sender, RoutedEventArgs e)
         {
             UITimer timer = new UITimer();
             timer.Name = "Timer" + (Timers.Count + 1).ToString();

@@ -1,0 +1,77 @@
+﻿<Window x:Class="AniBox.Framework.UI.SetItemsSourceView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Title="设置数据源"
+             d:DesignHeight="300" d:DesignWidth="300" Width="550" Height="500" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0"  Margin="0,2,0,2">Source Type</TextBlock>
+            <ComboBox x:Name="comboDSTypes" Grid.Row="0" Grid.Column="1"  Margin="0,2,0,2" ItemsSource="{Binding DataSourceTypes}" 
+                      DisplayMemberPath="SourceTypeName" SelectedIndex="0" SelectionChanged="comboDSTypes_SelectionChanged">
+                
+            </ComboBox>
+            <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,2,0,2">Source Path</TextBlock>
+            <TextBox x:Name="txtSourcePath" Grid.Row="1" Grid.Column="1" Height="20" Margin="0,2,0,2"></TextBox>
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,2,0,2">Filter Type</TextBlock>
+            <ComboBox x:Name="comboMatchers" Grid.Row="2" Grid.Column="1" Margin="0,2,0,2" ItemsSource="{Binding DataMatchers}" 
+                      DisplayMemberPath="MatcherType" SelectedIndex="0" SelectionChanged="comboMatchers_SelectionChanged" >
+                
+            </ComboBox>
+            <TextBlock Grid.Row="3" Grid.Column="0" Margin="0,2,0,2">Fitler string</TextBlock>
+            <TextBox x:Name="txtFilterString" Grid.Row="3" Grid.Column="1" Height="20" Margin="0,2,0,2"></TextBox>
+        </Grid>
+
+        <Button x:Name="testMatchBtn" Grid.Row="1" Margin="10,5,10,5" Height="20" Width="100" 
+                VerticalAlignment="Top" HorizontalAlignment="Left" Click="testMatchBtn_Click">测试匹配</Button>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!--<TextBox x:Name="txtRawData" Grid.Column="0" Margin="10,5,5,5"></TextBox>-->
+            <TextBox x:Name="txtMatchResult" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,5,10,5" TextWrapping="Wrap"></TextBox>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="10,5,10,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock>Item Fields</TextBlock>
+            <DataGrid Grid.Row="1" Grid.RowSpan="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="100" Header="Field Name"></DataGridTextColumn>
+                    <DataGridTextColumn Width="200" Header="Setting"></DataGridTextColumn>
+                    <DataGridTextColumn Width="200" Header="Result"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="addFieldBtn" Grid.Row="1" Grid.Column="1" Margin="8" Height="20" Click="addFieldBtn_Click">Add Field</Button>
+
+            <Button x:Name="delFieldBtn" Grid.Row="2" Grid.Column="1" Margin="8" Height="20" Click="delFieldBtn_Click">Remove</Button>
+        </Grid>
+    </Grid>
+</Window>
