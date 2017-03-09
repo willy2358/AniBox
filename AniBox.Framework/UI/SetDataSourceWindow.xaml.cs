@@ -83,12 +83,12 @@ namespace AniBox.Framework.UI
             DataSource ds = this.comboDSTypes.SelectedItem as DataSource;
             ds.SourceSetting = txtDataSourceSetting.Text;
 
-            string rawText = ds.GetUpdate();
+            string rawText = ds.GetUpdateString();
             txtSourceRawData.Text = rawText;
 
             if (null != _dataMatcher)
             {
-                txtFilteredData.Text = _dataMatcher.FilterData(rawText);
+                txtFilteredData.Text = _dataMatcher.FilterData(rawText).ToString();
             }
         }
 

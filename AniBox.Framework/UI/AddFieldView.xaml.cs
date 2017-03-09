@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AniBox.Framework.Data;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,41 @@ namespace AniBox.Framework.UI
     /// </summary>
     public partial class AddFieldView : Window
     {
+        public string _fieldsSource = "";
         public AddFieldView()
         {
+            this.DataContext = this;
+
             InitializeComponent();
+
+            lstProperties.PropertyFilterType = typeof(AniBox.Framework.Attributes.AniPropertyAttribute);
+        }
+
+        public string FieldsSource
+        {
+            get
+            {
+                return _fieldsSource;
+            }
+            set
+            {
+                _fieldsSource = value;
+                txtFieldsSource.Text = _fieldsSource;
+            }
+        }
+
+        public IEnumerable<IProcessText> ProcessTypes
+        {
+            get
+            {
+                return AniBox.Framework.Region.AniRegion.ProcessTypes;
+            }
+
+        }
+
+        private void comboProcessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.lstProperties.SelectedObject = e.AddedItems[0];
         }
     }
 }

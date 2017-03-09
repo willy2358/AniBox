@@ -9,7 +9,7 @@ namespace AniBox.Framework.Data
 {
     public class DataMatcher_XPath : DataMatcher
     {
-        public override String FilterData(String inData)
+        public override Object FilterData(String inData)
         {
             System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
             try
@@ -18,13 +18,7 @@ namespace AniBox.Framework.Data
 
                 XmlNodeList nodes =  xmlDoc.SelectNodes(Filter);
 
-                string txt = "";
-                foreach(XmlNode n in nodes)
-                {
-                    txt += n.OuterXml;
-                }
-
-                return txt;
+                return nodes;
             }
             catch(Exception ex)
             {

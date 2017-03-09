@@ -37,6 +37,8 @@ namespace AniBox.Framework.Region
 
         private ObservableCollection<UITimer> _timers = new ObservableCollection<UITimer>();
 
+        public static IEnumerable<IProcessText> ProcessTypes { get; set; }
+
         private List<DataSource> _dataSourceTypes { set; get; }
 
         private double _regionWidth = 0;

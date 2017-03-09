@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace AniBox.Framework.UI
 {
@@ -27,6 +28,8 @@ namespace AniBox.Framework.UI
         ObservableCollection<DataMatcher> _dataMatchers = null;
 
         DataMatcher _dataMatcher = null;
+
+        public string FieldsSource = "";
         public SetItemsSourceView()
         {
             InitializeDataSourceTypes();
@@ -99,6 +102,7 @@ namespace AniBox.Framework.UI
         private void addFieldBtn_Click(object sender, RoutedEventArgs e)
         {
             AddFieldView dlg = new AddFieldView();
+            dlg.FieldsSource = FieldsSource;
             dlg.Owner = this;
             dlg.ShowDialog();
         }
@@ -114,9 +118,29 @@ namespace AniBox.Framework.UI
             ds.SourceSetting = txtSourcePath.Text;
             _dataMatcher.Filter = this.txtFilterString.Text;
 
-            string result = ds.GetUpdate();
+            string result = ds.GetUpdateString();
+            UpdateFieldsSource(ds.GetUpdateObject());
 
             this.txtMatchResult.Text = result;
+            
+        }
+
+        private void UpdateFieldsSource(Object source)
+        {
+            if (source is XmlNodeList)
+            {
+                XmlNodeList xmlNodes = source as XmlNodeList;
+                if (xmlNodes.Count > 0)
+                {
+                    this.FieldsSource = xmlNodes[0].OuterXml;
+                }
+            }
+            else
+            {
+                this.FieldsSource = "";
+            }
+
+
         }
     }
 }

@@ -8,7 +8,7 @@ namespace AniBox.Framework.Data
 {
     public class DataMatcher_Regex : DataMatcher
     {
-        public override String FilterData(String inData)
+        public override Object FilterData(String inData)
         {
             throw new NotImplementedException();
         }

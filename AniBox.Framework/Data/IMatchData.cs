@@ -8,7 +8,7 @@ namespace AniBox.Framework.Data
 {
     public interface IMatchData
     {
-        String FilterData(String inData);
+        Object FilterData(String inData);
 
     }
 }

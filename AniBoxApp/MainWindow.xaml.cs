@@ -43,6 +43,9 @@ namespace AniBox
         private CompositionContainer _container;
 
         [ImportMany]
+        IEnumerable<IProcessText> _processTypes = null;
+
+        [ImportMany]
         IEnumerable<AniControl> _controlTypes = null;
 
         [ImportMany]
@@ -121,6 +124,7 @@ namespace AniBox
 
             this.lstControls.ItemsSource = _controlTypes;
             this.lstRegions.ItemsSource = _regionTypes;
+            AniRegion.ProcessTypes = this._processTypes;
         }
 
         public ObservableCollection<AniRegion> UserRegions

@@ -3,16 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:pg="clr-namespace:System.Windows.Controls.WpfPropertyGrid;assembly=System.Windows.Controls.WpfPropertyGrid"
              mc:Ignorable="d" Title="添加字段"
              d:DesignHeight="300" d:DesignWidth="300" Width="450" Height="400"  WindowStartupLocation="CenterOwner">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <TextBox x:Name="txtFieldsSource" Grid.Row="0" Height="100" TextWrapping="Wrap"></TextBox>
+        <Grid Grid.Row="1" Margin="0,5,0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -20,31 +23,45 @@
             <TextBlock Grid.Column="0" VerticalAlignment="Center">Field Name</TextBlock>
             <TextBox Grid.Column="1" Height="25"></TextBox>
         </Grid>
-        <Grid Grid.Row="1" Margin="0,5,0,5">
+        <Grid Grid.Row="2" Margin="0,5,0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" VerticalAlignment="Center">Filter types</TextBlock>
-            <ComboBox Grid.Column="1" Height="25"></ComboBox>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center">Process Types</TextBlock>
+            <ComboBox x:Name="comboProcessType" Grid.Column="1" Height="25"
+                      SelectionChanged="comboProcessType_SelectionChanged" 
+                      ItemsSource="{Binding ProcessTypes}" DisplayMemberPath="Name" >
+                
+            </ComboBox>
         </Grid>
 
-        <Grid Grid.Row="2" Margin="0,5,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="60"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Border BorderBrush="Gray" BorderThickness="1"></Border>
-            </Grid>
-            <Button Grid.Column="1" Height="25" Margin="10">test</Button>
-        </Grid>
         <Grid Grid.Row="3" Margin="0,5,0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="60"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0"></ListView>
+            <Grid Grid.Column="0">
+                <Border BorderBrush="Gray" BorderThickness="1">
+                    <pg:PropertyGrid x:Name="lstProperties" PropertyFilterVisibility="Collapsed" 
+                        ></pg:PropertyGrid>
+                </Border>
+            </Grid>
+            <Button Grid.Column="1" Height="25" Margin="10">test</Button>
+        </Grid>
+        <Grid Grid.Row="4" Margin="0,5,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="60"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Column="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="100" Header="Type Name"></DataGridTextColumn>
+                    <DataGridTextColumn Width="200" Header="Setting"></DataGridTextColumn>
+                    <DataGridTextColumn Width="200" Header="input"></DataGridTextColumn>
+                    <DataGridTextColumn Width="200" Header="output"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace AniBox.Framework.Data
 {
@@ -13,16 +14,38 @@ namespace AniBox.Framework.Data
 
         public abstract String SourceTypeName { get; }
 
-        public String GetUpdate()
+        public Object GetUpdateObject()
         {
-            string data = this.QueryData();
-
+            string text = this.QueryData();
             if (null != DataMatcher)
             {
-                data = DataMatcher.FilterData(data);
+                Object data = DataMatcher.FilterData(text);
+                return data;
+            }
+            else
+            {
+                return text;
+            }
+        }
+
+        public String GetUpdateString()
+        {
+            Object obj = GetUpdateObject();
+            if (obj is string)
+            {
+                return obj.ToString();
+            }
+            else if (obj is XmlNodeList)
+            {
+                string txt = "";
+                foreach (XmlNode n in obj as XmlNodeList)
+                {
+                    txt += n.OuterXml;
+                }
+                return txt;
             }
 
-            return data;
+            return obj.ToString();
         }
 
         public abstract String QueryData();

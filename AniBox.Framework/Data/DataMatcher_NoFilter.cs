@@ -8,7 +8,7 @@ namespace AniBox.Framework.Data
 {
     class DataMatcher_NoFilter : DataMatcher
     {
-        public override string FilterData(string inData)
+        public override Object FilterData(string inData)
         {
             return inData;
         }

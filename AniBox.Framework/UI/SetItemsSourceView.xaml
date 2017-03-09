@@ -19,25 +19,28 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0"  Margin="0,2,0,2">Source Type</TextBlock>
-            <ComboBox x:Name="comboDSTypes" Grid.Row="0" Grid.Column="1"  Margin="0,2,0,2" ItemsSource="{Binding DataSourceTypes}" 
+            <TextBlock Grid.Row="0" Grid.Column="0"  Margin="0,2,0,2">Source Name</TextBlock>
+            <TextBox x:Name="txtSourceName" Grid.Row="0" Grid.Column="1" Height="20"  Margin="0,2,0,2" Text="Source1"></TextBox>
+            <TextBlock Grid.Row="1" Grid.Column="0"  Margin="0,2,0,2">Source Type</TextBlock>
+            <ComboBox x:Name="comboDSTypes" Grid.Row="1" Grid.Column="1"  Margin="0,2,0,2" ItemsSource="{Binding DataSourceTypes}" 
                       DisplayMemberPath="SourceTypeName" SelectedIndex="0" SelectionChanged="comboDSTypes_SelectionChanged">
                 
             </ComboBox>
-            <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,2,0,2">Source Path</TextBlock>
-            <TextBox x:Name="txtSourcePath" Grid.Row="1" Grid.Column="1" Height="20" Margin="0,2,0,2"></TextBox>
-            <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,2,0,2">Filter Type</TextBlock>
-            <ComboBox x:Name="comboMatchers" Grid.Row="2" Grid.Column="1" Margin="0,2,0,2" ItemsSource="{Binding DataMatchers}" 
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,2,0,2">Source Path</TextBlock>
+            <TextBox x:Name="txtSourcePath" Grid.Row="2" Grid.Column="1" Height="20" Margin="0,2,0,2"></TextBox>
+            <TextBlock Grid.Row="3" Grid.Column="0" Margin="0,2,0,2">Filter Type</TextBlock>
+            <ComboBox x:Name="comboMatchers" Grid.Row="3" Grid.Column="1" Margin="0,2,0,2" ItemsSource="{Binding DataMatchers}" 
                       DisplayMemberPath="MatcherType" SelectedIndex="0" SelectionChanged="comboMatchers_SelectionChanged" >
                 
             </ComboBox>
-            <TextBlock Grid.Row="3" Grid.Column="0" Margin="0,2,0,2">Fitler string</TextBlock>
-            <TextBox x:Name="txtFilterString" Grid.Row="3" Grid.Column="1" Height="20" Margin="0,2,0,2"></TextBox>
+            <TextBlock Grid.Row="4" Grid.Column="0" Margin="0,2,0,2">Fitler string</TextBlock>
+            <TextBox x:Name="txtFilterString" Grid.Row="4" Grid.Column="1" Height="20" Margin="0,2,0,2"></TextBox>
         </Grid>
 
         <Button x:Name="testMatchBtn" Grid.Row="1" Margin="10,5,10,5" Height="20" Width="100" 
