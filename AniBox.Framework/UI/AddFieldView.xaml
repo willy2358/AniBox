@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:pg="clr-namespace:System.Windows.Controls.WpfPropertyGrid;assembly=System.Windows.Controls.WpfPropertyGrid"
              mc:Ignorable="d" Title="添加字段"
-             d:DesignHeight="300" d:DesignWidth="300" Width="650" Height="480"  WindowStartupLocation="CenterOwner">
+             d:DesignHeight="300" d:DesignWidth="300" Width="650" Height="480"  WindowStartupLocation="CenterOwner" Closed="Window_Closed">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -13,13 +13,14 @@
             <RowDefinition Height="auto"></RowDefinition>-->
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <TextBlock>Source</TextBlock>
-            <TextBox x:Name="txtFieldsSource" Grid.Row="0" Height="100" TextWrapping="Wrap"></TextBox>
+            <TextBox x:Name="txtFieldsSource" Grid.Row="0" Height="60" TextWrapping="Wrap"></TextBox>
 
             <TextBlock VerticalAlignment="Center" Margin="0,10,0,0">Field Name</TextBlock>
-            <TextBox Height="25"></TextBox>
+            <TextBox x:Name="txtFieldName" Height="25"></TextBox>
 
             <TextBlock VerticalAlignment="Center" Margin="0,10,0,0">Process Types</TextBlock>
             <ComboBox x:Name="comboProcessType" Height="25"
@@ -101,5 +102,10 @@
                 <Button Grid.Row="2" Height="20" Width="50">Down</Button>
             </Grid>
         </Grid>
+        
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button x:Name="Ok" Width="100" Click="Ok_Click" Height="25">OK</Button>
+            <Button x:Name="Cancel" Width="100" Click="Cancel_Click" Margin="10,0,0,0" Height="25">Cancel</Button>
+        </StackPanel>
     </Grid>
 </Window>

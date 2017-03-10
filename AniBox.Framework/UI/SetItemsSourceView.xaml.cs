@@ -105,6 +105,11 @@ namespace AniBox.Framework.UI
             dlg.FieldsSource = FieldsSourceEntry;
             dlg.Owner = this;
             dlg.ShowDialog();
+            if (dlg.DialogResult.Value)
+            {
+
+            }
+
         }
 
         private void delFieldBtn_Click(object sender, RoutedEventArgs e)

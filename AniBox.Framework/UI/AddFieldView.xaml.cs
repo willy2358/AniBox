@@ -27,6 +27,8 @@ namespace AniBox.Framework.UI
         public Object _fieldsSource = null;
 
         public ObservableCollection<ProcessEntry> _processors = new ObservableCollection<ProcessEntry>();
+
+        public String FieldName;
         public AddFieldView()
         {
             this.DataContext = this;
@@ -113,6 +115,21 @@ namespace AniBox.Framework.UI
             {
                 return _processors[0].Output;
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            this.FieldName = txtFieldName.Text;
+        }
+
+        private void Ok_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
         }
 
     }
