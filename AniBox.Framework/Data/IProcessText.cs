@@ -9,5 +9,13 @@ namespace AniBox.Framework.Data
     public interface IProcessText
     {
         String Name { get; }
+
+        string Process(Object item);
+
+        string Config { get; }
+
+        Object Input { get; set; }
+
+        Object Output { get; set; }
     }
 }

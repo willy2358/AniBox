@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Title="设置数据源"
-             d:DesignHeight="300" d:DesignWidth="300" Width="550" Height="500" WindowStartupLocation="CenterOwner">
+             d:DesignHeight="300" d:DesignWidth="300" Width="700" Height="500" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>

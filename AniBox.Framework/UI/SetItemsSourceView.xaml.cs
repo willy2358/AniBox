@@ -29,7 +29,7 @@ namespace AniBox.Framework.UI
 
         DataMatcher _dataMatcher = null;
 
-        public string FieldsSource = "";
+        public Object FieldsSourceEntry = "";
         public SetItemsSourceView()
         {
             InitializeDataSourceTypes();
@@ -102,7 +102,7 @@ namespace AniBox.Framework.UI
         private void addFieldBtn_Click(object sender, RoutedEventArgs e)
         {
             AddFieldView dlg = new AddFieldView();
-            dlg.FieldsSource = FieldsSource;
+            dlg.FieldsSource = FieldsSourceEntry;
             dlg.Owner = this;
             dlg.ShowDialog();
         }
@@ -132,12 +132,12 @@ namespace AniBox.Framework.UI
                 XmlNodeList xmlNodes = source as XmlNodeList;
                 if (xmlNodes.Count > 0)
                 {
-                    this.FieldsSource = xmlNodes[0].OuterXml;
+                    this.FieldsSourceEntry = xmlNodes[0];
                 }
             }
             else
             {
-                this.FieldsSource = "";
+                this.FieldsSourceEntry = "";
             }
 
 

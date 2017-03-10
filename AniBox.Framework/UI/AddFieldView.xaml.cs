@@ -1,6 +1,7 @@
 ﻿using AniBox.Framework.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace AniBox.Framework.UI
 {
@@ -22,7 +24,9 @@ namespace AniBox.Framework.UI
     /// </summary>
     public partial class AddFieldView : Window
     {
-        public string _fieldsSource = "";
+        public Object _fieldsSource = null;
+
+        public ObservableCollection<ProcessEntry> _processors = new ObservableCollection<ProcessEntry>();
         public AddFieldView()
         {
             this.DataContext = this;
@@ -32,7 +36,15 @@ namespace AniBox.Framework.UI
             lstProperties.PropertyFilterType = typeof(AniBox.Framework.Attributes.AniPropertyAttribute);
         }
 
-        public string FieldsSource
+        public ObservableCollection<ProcessEntry> Processors
+        {
+            get
+            {
+                return _processors;
+            }
+        }
+
+        public Object FieldsSource
         {
             get
             {
@@ -41,7 +53,7 @@ namespace AniBox.Framework.UI
             set
             {
                 _fieldsSource = value;
-                txtFieldsSource.Text = _fieldsSource;
+                txtFieldsSource.Text = GetFieldSourceEntryString(_fieldsSource);
             }
         }
 
@@ -54,9 +66,54 @@ namespace AniBox.Framework.UI
 
         }
 
+        public string GetFieldSourceEntryString(Object entry)
+        {
+            if (entry is XmlNode)
+            {
+                return (entry as XmlNode).OuterXml;
+            }
+            else
+            {
+                return entry.ToString();
+            }
+        }
+
         private void comboProcessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.lstProperties.SelectedObject = e.AddedItems[0];
+            IProcessText process = Activator.CreateInstance(e.AddedItems[0].GetType()) as IProcessText;
+            this.lstProperties.SelectedObject = process;
         }
+
+        private void btnTestProcessor_Click(object sender, RoutedEventArgs e)
+        {
+            IProcessText process = this.lstProperties.SelectedObject as IProcessText;
+
+            this.txtProcessResult.Text = process.Process(FieldsSource);
+        }
+
+        private void btnAddProcessor_Click(object sender, RoutedEventArgs e)
+        {
+            IProcessText process = this.lstProperties.SelectedObject as IProcessText;
+
+            ProcessEntry entry = new ProcessEntry();
+            entry.TypeName = process.Name;
+            entry.Setting = process.Config;
+            entry.Output = process.Process(GetLastProcessOutput());
+
+            _processors.Add(entry);
+        }
+
+        private Object GetLastProcessOutput()
+        {
+            if (_processors.Count < 1)
+            {
+                return FieldsSource;
+            }
+            else
+            {
+                return _processors[0].Output;
+            }
+        }
+
     }
 }

@@ -79,6 +79,7 @@
     <Compile Include="Data\DataSource_LocalFile.cs" />
     <Compile Include="Data\DataSource_RandomGenerator.cs" />
     <Compile Include="Data\DataSource_WebUrl.cs" />
+    <Compile Include="Data\ProcessText.cs" />
     <Compile Include="Data\ProcessText_XmlAttribute.cs" />
     <Compile Include="Data\ProcessText_XmlInner.cs" />
     <Compile Include="Data\IProcessText.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="UI\AddFieldView.xaml.cs">
       <DependentUpon>AddFieldView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\ProcessEntry.cs" />
     <Compile Include="UI\SetDataSourceWindow.xaml.cs">
       <DependentUpon>SetDataSourceWindow.xaml</DependentUpon>
     </Compile>

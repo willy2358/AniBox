@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace AniBox.Framework.Data
 {
     [Export(typeof(IProcessText))]
-    public class ProcessText_XmlAttribute : IProcessText
+    public class ProcessText_XmlAttribute : ProcessText
     {
-        public string Name
+        public override string Name
         {
             get { return "Extract Xml Tag Attribute"; }
         }
@@ -28,6 +28,21 @@ namespace AniBox.Framework.Data
         {
             get;
             set;
+        }
+
+
+        public override string Process(object item)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public override string Config
+        {
+            get 
+            {
+                return "TagName:" + TagName + ";" + "AttributeName:" + AttributeName;
+            }
         }
     }
 }
