@@ -101,7 +101,7 @@ namespace AniBox.Framework.UI
             entry.TypeName = process.Name;
             entry.Setting = process.Config;
             entry.Output = process.Process(GetLastProcessOutput());
-
+      
             _processors.Add(entry);
         }
 

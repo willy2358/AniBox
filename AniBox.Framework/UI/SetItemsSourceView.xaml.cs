@@ -24,19 +24,13 @@ namespace AniBox.Framework.UI
     /// </summary>
     public partial class SetItemsSourceView : Window
     {
-        //ObservableCollection<DataSource> _dataSourceTypes = null;
-
-        //ObservableCollection<DataMatcher> _dataMatchers = null;
+        ObservableCollection<FieldEntry> _fields = new ObservableCollection<FieldEntry>();
 
         DataMatcher _dataMatcher = null;
 
         public Object FieldsSourceEntry = "";
         public SetItemsSourceView()
         {
-            //InitializeDataSourceTypes();
-
-            //InitializeDataFilters();
-
             this.DataContext = this;
 
             InitializeComponent();
@@ -47,6 +41,20 @@ namespace AniBox.Framework.UI
             get
             {
                 return IoCTypes.DataSourceTypes;
+            }
+        }
+
+        public String SourceName
+        {
+            get;
+            private set;
+        }
+
+        public ObservableCollection<FieldEntry> Fields
+        {
+            get
+            {
+                return _fields;
             }
         }
 
@@ -63,22 +71,6 @@ namespace AniBox.Framework.UI
                 return IoCTypes.DataMatcherTypes;
             }
         }
-
-        //private void InitializeDataSourceTypes()
-        //{
-        //    _dataSourceTypes = new ObservableCollection<DataSource>();
-        //    _dataSourceTypes.Add(new DataSource_LocalFile());
-        //    _dataSourceTypes.Add(new DataSource_WebUrl());
-        //}
-
-        //private void InitializeDataFilters()
-        //{
-        //    _dataMatchers = new ObservableCollection<DataMatcher>();
-        //    _dataMatchers.Add(new DataMatcher_NoFilter());
-        //    _dataMatchers.Add(new DataMatcher_XPath());
-        //    _dataMatchers.Add(new DataMatcher_Regex());
-        //    _dataMatchers.Add(new DataMatcher_JsonPath());
-        //}
 
         private void comboDSTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -106,11 +98,13 @@ namespace AniBox.Framework.UI
             dlg.FieldsSource = FieldsSourceEntry;
             dlg.Owner = this;
             dlg.ShowDialog();
-            if (dlg.DialogResult.Value)
+            if (dlg.DialogResult.Value && dlg.Processors.Count > 0)
             {
-
+                FieldEntry field = new FieldEntry();
+                field.FieldName = dlg.FieldName;
+                field.Processors = dlg.Processors.ToList<ProcessEntry>();
+                _fields.Add(field);
             }
-
         }
 
         private void delFieldBtn_Click(object sender, RoutedEventArgs e)
@@ -145,8 +139,17 @@ namespace AniBox.Framework.UI
             {
                 this.FieldsSourceEntry = "";
             }
+        }
 
+        private void Ok_Click(object sender, RoutedEventArgs e)
+        {
+            this.SourceName = this.txtSourceName.Text;
+            this.DialogResult = true;
+        }
 
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
         }
     }
 }

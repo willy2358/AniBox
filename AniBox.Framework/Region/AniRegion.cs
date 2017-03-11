@@ -37,6 +37,7 @@ namespace AniBox.Framework.Region
 
         private ObservableCollection<UITimer> _timers = new ObservableCollection<UITimer>();
 
+        private ObservableCollection<DataSupplier> _dataUpdaters = new ObservableCollection<DataSupplier>();
         
         private double _regionWidth = 0;
         private double _regionHeight = 0;
@@ -62,6 +63,14 @@ namespace AniBox.Framework.Region
         {
             get;
             set;
+        }
+
+        public ObservableCollection<DataSupplier> DataSources
+        {
+            get
+            {
+                return _dataUpdaters;
+            }
         }
 
         public AniControl SelectedControl
@@ -171,7 +180,7 @@ namespace AniBox.Framework.Region
             menuItem.Click += AddTimer_Click;
             ctxMenu.Items.Add(menuItem);
 
-            menuItem = new MenuItem() { Header = "Add ArrayItem" };
+            menuItem = new MenuItem() { Header = "Add DataSource" };
             menuItem.Click += AddArrayItem_Click;
             ctxMenu.Items.Add(menuItem);
 
@@ -182,7 +191,15 @@ namespace AniBox.Framework.Region
         {
             SetItemsSourceView view = new SetItemsSourceView();
             view.Owner = Application.Current.MainWindow;
-            view.ShowDialog();
+            bool? ret = view.ShowDialog();
+            if (ret.HasValue && ret.Value == true)
+            {
+                DataSupplier supplier = new DataSupplier();
+                supplier.Name = view.SourceName;
+                supplier.Source = view.CurrentDataSource;
+                supplier.Fields = view.Fields.ToList<FieldEntry>();
+                _dataUpdaters.Add(supplier);
+            }
         }
 
         void AddTimer_Click(object sender, RoutedEventArgs e)

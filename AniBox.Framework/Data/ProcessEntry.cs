@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniBox.Framework.UI
+namespace AniBox.Framework.Data
 {
     public class ProcessEntry
     {

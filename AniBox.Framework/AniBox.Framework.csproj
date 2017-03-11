@@ -88,6 +88,7 @@
     <Compile Include="Data\IDataSource.cs" />
     <Compile Include="Data\IUpdateData.cs" />
     <Compile Include="Interact\Service.cs" />
+    <Compile Include="Data\DataSupplier.cs" />
     <Compile Include="SyncUpdate\UITimer.cs" />
     <Compile Include="Events\ControlSelectStateEventArgs.cs" />
     <Compile Include="Events\SelectControlEventArgs.cs" />
@@ -107,7 +108,8 @@
     <Compile Include="UI\AddFieldView.xaml.cs">
       <DependentUpon>AddFieldView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ProcessEntry.cs" />
+    <Compile Include="Data\FieldEntry.cs" />
+    <Compile Include="Data\ProcessEntry.cs" />
     <Compile Include="UI\SetDataSourceWindow.xaml.cs">
       <DependentUpon>SetDataSourceWindow.xaml</DependentUpon>
     </Compile>

@@ -5,15 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Title="设置数据源"
              d:DesignHeight="300" d:DesignWidth="300" Width="700" Height="500" WindowStartupLocation="CenterOwner">
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
 
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="10,0">
+        <Grid Grid.Row="0" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
@@ -43,7 +44,7 @@
             <TextBox x:Name="txtFilterString" Grid.Row="4" Grid.Column="1" Height="20" Margin="0,2,0,2"></TextBox>
         </Grid>
 
-        <Button x:Name="testMatchBtn" Grid.Row="1" Margin="10,5,10,5" Height="20" Width="100" 
+        <Button x:Name="testMatchBtn" Grid.Row="1" Margin="0,5,0,5" Height="20" Width="100" 
                 VerticalAlignment="Top" HorizontalAlignment="Left" Click="testMatchBtn_Click">测试匹配</Button>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -51,10 +52,10 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <!--<TextBox x:Name="txtRawData" Grid.Column="0" Margin="10,5,5,5"></TextBox>-->
-            <TextBox x:Name="txtMatchResult" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,5,10,5" TextWrapping="Wrap"></TextBox>
+            <TextBox x:Name="txtMatchResult" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap"></TextBox>
         </Grid>
 
-        <Grid Grid.Row="3" Margin="10,5,10,20">
+        <Grid Grid.Row="3" Margin="0,5,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -65,16 +66,20 @@
                 <ColumnDefinition Width="80"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock>Item Fields</TextBlock>
-            <DataGrid Grid.Row="1" Grid.RowSpan="2">
+            <DataGrid Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding Fields}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="100" Header="Field Name"></DataGridTextColumn>
-                    <DataGridTextColumn Width="200" Header="Setting"></DataGridTextColumn>
-                    <DataGridTextColumn Width="200" Header="Result"></DataGridTextColumn>
+                    <DataGridTextColumn Width="100" Header="Field Name" Binding="{Binding FieldName}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="400" Header="Result" Binding="{Binding Result}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="addFieldBtn" Grid.Row="1" Grid.Column="1" Margin="8" Height="20" Click="addFieldBtn_Click">Add Field</Button>
 
             <Button x:Name="delFieldBtn" Grid.Row="2" Grid.Column="1" Margin="8" Height="20" Click="delFieldBtn_Click">Remove</Button>
         </Grid>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button x:Name="Ok" Width="100" Click="Ok_Click" Height="25">OK</Button>
+            <Button x:Name="Cancel" Width="100" Click="Cancel_Click" Margin="10,0,0,0" Height="25">Cancel</Button>
+        </StackPanel>
     </Grid>
 </Window>
