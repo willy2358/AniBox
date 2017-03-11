@@ -1,4 +1,5 @@
-﻿using AniBox.Framework.Data;
+﻿using AniBox.Framework.App;
+using AniBox.Framework.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -59,11 +60,11 @@ namespace AniBox.Framework.UI
             }
         }
 
-        public IEnumerable<IProcessText> ProcessTypes
+        public IEnumerable<ProcessText> ProcessTypes
         {
             get
             {
-                return AniBox.Framework.Region.AniRegion.ProcessTypes;
+                return IoCTypes.ProcessTypes;
             }
 
         }
@@ -89,8 +90,7 @@ namespace AniBox.Framework.UI
         private void btnTestProcessor_Click(object sender, RoutedEventArgs e)
         {
             IProcessText process = this.lstProperties.SelectedObject as IProcessText;
-
-            this.txtProcessResult.Text = process.Process(FieldsSource);
+            this.txtProcessResult.Text = process.Process(GetLastProcessOutput());
         }
 
         private void btnAddProcessor_Click(object sender, RoutedEventArgs e)

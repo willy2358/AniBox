@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Xml;
 
 namespace AniBox.Framework.Data
 {
+     [Export(typeof(DataMatcher))]
     public class DataMatcher_XPath : DataMatcher
     {
         public override Object FilterData(String inData)

@@ -29,6 +29,7 @@ using AniBox.Framework.Utility;
 using AniBox.Framework.SyncUpdate;
 using AniBox.Framework.Data;
 using AniBox.Framework.Interact;
+using AniBox.Framework.App;
 
 namespace AniBox
 {
@@ -43,7 +44,13 @@ namespace AniBox
         private CompositionContainer _container;
 
         [ImportMany]
-        IEnumerable<IProcessText> _processTypes = null;
+        IEnumerable<ProcessText> _processTypes = null;
+
+        [ImportMany]
+        IEnumerable<DataSource> _dataSourceTypes = null;
+
+        [ImportMany]
+        IEnumerable<DataMatcher> _dataMatcherTypes = null;
 
         [ImportMany]
         IEnumerable<AniControl> _controlTypes = null;
@@ -124,7 +131,7 @@ namespace AniBox
 
             this.lstControls.ItemsSource = _controlTypes;
             this.lstRegions.ItemsSource = _regionTypes;
-            AniRegion.ProcessTypes = this._processTypes;
+            SetupIoCFoundTypes();
         }
 
         public ObservableCollection<AniRegion> UserRegions
@@ -146,6 +153,15 @@ namespace AniBox
                 SetProperty(ref _currentRegion, value, "CurrentRegion");
                 this.lstProperties.SelectedObject = _currentRegion;
             }
+        }
+
+        private void SetupIoCFoundTypes()
+        {
+            IoCTypes.ProcessTypes = _processTypes;
+
+            IoCTypes.DataSourceTypes = _dataSourceTypes;
+
+            IoCTypes.DataMatcherTypes = _dataMatcherTypes;
         }
 
         private void InitializeAggregateCatalog()

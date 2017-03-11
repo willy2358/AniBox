@@ -66,6 +66,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\IoCTypes.cs" />
     <Compile Include="Controls\AniControl.cs" />
     <Compile Include="Attributes\AniPropertyAttribute.cs" />
     <Compile Include="Controls\HtmlResItem.cs" />

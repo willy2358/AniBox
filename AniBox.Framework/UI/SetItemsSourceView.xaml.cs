@@ -1,4 +1,5 @@
-﻿using AniBox.Framework.Data;
+﻿using AniBox.Framework.App;
+using AniBox.Framework.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,29 +24,29 @@ namespace AniBox.Framework.UI
     /// </summary>
     public partial class SetItemsSourceView : Window
     {
-        ObservableCollection<DataSource> _dataSourceTypes = null;
+        //ObservableCollection<DataSource> _dataSourceTypes = null;
 
-        ObservableCollection<DataMatcher> _dataMatchers = null;
+        //ObservableCollection<DataMatcher> _dataMatchers = null;
 
         DataMatcher _dataMatcher = null;
 
         public Object FieldsSourceEntry = "";
         public SetItemsSourceView()
         {
-            InitializeDataSourceTypes();
+            //InitializeDataSourceTypes();
 
-            InitializeDataFilters();
+            //InitializeDataFilters();
 
             this.DataContext = this;
 
             InitializeComponent();
         }
 
-        public ObservableCollection<DataSource> DataSourceTypes
+        public IEnumerable<DataSource> DataSourceTypes
         {
             get
             {
-                return _dataSourceTypes;
+                return IoCTypes.DataSourceTypes;
             }
         }
 
@@ -55,29 +56,29 @@ namespace AniBox.Framework.UI
             set;
         }
 
-        public ObservableCollection<DataMatcher> DataMatchers
+        public IEnumerable<DataMatcher> DataMatchers
         {
             get
             {
-                return _dataMatchers;
+                return IoCTypes.DataMatcherTypes;
             }
         }
 
-        private void InitializeDataSourceTypes()
-        {
-            _dataSourceTypes = new ObservableCollection<DataSource>();
-            _dataSourceTypes.Add(new DataSource_LocalFile());
-            _dataSourceTypes.Add(new DataSource_WebUrl());
-        }
+        //private void InitializeDataSourceTypes()
+        //{
+        //    _dataSourceTypes = new ObservableCollection<DataSource>();
+        //    _dataSourceTypes.Add(new DataSource_LocalFile());
+        //    _dataSourceTypes.Add(new DataSource_WebUrl());
+        //}
 
-        private void InitializeDataFilters()
-        {
-            _dataMatchers = new ObservableCollection<DataMatcher>();
-            _dataMatchers.Add(new DataMatcher_NoFilter());
-            _dataMatchers.Add(new DataMatcher_XPath());
-            _dataMatchers.Add(new DataMatcher_Regex());
-            _dataMatchers.Add(new DataMatcher_JsonPath());
-        }
+        //private void InitializeDataFilters()
+        //{
+        //    _dataMatchers = new ObservableCollection<DataMatcher>();
+        //    _dataMatchers.Add(new DataMatcher_NoFilter());
+        //    _dataMatchers.Add(new DataMatcher_XPath());
+        //    _dataMatchers.Add(new DataMatcher_Regex());
+        //    _dataMatchers.Add(new DataMatcher_JsonPath());
+        //}
 
         private void comboDSTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

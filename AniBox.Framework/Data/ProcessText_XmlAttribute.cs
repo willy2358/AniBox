@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AniBox.Framework.Data
 {
-    [Export(typeof(IProcessText))]
+    [Export(typeof(ProcessText))]
     public class ProcessText_XmlAttribute : ProcessText
     {
         public override string Name

@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace AniBox.Framework.Data
 {
-    [Export(typeof(IProcessText))]
+    [Export(typeof(ProcessText))]
     public class ProcessText_XmlInner : ProcessText
     {
         public override string Name
@@ -30,12 +30,19 @@ namespace AniBox.Framework.Data
             Input = item;
             if (item is XmlNode)
             {
-                XmlNode node = item as XmlNode;
-                XmlNode child = node.SelectSingleNode(TagName);
-                if (null != child)
+                try
                 {
-                    Output = child.InnerText;
-                    return Output.ToString();
+                    XmlNode node = item as XmlNode;
+                    XmlNode child = node.SelectSingleNode(TagName);
+                    if (null != child)
+                    {
+                        Output = child.InnerText;
+                        return Output.ToString();
+                    }
+                }
+                catch(Exception ex)
+                {
+
                 }
             }
 
