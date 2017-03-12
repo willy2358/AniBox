@@ -27,7 +27,9 @@ namespace AniBox.Framework.UI
     {
         public Object _fieldsSource = null;
 
-        public ObservableCollection<ProcessEntry> _processors = new ObservableCollection<ProcessEntry>();
+        public ObservableCollection<ProcessEntry> _processEntries = new ObservableCollection<ProcessEntry>();
+
+        public List<IProcessText> _processors = new List<IProcessText>();
 
         public String FieldName;
         public AddFieldView()
@@ -39,7 +41,15 @@ namespace AniBox.Framework.UI
             lstProperties.PropertyFilterType = typeof(AniBox.Framework.Attributes.AniPropertyAttribute);
         }
 
-        public ObservableCollection<ProcessEntry> Processors
+        public ObservableCollection<ProcessEntry> ProcessEntries
+        {
+            get
+            {
+                return _processEntries;
+            }
+        }
+
+        public List<IProcessText> Processors
         {
             get
             {
@@ -101,19 +111,20 @@ namespace AniBox.Framework.UI
             entry.TypeName = process.Name;
             entry.Setting = process.Config;
             entry.Output = process.Process(GetLastProcessOutput());
-      
-            _processors.Add(entry);
+
+            _processors.Add(process);
+            _processEntries.Add(entry);
         }
 
         private Object GetLastProcessOutput()
         {
-            if (_processors.Count < 1)
+            if (_processEntries.Count < 1)
             {
                 return FieldsSource;
             }
             else
             {
-                return _processors[0].Output;
+                return _processEntries[0].Output;
             }
         }
 

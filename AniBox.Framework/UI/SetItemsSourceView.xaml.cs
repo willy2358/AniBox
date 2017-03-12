@@ -106,11 +106,12 @@ namespace AniBox.Framework.UI
             dlg.FieldsSource = FieldsSourceEntry;
             dlg.Owner = this;
             dlg.ShowDialog();
-            if (dlg.DialogResult.Value && dlg.Processors.Count > 0)
+            if (dlg.DialogResult.Value && dlg.ProcessEntries.Count > 0)
             {
                 FieldEntry field = new FieldEntry();
+                field.SourceInput = FieldsSourceEntry;
                 field.FieldName = dlg.FieldName;
-                field.Processors = dlg.Processors.ToList<ProcessEntry>();
+                field.Processors = dlg.Processors;
                 _fields.Add(field);
             }
         }

@@ -66,6 +66,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AniEventArgs\DataFieldProcessArgs.cs" />
     <Compile Include="App\IoCTypes.cs" />
     <Compile Include="Controls\AniControl.cs" />
     <Compile Include="Attributes\AniPropertyAttribute.cs" />
@@ -91,8 +92,8 @@
     <Compile Include="Interact\Service.cs" />
     <Compile Include="Data\DataSupplier.cs" />
     <Compile Include="SyncUpdate\UITimer.cs" />
-    <Compile Include="Events\ControlSelectStateEventArgs.cs" />
-    <Compile Include="Events\SelectControlEventArgs.cs" />
+    <Compile Include="AniEventArgs\ControlSelectStateEventArgs.cs" />
+    <Compile Include="AniEventArgs\SelectControlEventArgs.cs" />
     <Compile Include="Region\AniRegion.cs" />
     <Compile Include="Controls\IAniControl.cs" />
     <Compile Include="Controls\HtmlAniControl.cs" />

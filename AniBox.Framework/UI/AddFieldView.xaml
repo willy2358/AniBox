@@ -84,7 +84,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="60"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="dgFieldsProcessors" Grid.Column="0" ItemsSource="{Binding Processors}" AutoGenerateColumns="False">
+            <DataGrid x:Name="dgFieldsProcessors" Grid.Column="0" ItemsSource="{Binding ProcessEntries}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="150" Header="Type Name" Binding="{Binding TypeName}" ></DataGridTextColumn>
                     <DataGridTextColumn Width="200" Header="Setting" Binding="{Binding Setting}"></DataGridTextColumn>

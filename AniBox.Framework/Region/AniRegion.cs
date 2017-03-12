@@ -1,7 +1,7 @@
 ﻿using AniBox.Framework.Attributes;
 using AniBox.Framework.Controls;
 using AniBox.Framework.Data;
-using AniBox.Framework.Events;
+using AniBox.Framework.AniEventArgs;
 using AniBox.Framework.Interact;
 using AniBox.Framework.Share;
 using AniBox.Framework.SyncUpdate;

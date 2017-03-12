@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AniBox.Framework.AniEventArgs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,24 +9,34 @@ namespace AniBox.Framework.Data
 {
     public class FieldEntry
     {
-        public EventHandler ResultListener;
+        public EventHandler<DataFieldProcessArgs> ResultListener;
         public String FieldName { get; set; }
 
-        public List<ProcessEntry> Processors { get; set; }
+        public Object SourceInput { get; set; }
+
+        public String ProcessSource(Object source)
+        {
+            Object input = source;
+            Object output = input;
+            for(int i = 0; i < Processors.Count; i++)
+            {
+                IProcessText proc = Processors[i];
+                output = proc.Process(input);
+
+                input = output;
+            }
+
+            return output.ToString();
+        }
+
+        public List<IProcessText> Processors { get; set; }
 
 
         public String Result
         {
             get
             {
-                if (null != Processors && Processors.Count > 0)
-                {
-                    return Processors[Processors.Count - 1].Output;
-                }
-                else
-                {
-                    return "";
-                }
+                return ProcessSource(SourceInput);
             }
         }
     }

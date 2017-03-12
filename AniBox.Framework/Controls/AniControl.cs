@@ -1,5 +1,5 @@
 ﻿using AniBox.Framework.Attributes;
-using AniBox.Framework.Events;
+using AniBox.Framework.AniEventArgs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
