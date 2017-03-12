@@ -10,7 +10,12 @@ namespace AniBox.Framework.Data
     {
         void UpdateData(String source);
 
+        void OnFieldSourceUpdated(Object field, EventArgs e);
+
         DataSource DataSource { get; set; }
+
+
+
 
        
     }

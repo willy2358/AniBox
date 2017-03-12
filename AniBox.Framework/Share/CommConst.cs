@@ -13,5 +13,7 @@ namespace AniBox.Framework.Share
         public const string DRAGED_REGION_DATA = "DragedRegionType";
 
         public const string DRAGED_TIMER_DATA = "DragedTimer";
+
+        public const string DRAGED_DATASOURCE = "DragedDataSource";
     }
 }

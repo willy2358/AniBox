@@ -28,6 +28,8 @@ namespace AniBox.Framework.UI
 
         DataMatcher _dataMatcher = null;
 
+
+
         public Object FieldsSourceEntry = "";
         public SetItemsSourceView()
         {
@@ -45,6 +47,12 @@ namespace AniBox.Framework.UI
         }
 
         public String SourceName
+        {
+            get;
+            private set;
+        }
+
+        public int UpdateInterval
         {
             get;
             private set;
@@ -144,6 +152,13 @@ namespace AniBox.Framework.UI
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
             this.SourceName = this.txtSourceName.Text;
+
+            int interval = 10;
+            if (int.TryParse(this.txtUpdateInterval.Text, out interval))
+            {
+                UpdateInterval = interval;
+            }
+
             this.DialogResult = true;
         }
 

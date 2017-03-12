@@ -64,6 +64,7 @@ namespace AniBox
         private Point _startControlLstPoint;
         private Point _StartRegionLstPoint;
         private Point _startTimerLstPoint;
+        private Point _startDataSourceLastPoint;
 
         private AniRegion _currentRegion = null;
 
@@ -492,6 +493,40 @@ namespace AniBox
         private void radioSelect_Click(object sender, RoutedEventArgs e)
         {
             Service.CurrentOperation = Service.OP_Type.SelectControl;
+        }
+
+        private void lstRegionDSs_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _startDataSourceLastPoint = e.GetPosition(null);
+        }
+
+        private void lstRegionDSs_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (lstRegionDSs.SelectedItems.Count < 1)
+            {
+                return;
+            }
+
+            Point mousePos = e.GetPosition(null);
+            Vector diff = _startDataSourceLastPoint - mousePos;
+            if (e.LeftButton == MouseButtonState.Pressed
+                && (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance
+                    || Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+                )
+            {
+                ListBox listView = sender as ListBox;
+                ListBoxItem listViewItem = UiSearchHelper.FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+                if (null == listViewItem)
+                {
+                    return;
+                }
+
+                DataSupplier dataSupplier = (DataSupplier)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
+
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject(CommConst.DRAGED_DATASOURCE, dataSupplier);
+                DragDrop.DoDragDrop(lstRegionDSs, dragData, DragDropEffects.Move);
+            }
         }
 
     }

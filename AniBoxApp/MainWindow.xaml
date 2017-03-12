@@ -81,6 +81,8 @@
                                  PreviewMouseMove="lstRegionTimers_PreviewMouseMove"
                                  DisplayMemberPath="Name"></ListBox>
                         <ListBox x:Name="lstRegionDSs" Grid.Row="2" ItemsSource="{Binding CurrentRegion.DataSources}"
+                                 PreviewMouseLeftButtonDown="lstRegionDSs_PreviewMouseLeftButtonDown"
+                                 PreviewMouseMove="lstRegionDSs_PreviewMouseMove"
                                  DisplayMemberPath="Name"></ListBox>
                     </Grid>
                 </TabItem>

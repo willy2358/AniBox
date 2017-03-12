@@ -1,4 +1,5 @@
 ﻿using AniBox.Framework.Controls;
+using AniBox.Framework.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace AniBox.Controls.Html
 {
     [Export(typeof(AniControl))]
-    class SwitchImage_HorzPush : HtmlAniControl 
+    class SwitchImage_HorzPush : HtmlAniControl, IUpdateData
     {
         public SwitchImage_HorzPush()
         {
@@ -46,6 +47,28 @@ namespace AniBox.Controls.Html
 
             return html;
 
+        }
+
+        public void UpdateData(string source)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void OnFieldSourceUpdated(Object field, EventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public DataSource DataSource
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

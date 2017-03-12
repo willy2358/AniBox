@@ -33,5 +33,11 @@ namespace AniBox.Controls
             get;
             set;
         }
+
+
+        public void OnFieldSourceUpdated(Object field, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

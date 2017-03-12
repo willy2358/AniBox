@@ -196,8 +196,10 @@ namespace AniBox.Framework.Region
             {
                 DataSupplier supplier = new DataSupplier();
                 supplier.Name = view.SourceName;
+                supplier.UpdateInterval = view.UpdateInterval;
                 supplier.Source = view.CurrentDataSource;
                 supplier.Fields = view.Fields.ToList<FieldEntry>();
+                supplier.StartUpdate();
                 _dataUpdaters.Add(supplier);
             }
         }
@@ -345,6 +347,22 @@ namespace AniBox.Framework.Region
                     timer.AddUptateControl(control as IUpdateData);
                     AddTimerIndicatorToControl(border.Child as Grid);
                     e.Handled = true;
+                }
+            }
+            else if (e.Data.GetDataPresent(CommConst.DRAGED_DATASOURCE))
+            {
+                DataSupplier ds = e.Data.GetData(CommConst.DRAGED_DATASOURCE) as DataSupplier;
+                BindDataSupplierView view = new BindDataSupplierView();
+                view.Fields = ds.Fields;
+                view.Owner = Application.Current.MainWindow;
+                if (view.ShowDialog().Value)
+                {
+                    Border border = sender as Border;
+                    AniControl control = GetActualControl(border);
+                    if (control is IUpdateData)
+                    {
+                        view.SelectedField.ResultListener += (control as IUpdateData).OnFieldSourceUpdated;
+                    }
                 }
             }
         }
