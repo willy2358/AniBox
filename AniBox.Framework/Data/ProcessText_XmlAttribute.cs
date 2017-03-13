@@ -31,9 +31,10 @@ namespace AniBox.Framework.Data
         }
 
 
-        public override string Process(object item)
+        public override string Process()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return "";
         }
 
 

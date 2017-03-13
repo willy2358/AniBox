@@ -10,12 +10,7 @@ namespace AniBox.Framework.Data
     {
         String Name { get; }
 
-        string Process(Object item);
+        string Process();
 
-        string Config { get; }
-
-        Object Input { get; set; }
-
-        Object Output { get; set; }
     }
 }

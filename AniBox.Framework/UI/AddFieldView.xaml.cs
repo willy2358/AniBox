@@ -100,17 +100,17 @@ namespace AniBox.Framework.UI
         private void btnTestProcessor_Click(object sender, RoutedEventArgs e)
         {
             IProcessText process = this.lstProperties.SelectedObject as IProcessText;
-            this.txtProcessResult.Text = process.Process(GetLastProcessOutput());
+            this.txtProcessResult.Text = process.Process();
         }
 
         private void btnAddProcessor_Click(object sender, RoutedEventArgs e)
         {
-            IProcessText process = this.lstProperties.SelectedObject as IProcessText;
+            ProcessText process = this.lstProperties.SelectedObject as ProcessText;
 
             ProcessEntry entry = new ProcessEntry();
             entry.TypeName = process.Name;
             entry.Setting = process.Config;
-            entry.Output = process.Process(GetLastProcessOutput());
+            entry.Output = process.Process();
 
             _processors.Add(process);
             _processEntries.Add(entry);

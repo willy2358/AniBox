@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Text.RegularExpressions;
+
 
 namespace AniBox.Framework.Data
 {
@@ -18,6 +20,13 @@ namespace AniBox.Framework.Data
         }
 
         [AniProperty]
+        public string XmlSnippet
+        {
+            get;
+            set;
+        }
+
+        [AniProperty]
         public string TagName
         {
             get;
@@ -25,28 +34,41 @@ namespace AniBox.Framework.Data
         }
 
 
-        public override string Process(object item)
+        public override string Process()
         {
-            Input = item;
-            if (item is XmlNode)
+            String regex = "<" + TagName +"[^>]*>(?<text>\\w*)</" + TagName +">";
+
+            Match mat = Regex.Match(XmlSnippet, regex, RegexOptions.IgnoreCase);
+            if (mat.Success)
             {
-                try
-                {
-                    XmlNode node = item as XmlNode;
-                    XmlNode child = node.SelectSingleNode(TagName);
-                    if (null != child)
-                    {
-                        Output = child.InnerText;
-                        return Output.ToString();
-                    }
-                }
-                catch(Exception ex)
-                {
+                //if (mat.Groups["text"].Value)
 
-                }
+                return mat.Groups["text"].Value;
             }
+            else
+            {
+                return "";
+            }
+            //Input = item;
+            //if (item is XmlNode)
+            //{
+            //    try
+            //    {
+            //        XmlNode node = item as XmlNode;
+            //        XmlNode child = node.SelectSingleNode(TagName);
+            //        if (null != child)
+            //        {
+            //            Output = child.InnerText;
+            //            return Output.ToString();
+            //        }
+            //    }
+            //    catch(Exception ex)
+            //    {
 
-            return "";
+            //    }
+            //}
+
+            //return "";
         }
 
         public override string Config

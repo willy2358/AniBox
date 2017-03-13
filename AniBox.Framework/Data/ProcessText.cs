@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AniBox.Framework.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,27 +10,33 @@ namespace AniBox.Framework.Data
     public abstract class ProcessText : IProcessText
     {
         private Object _input;
-        private Object _output;
+        protected Object _output;
 
 
         public abstract string Config { get; }
 
-        public object Input
-        {
-            get
-            {
-                return _input;
-            }
-            set
-            {
-                _input = value;
-            }
-        }
+        //[AniProperty]
+        //public object Input
+        //{
+        //    get
+        //    {
+        //        return _input;
+        //    }
+        //    set
+        //    {
+        //        _input = value;
+        //    }
+        //}
 
         public object Output
         {
             get
             {
+                if (null == _output)
+                {
+                    _output = Process();
+                }
+
                 return _output;
             }
             set
@@ -41,7 +48,7 @@ namespace AniBox.Framework.Data
         public abstract string Name{get;}
 
 
-        public abstract string Process(object item);
+        public abstract string Process();
 
     }
 }

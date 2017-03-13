@@ -167,5 +167,20 @@ namespace AniBox.Framework.UI
         {
             this.DialogResult = false;
         }
+
+        private void btnSetSourcePath_Click(object sender, RoutedEventArgs e)
+        {
+            SetTextProcessorsView dlg = new SetTextProcessorsView();
+            dlg.Owner = this;
+            if (dlg.ShowDialog().Value)
+            {
+                List<ProcessText> proces = dlg.SelectedProcessors.ToList<ProcessText>();
+                if (proces.Count > 0)
+                {
+                    this.txtSourcePath.Text = proces.Last<ProcessText>().Output.ToString();
+                }
+            }
+
+        }
     }
 }

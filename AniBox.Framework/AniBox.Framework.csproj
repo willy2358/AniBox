@@ -83,6 +83,7 @@
     <Compile Include="Data\DataSource_RandomGenerator.cs" />
     <Compile Include="Data\DataSource_WebUrl.cs" />
     <Compile Include="Data\ProcessText.cs" />
+    <Compile Include="Data\ProcessText_FixString.cs" />
     <Compile Include="Data\ProcessText_XmlAttribute.cs" />
     <Compile Include="Data\ProcessText_XmlInner.cs" />
     <Compile Include="Data\IProcessText.cs" />
@@ -121,6 +122,9 @@
     <Compile Include="UI\SetItemsSourceView.xaml.cs">
       <DependentUpon>SetItemsSourceView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\SetTextProcessorsView.xaml.cs">
+      <DependentUpon>SetTextProcessorsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\ImmeUITimer.cs" />
     <Compile Include="Utility\UiSearchHelper.cs" />
     <Compile Include="UI\TimerImage.xaml.cs">
@@ -152,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\SetItemsSourceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\SetTextProcessorsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

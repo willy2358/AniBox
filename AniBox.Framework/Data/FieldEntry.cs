@@ -21,7 +21,7 @@ namespace AniBox.Framework.Data
             for(int i = 0; i < Processors.Count; i++)
             {
                 IProcessText proc = Processors[i];
-                output = proc.Process(input);
+                output = proc.Process();
 
                 input = output;
             }
