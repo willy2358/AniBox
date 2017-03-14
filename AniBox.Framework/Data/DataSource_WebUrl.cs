@@ -16,7 +16,7 @@ namespace AniBox.Framework.Data
         private string _address = "http://";
         public override String QueryData()
         {
-            return HttpHelper.GetHtmlOfUrl(_address, Encoding.UTF8);
+            return HttpHelper.GetHtmlOfUrl(_address, GetEncoding());
         }
 
         public override string SourceTypeName

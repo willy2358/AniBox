@@ -15,7 +15,7 @@ namespace AniBox.Framework.Data
         {
             try
             {
-                return System.IO.File.ReadAllText(SourceSetting, Encoding.UTF8);
+                return System.IO.File.ReadAllText(SourceSetting, GetEncoding());
             }
             catch(Exception ex)
             {

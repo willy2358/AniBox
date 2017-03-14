@@ -29,11 +29,24 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0"  Margin="0,2,0,2">Source Name</TextBlock>
             <TextBox x:Name="txtSourceName" Grid.Row="0" Grid.Column="1" Height="20"  Margin="0,2,0,2" Text="Source1"></TextBox>
+            
             <TextBlock Grid.Row="1" Grid.Column="0"  Margin="0,2,0,2">Source Type</TextBlock>
-            <ComboBox x:Name="comboDSTypes" Grid.Row="1" Grid.Column="1"  Margin="0,2,0,2" ItemsSource="{Binding DataSourceTypes}" 
+            <Grid Grid.Row="1" Grid.Column="1"  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="comboDSTypes" Grid.Column="0"  Margin="0,2,0,2" ItemsSource="{Binding DataSourceTypes}" 
                       DisplayMemberPath="SourceTypeName" SelectedIndex="0" SelectionChanged="comboDSTypes_SelectionChanged">
+                </ComboBox>
+                <TextBlock Grid.Column="1" Margin="10,5">Encoding:</TextBlock>
+                <ComboBox x:Name="comboEncoding" Grid.Column="2" Width="100" SelectedIndex="0">
+                    <ComboBoxItem>UTF-8</ComboBoxItem>
+                    <ComboBoxItem>GB2312</ComboBoxItem>
+                </ComboBox>
+            </Grid>
 
-            </ComboBox>
             <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,2,0,2">Source Path</TextBlock>
             <Grid Grid.Row="2" Grid.Column="1" Margin="0,2,0,2" >
                 <Grid.ColumnDefinitions>

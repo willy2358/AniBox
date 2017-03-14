@@ -14,6 +14,8 @@ namespace AniBox.Framework.Data
 
         public abstract String SourceTypeName { get; }
 
+        public String Encoding { get; set; }
+
         public Object GetUpdateObject()
         {
             string text = this.QueryData();
@@ -51,6 +53,22 @@ namespace AniBox.Framework.Data
         public abstract String QueryData();
 
         public IMatchData DataMatcher { get; set; }
+
+        protected System.Text.Encoding GetEncoding()
+        {
+            System.Text.Encoding encode = System.Text.Encoding.UTF8;
+            try
+            {
+                encode = System.Text.Encoding.GetEncoding(Encoding);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return encode;
+        }
+
 
     }
 }

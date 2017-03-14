@@ -126,6 +126,7 @@ namespace AniBox.Framework.UI
         {
             DataSource ds = this.comboDSTypes.SelectedItem as DataSource;
             ds.SourceSetting = txtSourcePath.Text;
+            ds.Encoding = this.comboEncoding.Text.Trim();
             _dataMatcher.Filter = this.txtFilterString.Text;
 
             string result = ds.GetUpdateString();
