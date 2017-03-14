@@ -1,5 +1,6 @@
 ﻿using AniBox.Framework.Attributes;
 using AniBox.Framework.Data;
+using AniBox.Framework.Data.Process;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -27,8 +28,6 @@ namespace AniBox.Framework.Region
     {
         private Color _backgroundColor = Colors.Blue;
 
-        [ImportMany]
-        IEnumerable<IProcessText> _processTypes = null;
         public AniRegion_ColorBackground()
         {
             InitializeComponent();

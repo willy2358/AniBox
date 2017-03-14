@@ -9,7 +9,7 @@ using System.Xml;
 using System.Text.RegularExpressions;
 
 
-namespace AniBox.Framework.Data
+namespace AniBox.Framework.Data.Process
 {
     [Export(typeof(ProcessText))]
     public class ProcessText_XmlInner : ProcessText
