@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -12,7 +13,52 @@ namespace AniBox.Framework.Data
     {
         public override Object FilterData(String inData)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(inData) || string.IsNullOrEmpty(Filter))
+            {
+                return null;
+            }
+
+            string[] parts = Filter.Split('.');
+            for(int i = 0; i < parts.Length; i++)
+            {
+                string p = parts[i];
+                if (p == "[]" || p == "[ ]")
+                {
+
+                }
+                else if (p == "{}" || p == "{ }")
+                {
+
+                }
+            }
+
+            return null;
+        }
+
+        private JArray ParseJsonArray(string json)
+        {
+            try
+            {
+                JArray items = JArray.Parse(json.Trim()); 
+                return items;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        private JObject ParseJsonObject(string json)
+        {
+            try
+            {
+                JObject jObj = JObject.Parse(json);
+                return jObj;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
 
         public override string MatcherType
