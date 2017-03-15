@@ -82,7 +82,7 @@
     <Compile Include="Data\DataSource_LocalFile.cs" />
     <Compile Include="Data\DataSource_RandomGenerator.cs" />
     <Compile Include="Data\DataSource_WebUrl.cs" />
-    <Compile Include="Data\Process\ProcessTest_DateMonth.cs" />
+    <Compile Include="Data\Process\ProcessText_DateMonth.cs" />
     <Compile Include="Data\Process\ProcessText.cs" />
     <Compile Include="Data\Process\ProcessText_DateDay.cs" />
     <Compile Include="Data\Process\ProcessText_FixString.cs" />

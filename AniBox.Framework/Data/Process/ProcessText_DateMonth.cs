@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AniBox.Framework.Data.Process
 {
     [Export(typeof(ProcessText))]
-    class ProcessTest_DateMonth : ProcessText
+    class ProcessText_DateMonth : ProcessText
     {
 
         public override string Config

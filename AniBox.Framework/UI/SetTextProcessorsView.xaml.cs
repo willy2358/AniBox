@@ -99,5 +99,16 @@ namespace AniBox.Framework.UI
         {
             _linkType = ProcessText.Link_Type.AppendEnd;
         }
+
+        private void btnRemoveProcess_Click(object sender, RoutedEventArgs e)
+        {
+            if ( this.dgProcessors.SelectedIndex != this.dgProcessors.Items.Count - 1)
+            {
+                return;
+            }
+
+            Object lastProcessor = this.dgProcessors.Items[dgProcessors.Items.Count - 1];
+            this.SelectedProcessors.Remove(lastProcessor as ProcessText);
+        }
     }
 }

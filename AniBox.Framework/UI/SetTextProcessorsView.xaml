@@ -34,22 +34,25 @@
                     <RadioButton x:Name="radioLinkAsInput" Margin="5"  GroupName="linktype" Checked="radioLinkAsInput_Checked">As Input</RadioButton>
                     <RadioButton x:Name="radioLinkAppend" Margin="5"  GroupName="linktype" Checked="radioLinkAppend_Checked">Append End</RadioButton>
                 </StackPanel>
-               
-                
             </GroupBox>
-            
             <Button x:Name="btnAddProcessor" HorizontalAlignment="Right"
                 Height="25" Width="60" Margin="10" Click="btnAddProcessor_Click">Add</Button>
         </StackPanel>
-        
-        <DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
-                  ItemsSource="{Binding SelectedProcessors}" AutoGenerateColumns="False" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="100"> </DataGridTextColumn>
-                <DataGridTextColumn Header="Result" Binding="{Binding Output}" Width="300"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        
+
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="dgProcessors" Grid.Column="0" ItemsSource="{Binding SelectedProcessors}" AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="100"> </DataGridTextColumn>
+                    <DataGridTextColumn Header="Result" Binding="{Binding Output}" Width="300"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            
+            <Button x:Name="btnRemoveProcess" Grid.Column="1" Height="25" Margin="10" Click="btnRemoveProcess_Click">Remove</Button>
+        </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Right">
             <Button x:Name="btnOK" Width="80" Click="btnOK_Click" Margin="10,0,10,0">OK</Button>
             <Button x:Name="btnCancel" Width="80" Click="btnCancel_Click" >Cancel</Button>
