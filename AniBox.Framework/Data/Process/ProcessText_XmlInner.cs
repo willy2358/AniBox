@@ -49,26 +49,7 @@ namespace AniBox.Framework.Data.Process
             {
                 return "";
             }
-            //Input = item;
-            //if (item is XmlNode)
-            //{
-            //    try
-            //    {
-            //        XmlNode node = item as XmlNode;
-            //        XmlNode child = node.SelectSingleNode(TagName);
-            //        if (null != child)
-            //        {
-            //            Output = child.InnerText;
-            //            return Output.ToString();
-            //        }
-            //    }
-            //    catch(Exception ex)
-            //    {
 
-            //    }
-            //}
-
-            //return "";
         }
 
         public override string Config

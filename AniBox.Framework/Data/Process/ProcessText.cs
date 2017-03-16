@@ -17,18 +17,6 @@ namespace AniBox.Framework.Data.Process
 
         public abstract string Config { get; }
 
-        //[AniProperty]
-        //public object Input
-        //{
-        //    get
-        //    {
-        //        return _input;
-        //    }
-        //    set
-        //    {
-        //        _input = value;
-        //    }
-        //}
         public ProcessText Parent { get; set; }
 
         public Link_Type LinkType
@@ -47,17 +35,12 @@ namespace AniBox.Framework.Data.Process
         {
             get
             {
-                if (null == _output)
-                {
-                    _output = Process();
-                }
-
-                return _output;
+                return Process();
             }
-            set
-            {
-                _output = value;
-            }
+            //set
+            //{
+            //    _output = value;
+            //}
         }
 
         public abstract string Name{get;}

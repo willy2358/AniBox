@@ -1,6 +1,7 @@
 ﻿using AniBox.Framework.App;
 using AniBox.Framework.Data;
 using AniBox.Framework.Data.Process;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -144,6 +145,14 @@ namespace AniBox.Framework.UI
                 if (xmlNodes.Count > 0)
                 {
                     this.FieldsSourceEntry = xmlNodes[0];
+                }
+            }
+            else if (source is List<JToken>)
+            {
+                List<JToken> tokens = source as List<JToken>;
+                if (tokens.Count > 0)
+                {
+                    this.FieldsSourceEntry = tokens[0].ToString();
                 }
             }
             else

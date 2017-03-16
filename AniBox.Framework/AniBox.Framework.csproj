@@ -90,6 +90,7 @@
     <Compile Include="Data\Process\ProcessText.cs" />
     <Compile Include="Data\Process\ProcessText_DateDay.cs" />
     <Compile Include="Data\Process\ProcessText_FixString.cs" />
+    <Compile Include="Data\Process\ProcessText_JsonPath.cs" />
     <Compile Include="Data\Process\ProcessText_XmlAttribute.cs" />
     <Compile Include="Data\Process\ProcessText_XmlInner.cs" />
     <Compile Include="Data\Process\IProcessText.cs" />

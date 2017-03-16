@@ -11,6 +11,15 @@ namespace AniBox.Framework.Data
     [Export(typeof(DataMatcher))]
     public class DataMatcher_JsonPath : DataMatcher
     {
+        /// <summary>
+        /// exameples of JsonPath:
+        /// $.Manufacturers[?(@.Name == 'Acme Co')]
+        /// $..Products[?(@.Price >= 50)].Name
+        /// ref:http://www.newtonsoft.com/json/help/html/QueryJsonSelectTokenJsonPath.htm
+        /// downloaded local html:Querying JSON with JSONPath.html
+        /// </summary>
+        /// <param name="inData"></param>
+        /// <returns></returns>
         public override Object FilterData(String inData)
         {
             if (string.IsNullOrEmpty(inData) || string.IsNullOrEmpty(Filter))
@@ -18,20 +27,22 @@ namespace AniBox.Framework.Data
                 return null;
             }
 
-            string[] parts = Filter.Split('.');
-            for(int i = 0; i < parts.Length; i++)
+            string json = inData.Trim();
+            JToken jToken = null;
+            if (json.StartsWith("["))
             {
-                string p = parts[i];
-                if (p == "[]" || p == "[ ]")
-                {
-
-                }
-                else if (p == "{}" || p == "{ }")
-                {
-
-                }
+                jToken = ParseJsonArray(json);
+            }
+            else if (json.StartsWith("{"))
+            {
+                jToken = ParseJsonObject(json);
             }
 
+            if (null != jToken)
+            {
+                List<JToken> items = jToken.SelectTokens(Filter).ToList<JToken>();
+                return items;
+            }
             return null;
         }
 

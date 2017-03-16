@@ -1,4 +1,5 @@
 ﻿using AniBox.Framework.Attributes;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,16 @@ namespace AniBox.Framework.Data
                     txt += n.OuterXml;
                 }
                 return txt;
+            }
+            else if (obj is List<JToken>)
+            {
+                string jsons = "";
+                List<JToken> tokens = obj as List<JToken>;
+                for(int i = 0; i < tokens.Count; i++)
+                {
+                    jsons += tokens[i].ToString() + "\r\n";
+                }
+                return jsons;
             }
 
             return obj.ToString();
