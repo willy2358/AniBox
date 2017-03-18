@@ -104,16 +104,19 @@ namespace AniBox.Framework.UI
 
         private void addFieldBtn_Click(object sender, RoutedEventArgs e)
         {
-            AddFieldView dlg = new AddFieldView();
-            dlg.FieldsSource = FieldsSourceEntry;
+            AddField2View dlg = new AddField2View();
+            dlg.FieldInput = FieldsSourceEntry;
             dlg.Owner = this;
             dlg.ShowDialog();
-            if (dlg.DialogResult.Value && dlg.ProcessEntries.Count > 0)
+            if (dlg.DialogResult.Value && dlg.Processors.Count > 0)
             {
                 FieldEntry field = new FieldEntry();
                 field.SourceInput = FieldsSourceEntry;
                 field.FieldName = dlg.FieldName;
-                field.Processors = dlg.Processors;
+                List<ProcessText> procs = new List<ProcessText>();
+                procs.Add(dlg.HeadProcess);
+                procs.AddRange(dlg.Processors);
+                field.Processors = procs;
                 _fields.Add(field);
             }
         }

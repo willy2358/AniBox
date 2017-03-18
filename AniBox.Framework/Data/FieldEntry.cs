@@ -17,20 +17,30 @@ namespace AniBox.Framework.Data
 
         public String ProcessSource(Object source)
         {
-            Object input = source;
-            Object output = input;
-            for(int i = 0; i < Processors.Count; i++)
+            ProcessText_InToOut head = Processors[0] as ProcessText_InToOut;
+            if (null == head)
             {
-                IProcessText proc = Processors[i];
-                output = proc.Process();
-
-                input = output;
+                return "";
             }
+            else
+            {
+                return Processors[Processors.Count - 1].Output.ToString();
+            }
+            //Object input = source;
 
-            return output.ToString();
+            //Object output = input;
+            //for(int i = 0; i < Processors.Count; i++)
+            //{
+            //    ProcessText proc = Processors[i];
+            //    output = proc.Process();
+
+            //    input = output;
+            //}
+
+            //return output.ToString();
         }
 
-        public List<IProcessText> Processors { get; set; }
+        public List<ProcessText> Processors { get; set; }
 
 
         public String Result

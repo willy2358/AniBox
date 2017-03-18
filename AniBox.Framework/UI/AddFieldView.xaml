@@ -14,11 +14,13 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <TextBlock>Source example</TextBlock>
+            <TextBlock VerticalAlignment="Center" Margin="0">Field Name</TextBlock>
+            <TextBox x:Name="txtFieldName" Height="25"></TextBox>
+            
+            <TextBlock>Input te</TextBlock>
             <TextBox x:Name="txtFieldsSource" Grid.Row="0" Height="60" TextWrapping="Wrap"></TextBox>
 
-            <TextBlock VerticalAlignment="Center" Margin="0,10,0,0">Field Name</TextBlock>
-            <TextBox x:Name="txtFieldName" Height="25"></TextBox>
+
 
             <TextBlock VerticalAlignment="Center" Margin="0,10,0,0">Process Types</TextBlock>
             <ComboBox x:Name="comboProcessType" Height="25"

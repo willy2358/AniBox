@@ -36,8 +36,12 @@ namespace AniBox.Framework.Data.Process
 
         public override string Process()
         {
-            String regex = "<" + TagName +"[^>]*>(?<text>\\w*)</" + TagName +">";
+            if (string.IsNullOrEmpty(XmlSnippet) || string.IsNullOrEmpty(TagName))
+            {
+                return "";
+            }
 
+            String regex = "<" + TagName +"[^>]*>(?<text>\\w*)</" + TagName +">";
             Match mat = Regex.Match(XmlSnippet, regex, RegexOptions.IgnoreCase);
             if (mat.Success)
             {
