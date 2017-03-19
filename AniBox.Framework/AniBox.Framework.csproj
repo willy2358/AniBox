@@ -86,15 +86,16 @@
     <Compile Include="Data\DataSource_LocalFile.cs" />
     <Compile Include="Data\DataSource_RandomGenerator.cs" />
     <Compile Include="Data\DataSource_WebUrl.cs" />
-    <Compile Include="Data\Process\ProcessText_DateMonth.cs" />
+    <Compile Include="Data\Process\ExtractText.cs" />
+    <Compile Include="Data\Process\GenerateText.cs" />
+    <Compile Include="Data\Process\GenerateDateMonth.cs" />
     <Compile Include="Data\Process\ProcessText.cs" />
-    <Compile Include="Data\Process\ProcessText_DateDay.cs" />
-    <Compile Include="Data\Process\ProcessText_FixString.cs" />
-    <Compile Include="Data\Process\ProcessText_InToOut.cs" />
-    <Compile Include="Data\Process\ProcessText_JsonPath.cs" />
-    <Compile Include="Data\Process\ProcessText_XmlAttribute.cs" />
-    <Compile Include="Data\Process\ProcessText_XmlInner.cs" />
-    <Compile Include="Data\Process\IProcessText.cs" />
+    <Compile Include="Data\Process\GenerateDateDay.cs" />
+    <Compile Include="Data\Process\GenerateFixString.cs" />
+    <Compile Include="Data\Process\GenerateStrFromObj.cs" />
+    <Compile Include="Data\Process\ExtractByJsonPath.cs" />
+    <Compile Include="Data\Process\ExtractXmlAttribute.cs" />
+    <Compile Include="Data\Process\ExtractXmlInner.cs" />
     <Compile Include="Data\IMatchData.cs" />
     <Compile Include="Data\IDataSource.cs" />
     <Compile Include="Data\IUpdateData.cs" />
@@ -119,9 +120,6 @@
     <Compile Include="UI\AddField2View.xaml.cs">
       <DependentUpon>AddField2View.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\AddFieldView.xaml.cs">
-      <DependentUpon>AddFieldView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Data\FieldEntry.cs" />
     <Compile Include="Data\ProcessEntry.cs" />
     <Compile Include="UI\AddProcessorView.xaml.cs">
@@ -141,6 +139,7 @@
     </Compile>
     <Compile Include="Utility\HttpHelper.cs" />
     <Compile Include="Utility\ImmeUITimer.cs" />
+    <Compile Include="Utility\StringHelper.cs" />
     <Compile Include="Utility\UiSearchHelper.cs" />
     <Compile Include="UI\TimerImage.xaml.cs">
       <DependentUpon>TimerImage.xaml</DependentUpon>
@@ -159,10 +158,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\AddField2View.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\AddFieldView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,14 +9,8 @@ using System.Threading.Tasks;
 namespace AniBox.Framework.Data.Process
 {
     [Export(typeof(ProcessText))]
-    class ProcessText_DateMonth : ProcessText
+    class GenerateDateMonth : GenerateText
     {
-
-        public override string Config
-        {
-            get { return "Month of Date"; }
-        }
-
         private int _digitNum = 2;
 
         [AniProperty]
@@ -37,7 +31,7 @@ namespace AniBox.Framework.Data.Process
             get { return "Month of Date"; }
         }
 
-        public override string Process()
+        public override string Generate()
         {
             string myOutput = System.DateTime.Now.Month.ToString("D" + DigitNum.ToString());
             if (_digitNum < 2)
@@ -45,25 +39,7 @@ namespace AniBox.Framework.Data.Process
                 myOutput = System.DateTime.Now.Month.ToString();
             }
 
-            if (null == Parent)
-            {
-                return myOutput;
-            }
-            else
-            {
-                if (LinkType == Link_Type.AppendEnd)
-                {
-                    return Parent.Output + myOutput;
-                }
-                else if (Link_Type.InsertAhead == LinkType)
-                {
-                    return myOutput + Parent.Output;
-                }
-                else
-                {
-                    return myOutput;
-                }
-            }
+            return myOutput;
         }
     }
 }

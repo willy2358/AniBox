@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 namespace AniBox.Framework.Data.Process
 {
     [Export(typeof(ProcessText))]
-    public class ProcessText_FixString : ProcessText
+    public class GenerateFixString : GenerateText
     {
-        public override string Config
-        {
-            get { return "String:" + FixString; }
-        }
+        //public override string Config
+        //{
+        //    get { return "String:" + FixString; }
+        //}
 
         [AniProperty]
         public String FixString
@@ -28,7 +28,7 @@ namespace AniBox.Framework.Data.Process
             get { return "Fixed String"; }
         }
 
-        public override string Process()
+        public override string Generate()
         {
             return FixString;
         }

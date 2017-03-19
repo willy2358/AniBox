@@ -17,7 +17,7 @@ namespace AniBox.Framework.Data
 
         public String ProcessSource(Object source)
         {
-            ProcessText_InToOut head = Processors[0] as ProcessText_InToOut;
+            GenerateStrFromObj head = Processors[0] as GenerateStrFromObj;
             if (null == head)
             {
                 return "";

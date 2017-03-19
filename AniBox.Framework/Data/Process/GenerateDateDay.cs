@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 namespace AniBox.Framework.Data.Process
 {
     [Export(typeof(ProcessText))]
-    public class ProcessText_DateDay : ProcessText
+    public class GenerateDateDay : GenerateText
     {
-        public override string Config
-        {
-            get { return "Day of Date"; }
-        }
+        //public override string Config
+        //{
+        //    get { return "Day of Date"; }
+        //}
 
         public override string Name
         {
@@ -37,33 +37,15 @@ namespace AniBox.Framework.Data.Process
         }
 
 
-        public override string Process()
+        public override string Generate()
         {
             string myOutput = System.DateTime.Now.Day.ToString("D" + DigitNum.ToString());
             if (_digitNum < 2)
             {
                 myOutput = System.DateTime.Now.Day.ToString();
             }
-            
-            if (null == Parent)
-            {
-                return myOutput;
-            }
-            else
-            {
-                if (LinkType == Link_Type.AppendEnd)
-                {
-                    return Parent.Output + myOutput;
-                }
-                else if (Link_Type.InsertAhead == LinkType)
-                {
-                    return myOutput + Parent.Output;
-                }
-                else
-                {
-                    return myOutput;
-                }
-            }
+
+            return myOutput;
         }
     }
 }

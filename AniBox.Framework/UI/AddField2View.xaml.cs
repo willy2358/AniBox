@@ -26,7 +26,7 @@ namespace AniBox.Framework.UI
     {
         public String FieldName;
         private Object _fieldInput = null;
-        private ProcessText_InToOut _headProcess = new ProcessText_InToOut();
+        private GenerateStrFromObj _headProcess = new GenerateStrFromObj();
         private ObservableCollection<ProcessText> _processors = new ObservableCollection<ProcessText>();
         public AddField2View()
         {
@@ -59,8 +59,8 @@ namespace AniBox.Framework.UI
             set
             {
                 _fieldInput = value;
-                _headProcess.Input = GetFieldInputString();
-                this.txtInputStr.Text = _headProcess.Input.ToString();
+                _headProcess.SourceObj = GetFieldInputString();
+                this.txtInputStr.Text = _headProcess.SourceObj.ToString();
                 
             }
         }
