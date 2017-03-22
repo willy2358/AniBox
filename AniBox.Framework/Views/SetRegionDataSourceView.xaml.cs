@@ -19,12 +19,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 
-namespace AniBox.Framework.UI
+namespace AniBox.Framework.Views
 {
     /// <summary>
     /// SetItemsSourceView.xaml 的交互逻辑
     /// </summary>
-    public partial class SetItemsSourceView : Window
+    public partial class SetRegionDataSourceView : Window
     {
         ObservableCollection<FieldEntry> _fields = new ObservableCollection<FieldEntry>();
 
@@ -33,7 +33,7 @@ namespace AniBox.Framework.UI
 
 
         public Object FieldsSourceEntry = "";
-        public SetItemsSourceView()
+        public SetRegionDataSourceView()
         {
             this.DataContext = this;
 
@@ -104,7 +104,7 @@ namespace AniBox.Framework.UI
 
         private void addFieldBtn_Click(object sender, RoutedEventArgs e)
         {
-            AddField2View dlg = new AddField2View();
+            AddRegionFieldView dlg = new AddRegionFieldView();
             dlg.FieldInput = FieldsSourceEntry;
             dlg.Owner = this;
             dlg.ShowDialog();
@@ -184,7 +184,7 @@ namespace AniBox.Framework.UI
 
         private void btnSetSourcePath_Click(object sender, RoutedEventArgs e)
         {
-            SetTextProcessorsView dlg = new SetTextProcessorsView();
+            SetPathProcessorsView dlg = new SetPathProcessorsView();
             dlg.Owner = this;
             if (dlg.ShowDialog().Value)
             {

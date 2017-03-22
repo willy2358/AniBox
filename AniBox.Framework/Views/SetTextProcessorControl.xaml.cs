@@ -2,6 +2,7 @@
 using AniBox.Framework.Data.Process;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,36 +16,34 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AniBox.Framework.UI
+namespace AniBox.Framework.Views
 {
     /// <summary>
-    /// AddProcessorView.xaml 的交互逻辑
+    /// SetTextProcessorControl.xaml 的交互逻辑
     /// </summary>
-    public partial class AddProcessorView : Window
+    public partial class SetTextProcessorControl : UserControl
     {
         private ProcessText.Link_Type _linkType = ProcessText.Link_Type.None;
 
-        //private Object _input;
         private ProcessText _parentProcess = null;
         private ProcessText _myProcess = null;
-        public AddProcessorView()
+
+        public SetTextProcessorControl()
         {
             this.DataContext = this;
             InitializeComponent();
-
             this.lstProperties.PropertyFilterType = typeof(AniBox.Framework.Attributes.AniPropertyAttribute);
         }
 
         public ProcessText ParentProcess
         {
-            get
+            private get
             {
                 return _parentProcess;
             }
             set
             {
                 _parentProcess = value;
-                txtInputString.Text = _parentProcess.Output.ToString();
             }
         }
 
@@ -60,14 +59,12 @@ namespace AniBox.Framework.UI
             }
         }
 
-
         public IEnumerable<ProcessText> ProcessTypes
         {
             get
             {
                 return IoCTypes.ProcessTypes;
             }
-
         }
 
         private void lstProperties_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -93,15 +90,6 @@ namespace AniBox.Framework.UI
             UpdateProcessResult();
         }
 
-        private void Ok_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = false;
-        }
         private void radioLinkNone_Checked(object sender, RoutedEventArgs e)
         {
             _linkType = ProcessText.Link_Type.None;
@@ -137,8 +125,10 @@ namespace AniBox.Framework.UI
             newProcess.LinkType = _linkType;
             newProcess.Parent = ParentProcess;
             MyProcess = newProcess;
-
-            this.txtResult.Text = newProcess.Output.ToString();
+            if (null != newProcess.Output)
+            {
+                this.txtResult.Text = newProcess.Output.ToString();
+            }
         }
     }
 }

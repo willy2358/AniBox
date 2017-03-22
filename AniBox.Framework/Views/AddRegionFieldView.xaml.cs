@@ -17,18 +17,18 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 
-namespace AniBox.Framework.UI
+namespace AniBox.Framework.Views
 {
     /// <summary>
     /// AddField2View.xaml 的交互逻辑
     /// </summary>
-    public partial class AddField2View : Window
+    public partial class AddRegionFieldView : Window
     {
         public String FieldName;
         private Object _fieldInput = null;
         private GenerateStrFromObj _headProcess = new GenerateStrFromObj();
         private ObservableCollection<ProcessText> _processors = new ObservableCollection<ProcessText>();
-        public AddField2View()
+        public AddRegionFieldView()
         {
             this.DataContext = this;
             InitializeComponent();
@@ -96,7 +96,7 @@ namespace AniBox.Framework.UI
 
         private void btnAddProcessor_Click(object sender, RoutedEventArgs e)
         {
-            AddProcessorView dlg = new AddProcessorView();
+            AddFieldProcessorView dlg = new AddFieldProcessorView();
             dlg.Owner = this;
             if (_processors.Count > 0)
             {

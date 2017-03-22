@@ -117,32 +117,35 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\WPFAniControl.cs" />
     <Compile Include="Share\CommConst.cs" />
-    <Compile Include="UI\AddField2View.xaml.cs">
-      <DependentUpon>AddField2View.xaml</DependentUpon>
+    <Compile Include="Views\AddRegionFieldView.xaml.cs">
+      <DependentUpon>AddRegionFieldView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\FieldEntry.cs" />
     <Compile Include="Data\ProcessEntry.cs" />
-    <Compile Include="UI\AddProcessorView.xaml.cs">
-      <DependentUpon>AddProcessorView.xaml</DependentUpon>
+    <Compile Include="Views\AddFieldProcessorView.xaml.cs">
+      <DependentUpon>AddFieldProcessorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\BindDataSupplierView.xaml.cs">
+    <Compile Include="Views\BindDataSupplierView.xaml.cs">
       <DependentUpon>BindDataSupplierView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\SetDataSourceWindow.xaml.cs">
-      <DependentUpon>SetDataSourceWindow.xaml</DependentUpon>
+    <Compile Include="Views\SetControlDataSourceView.xaml.cs">
+      <DependentUpon>SetControlDataSourceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\SetItemsSourceView.xaml.cs">
-      <DependentUpon>SetItemsSourceView.xaml</DependentUpon>
+    <Compile Include="Views\SetRegionDataSourceView.xaml.cs">
+      <DependentUpon>SetRegionDataSourceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\SetTextProcessorsView.xaml.cs">
-      <DependentUpon>SetTextProcessorsView.xaml</DependentUpon>
+    <Compile Include="Views\SetTextProcessorControl.xaml.cs">
+      <DependentUpon>SetTextProcessorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SetPathProcessorsView.xaml.cs">
+      <DependentUpon>SetPathProcessorsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility\HttpHelper.cs" />
     <Compile Include="Utility\ImmeUITimer.cs" />
     <Compile Include="Utility\JsonHelper.cs" />
     <Compile Include="Utility\StringHelper.cs" />
     <Compile Include="Utility\UiSearchHelper.cs" />
-    <Compile Include="UI\TimerImage.xaml.cs">
+    <Compile Include="Views\TimerImage.xaml.cs">
       <DependentUpon>TimerImage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -158,31 +161,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\AddField2View.xaml">
+    <Page Include="Views\AddRegionFieldView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\AddProcessorView.xaml">
+    <Page Include="Views\AddFieldProcessorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\BindDataSupplierView.xaml">
+    <Page Include="Views\BindDataSupplierView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\SetDataSourceWindow.xaml">
+    <Page Include="Views\SetControlDataSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\SetItemsSourceView.xaml">
+    <Page Include="Views\SetRegionDataSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\SetTextProcessorsView.xaml">
+    <Page Include="Views\SetTextProcessorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\TimerImage.xaml">
+    <Page Include="Views\SetPathProcessorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TimerImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

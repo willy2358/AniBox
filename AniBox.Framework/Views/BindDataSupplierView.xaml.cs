@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AniBox.Framework.UI
+namespace AniBox.Framework.Views
 {
     /// <summary>
     /// BindDataSupplierView.xaml 的交互逻辑

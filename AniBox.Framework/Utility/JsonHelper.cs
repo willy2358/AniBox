@@ -50,8 +50,15 @@ namespace AniBox.Framework.Utility
 
             if (null != jToken)
             {
-                List<JToken> items = jToken.SelectTokens(jsonPath).ToList<JToken>();
-                return items;
+                try
+                {
+                    List<JToken> items = jToken.SelectTokens(jsonPath).ToList<JToken>();
+                    return items;
+                }
+                catch(Exception ex)
+                {
+
+                }
             }
             return null;
         }

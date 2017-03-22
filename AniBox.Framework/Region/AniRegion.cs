@@ -5,7 +5,7 @@ using AniBox.Framework.AniEventArgs;
 using AniBox.Framework.Interact;
 using AniBox.Framework.Share;
 using AniBox.Framework.SyncUpdate;
-using AniBox.Framework.UI;
+using AniBox.Framework.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -189,7 +189,7 @@ namespace AniBox.Framework.Region
 
         void AddArrayItem_Click(object sender, RoutedEventArgs e)
         {
-            SetItemsSourceView view = new SetItemsSourceView();
+            SetRegionDataSourceView view = new SetRegionDataSourceView();
             view.Owner = Application.Current.MainWindow;
             bool? ret = view.ShowDialog();
             if (ret.HasValue && ret.Value == true)
@@ -284,7 +284,7 @@ namespace AniBox.Framework.Region
         void SetDataSource_Click(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
-            SetDataSourceWindow dlg = new SetDataSourceWindow();
+            SetControlDataSourceView dlg = new SetControlDataSourceView();
             bool? ret = dlg.ShowDialog();
             if (ret.HasValue && ret.Value)
             {

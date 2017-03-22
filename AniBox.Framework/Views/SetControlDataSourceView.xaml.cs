@@ -16,19 +16,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AniBox.Framework.UI
+namespace AniBox.Framework.Views
 {
     /// <summary>
     /// SetDataSourceWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class SetDataSourceWindow : Window
+    public partial class SetControlDataSourceView : Window
     {
         ObservableCollection<DataSource> _dataSourceTypes = null;
 
         ObservableCollection<DataMatcher> _dataMatchers = null;
 
         DataMatcher _dataMatcher = null;
-        public SetDataSourceWindow()
+        public SetControlDataSourceView()
         {
             InitializeDataSourceTypes();
 

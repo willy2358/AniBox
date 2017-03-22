@@ -57,8 +57,12 @@ namespace AniBox.Framework.Data
                 }
                 return jsons;
             }
+            else if (null != obj)
+            {
+                return obj.ToString();
+            }
 
-            return obj.ToString();
+            return "";
         }
 
         public abstract String QueryData();
