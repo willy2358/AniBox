@@ -16,19 +16,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AniBox.Framework.Views
+namespace AniBox.Framework.Views.Controls
 {
     /// <summary>
     /// SetTextProcessorControl.xaml 的交互逻辑
     /// </summary>
-    public partial class SetTextProcessorControl : UserControl
+    public partial class SetTextProcessorView : UserControl
     {
         private ProcessText.Link_Type _linkType = ProcessText.Link_Type.None;
 
         private ProcessText _parentProcess = null;
         private ProcessText _myProcess = null;
 
-        public SetTextProcessorControl()
+        public SetTextProcessorView()
         {
             this.DataContext = this;
             InitializeComponent();

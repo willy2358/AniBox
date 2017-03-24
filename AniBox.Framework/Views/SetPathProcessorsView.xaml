@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:controls="clr-namespace:AniBox.Framework.Views"
+             xmlns:Controls="clr-namespace:AniBox.Framework.Views.Controls"
              xmlns:pg="clr-namespace:System.Windows.Controls.WpfPropertyGrid;assembly=System.Windows.Controls.WpfPropertyGrid"
              mc:Ignorable="d" 
              Title="文本处理"
@@ -20,7 +20,7 @@
             <ColumnDefinition Width="100"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <controls:SetTextProcessorControl x:Name="processorCtrl" Grid.Row="0" Grid.ColumnSpan="2"></controls:SetTextProcessorControl>
+        <Controls:SetTextProcessorView x:Name="processorCtrl" Grid.Row="0" Grid.ColumnSpan="2"></Controls:SetTextProcessorView>
         <!--<TextBlock Grid.Row="0" Grid.Column="0">Types</TextBlock>
         <ComboBox x:Name="comboProcessTypes" Grid.Row="0" Grid.Column="1" 
                   ItemsSource="{Binding ProcessTypes}" DisplayMemberPath="Name"

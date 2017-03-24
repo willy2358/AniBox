@@ -137,8 +137,8 @@
     <Compile Include="Views\SetRegionDataSourceView.xaml.cs">
       <DependentUpon>SetRegionDataSourceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SetTextProcessorControl.xaml.cs">
-      <DependentUpon>SetTextProcessorControl.xaml</DependentUpon>
+    <Compile Include="Views\Controls\SetTextProcessorView.xaml.cs">
+      <DependentUpon>SetTextProcessorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SetPathProcessorsView.xaml.cs">
       <DependentUpon>SetPathProcessorsView.xaml</DependentUpon>
@@ -188,7 +188,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SetTextProcessorControl.xaml">
+    <Page Include="Views\Controls\SetTextProcessorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
