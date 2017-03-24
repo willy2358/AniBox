@@ -352,17 +352,22 @@ namespace AniBox.Framework.Region
             else if (e.Data.GetDataPresent(CommConst.DRAGED_DATASOURCE))
             {
                 DataSupplier ds = e.Data.GetData(CommConst.DRAGED_DATASOURCE) as DataSupplier;
-                BindDataSupplierView view = new BindDataSupplierView();
-                view.Fields = ds.Fields;
-                view.Owner = Application.Current.MainWindow;
-                if (view.ShowDialog().Value)
+                SetControlToListenDataSourceFieldUpdate(sender, ds);
+            }
+        }
+
+        private void SetControlToListenDataSourceFieldUpdate(object sender, DataSupplier ds)
+        {
+            BindDataSupplierView view = new BindDataSupplierView();
+            view.Fields = ds.Fields;
+            view.Owner = Application.Current.MainWindow;
+            if (view.ShowDialog().Value)
+            {
+                Border border = sender as Border;
+                AniControl control = GetActualControl(border);
+                if (control is IUpdateData)
                 {
-                    Border border = sender as Border;
-                    AniControl control = GetActualControl(border);
-                    if (control is IUpdateData)
-                    {
-                        view.SelectedField.ResultListener += (control as IUpdateData).OnFieldSourceUpdated;
-                    }
+                    view.SelectedField.ResultListener += (control as IUpdateData).OnFieldSourceUpdated;
                 }
             }
         }
