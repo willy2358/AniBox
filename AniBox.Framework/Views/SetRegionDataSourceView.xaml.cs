@@ -28,11 +28,7 @@ namespace AniBox.Framework.Views
     {
         ObservableCollection<FieldEntry> _fields = new ObservableCollection<FieldEntry>();
 
-        DataMatcher _dataMatcher = null;
-
-
-
-        public Object FieldsSourceEntry = "";
+        
         public SetRegionDataSourceView()
         {
             this.DataContext = this;
@@ -40,19 +36,19 @@ namespace AniBox.Framework.Views
             InitializeComponent();
         }
 
-        public IEnumerable<DataSource> DataSourceTypes
-        {
-            get
-            {
-                return IoCTypes.DataSourceTypes;
-            }
-        }
+        //public IEnumerable<DataSource> DataSourceTypes
+        //{
+        //    get
+        //    {
+        //        return IoCTypes.DataSourceTypes;
+        //    }
+        //}
 
-        public String SourceName
-        {
-            get;
-            private set;
-        }
+        //public String SourceName
+        //{
+        //    get;
+        //    private set;
+        //}
 
         public int UpdateInterval
         {
@@ -74,44 +70,20 @@ namespace AniBox.Framework.Views
             set;
         }
 
-        public IEnumerable<DataMatcher> DataMatchers
-        {
-            get
-            {
-                return IoCTypes.DataMatcherTypes;
-            }
-        }
-
-        private void comboDSTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DataSource ds = this.comboDSTypes.SelectedItem as DataSource;
-            if (null != _dataMatcher)
-            {
-                ds.DataMatcher = _dataMatcher;
-            }
-
-            CurrentDataSource = ds;
-        }
-
-        private void comboMatchers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _dataMatcher = this.comboMatchers.SelectedItem as DataMatcher;
-            if (null != CurrentDataSource)
-            {
-                CurrentDataSource.DataMatcher = _dataMatcher;
-            }
-        }
-
         private void addFieldBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (null == this.dsControl.FieldsSourceEntry || string.IsNullOrEmpty(this.dsControl.FieldsSourceEntry.ToString()))
+            {
+                return;
+            }
             AddRegionFieldView dlg = new AddRegionFieldView();
-            dlg.FieldInput = FieldsSourceEntry;
+            dlg.FieldInput = this.dsControl.FieldsSourceEntry;
             dlg.Owner = this;
             dlg.ShowDialog();
             if (dlg.DialogResult.Value && dlg.Processors.Count > 0)
             {
                 FieldEntry field = new FieldEntry();
-                field.SourceInput = FieldsSourceEntry;
+                field.SourceInput = this.dsControl.FieldsSourceEntry;
                 field.FieldName = dlg.FieldName;
                 List<ProcessText> procs = new List<ProcessText>();
                 procs.Add(dlg.HeadProcess);
@@ -126,47 +98,13 @@ namespace AniBox.Framework.Views
 
         }
 
-        private void testMatchBtn_Click(object sender, RoutedEventArgs e)
-        {
-            DataSource ds = this.comboDSTypes.SelectedItem as DataSource;
-            ds.SourceSetting = txtSourcePath.Text;
-            ds.Encoding = this.comboEncoding.Text.Trim();
-            _dataMatcher.Filter = this.txtFilterString.Text;
 
-            string result = ds.GetUpdateString();
-            UpdateFieldsSource(ds.GetUpdateObject());
 
-            this.txtMatchResult.Text = result;
-            
-        }
 
-        private void UpdateFieldsSource(Object source)
-        {
-            if (source is XmlNodeList)
-            {
-                XmlNodeList xmlNodes = source as XmlNodeList;
-                if (xmlNodes.Count > 0)
-                {
-                    this.FieldsSourceEntry = xmlNodes[0];
-                }
-            }
-            else if (source is List<JToken>)
-            {
-                List<JToken> tokens = source as List<JToken>;
-                if (tokens.Count > 0)
-                {
-                    this.FieldsSourceEntry = tokens[0].ToString();
-                }
-            }
-            else
-            {
-                this.FieldsSourceEntry = "";
-            }
-        }
 
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            this.SourceName = this.txtSourceName.Text;
+            //this.SourceName = this.dsControl.txtSourceName.Text;
 
             int interval = 10;
             if (int.TryParse(this.txtUpdateInterval.Text, out interval))
@@ -182,19 +120,6 @@ namespace AniBox.Framework.Views
             this.DialogResult = false;
         }
 
-        private void btnSetSourcePath_Click(object sender, RoutedEventArgs e)
-        {
-            SetPathProcessorsView dlg = new SetPathProcessorsView();
-            dlg.Owner = this;
-            if (dlg.ShowDialog().Value)
-            {
-                List<ProcessText> proces = dlg.SelectedProcessors.ToList<ProcessText>();
-                if (proces.Count > 0)
-                {
-                    this.txtSourcePath.Text = proces.Last<ProcessText>().Output.ToString();
-                }
-            }
 
-        }
     }
 }

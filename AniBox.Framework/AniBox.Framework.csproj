@@ -128,6 +128,9 @@
     <Compile Include="Views\BindDataSupplierView.xaml.cs">
       <DependentUpon>BindDataSupplierView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\DataSourceView.xaml.cs">
+      <DependentUpon>DataSourceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SetControlDataSourceView.xaml.cs">
       <DependentUpon>SetControlDataSourceView.xaml</DependentUpon>
     </Compile>
@@ -170,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BindDataSupplierView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\DataSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

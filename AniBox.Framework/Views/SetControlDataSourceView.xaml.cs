@@ -23,29 +23,29 @@ namespace AniBox.Framework.Views
     /// </summary>
     public partial class SetControlDataSourceView : Window
     {
-        ObservableCollection<DataSource> _dataSourceTypes = null;
+        //ObservableCollection<DataSource> _dataSourceTypes = null;
 
-        ObservableCollection<DataMatcher> _dataMatchers = null;
+        //ObservableCollection<DataMatcher> _dataMatchers = null;
 
-        DataMatcher _dataMatcher = null;
+        //DataMatcher _dataMatcher = null;
         public SetControlDataSourceView()
         {
-            InitializeDataSourceTypes();
+        //    InitializeDataSourceTypes();
 
-            InitializeDataFilters();
+        //    InitializeDataFilters();
 
             this.DataContext = this;
 
             InitializeComponent();
         }
 
-        public ObservableCollection<DataSource> DataSourceTypes
-        {
-            get
-            {
-                return _dataSourceTypes;
-            }
-        }
+        //public ObservableCollection<DataSource> DataSourceTypes
+        //{
+        //    get
+        //    {
+        //        return _dataSourceTypes;
+        //    }
+        //}
 
         public DataSource CurrentDataSource
         {
@@ -53,70 +53,70 @@ namespace AniBox.Framework.Views
             set;
         }
 
-        public ObservableCollection<DataMatcher> DataMatchers
-        {
-            get
-            {
-                return _dataMatchers;
-            }
-        }
+        //public ObservableCollection<DataMatcher> DataMatchers
+        //{
+        //    get
+        //    {
+        //        return _dataMatchers;
+        //    }
+        //}
 
-        private void InitializeDataSourceTypes()
-        {
-            _dataSourceTypes = new ObservableCollection<DataSource>();
-            _dataSourceTypes.Add(new DataSource_LocalFile());
-            _dataSourceTypes.Add(new DataSource_WebUrl());
-            _dataSourceTypes.Add(new DataSource_RandomGenerator());
-        }
+        //private void InitializeDataSourceTypes()
+        //{
+        //    _dataSourceTypes = new ObservableCollection<DataSource>();
+        //    _dataSourceTypes.Add(new DataSource_LocalFile());
+        //    _dataSourceTypes.Add(new DataSource_WebUrl());
+        //    _dataSourceTypes.Add(new DataSource_RandomGenerator());
+        //}
 
-        private void InitializeDataFilters()
-        {
-            _dataMatchers = new ObservableCollection<DataMatcher>();
-            _dataMatchers.Add(new DataMatcher_NoFilter());
-            _dataMatchers.Add(new DataMatcher_XPath());
-            _dataMatchers.Add(new DataMatcher_Regex());
-            _dataMatchers.Add(new DataMatcher_JsonPath());
-        }
+        //private void InitializeDataFilters()
+        //{
+        //    _dataMatchers = new ObservableCollection<DataMatcher>();
+        //    _dataMatchers.Add(new DataMatcher_NoFilter());
+        //    _dataMatchers.Add(new DataMatcher_XPath());
+        //    _dataMatchers.Add(new DataMatcher_Regex());
+        //    _dataMatchers.Add(new DataMatcher_JsonPath());
+        //}
 
-        private void btnTestDataSource_Click(object sender, RoutedEventArgs e)
-        {
-            DataSource ds = this.comboDSTypes.SelectedItem as DataSource;
-            ds.SourceSetting = txtDataSourceSetting.Text;
+        //private void btnTestDataSource_Click(object sender, RoutedEventArgs e)
+        //{
+        //    DataSource ds = this.comboDSTypes.SelectedItem as DataSource;
+        //    ds.SourceSetting = txtDataSourceSetting.Text;
 
-            string rawText = ds.GetUpdateString();
-            txtSourceRawData.Text = rawText;
+        //    string rawText = ds.GetUpdateString();
+        //    txtSourceRawData.Text = rawText;
 
-            if (null != _dataMatcher)
-            {
-                txtFilteredData.Text = _dataMatcher.FilterData(rawText).ToString();
-            }
-        }
+        //    if (null != _dataMatcher)
+        //    {
+        //        txtFilteredData.Text = _dataMatcher.FilterData(rawText).ToString();
+        //    }
+        //}
 
-        private void comboDSTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (null != txtDataSourceSetting)
-            {
-                DataSource ds = this.comboDSTypes.SelectedItem as DataSource;
+        //private void comboDSTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (null != txtDataSourceSetting)
+        //    {
+        //        DataSource ds = this.comboDSTypes.SelectedItem as DataSource;
 
-                txtDataSourceSetting.Text = ds.SourceSetting;
+        //        txtDataSourceSetting.Text = ds.SourceSetting;
 
-                if (null != _dataMatcher)
-                {
-                    ds.DataMatcher = _dataMatcher;
-                }
+        //        if (null != _dataMatcher)
+        //        {
+        //            ds.DataMatcher = _dataMatcher;
+        //        }
 
-                CurrentDataSource = ds;
-            }
-        }
+        //        CurrentDataSource = ds;
+        //    }
+        //}
 
-        private void comboMatchers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _dataMatcher = this.comboMatchers.SelectedItem as DataMatcher;
-            if (null != CurrentDataSource)
-            {
-                CurrentDataSource.DataMatcher = _dataMatcher;
-            }
-        }
+        //private void comboMatchers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    _dataMatcher = this.comboMatchers.SelectedItem as DataMatcher;
+        //    if (null != CurrentDataSource)
+        //    {
+        //        CurrentDataSource.DataMatcher = _dataMatcher;
+        //    }
+        //}
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {

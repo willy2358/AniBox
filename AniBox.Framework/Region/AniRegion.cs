@@ -195,7 +195,7 @@ namespace AniBox.Framework.Region
             if (ret.HasValue && ret.Value == true)
             {
                 DataSupplier supplier = new DataSupplier();
-                supplier.Name = view.SourceName;
+                supplier.Name = view.dsControl.SourceName;
                 supplier.UpdateInterval = view.UpdateInterval;
                 supplier.Source = view.CurrentDataSource;
                 supplier.Fields = view.Fields.ToList<FieldEntry>();
