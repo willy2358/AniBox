@@ -27,8 +27,6 @@ namespace AniBox.Framework.Views
     public partial class SetRegionDataSourceView : Window
     {
         ObservableCollection<FieldEntry> _fields = new ObservableCollection<FieldEntry>();
-
-        
         public SetRegionDataSourceView()
         {
             this.DataContext = this;
@@ -36,19 +34,13 @@ namespace AniBox.Framework.Views
             InitializeComponent();
         }
 
-        //public IEnumerable<DataSource> DataSourceTypes
-        //{
-        //    get
-        //    {
-        //        return IoCTypes.DataSourceTypes;
-        //    }
-        //}
-
-        //public String SourceName
-        //{
-        //    get;
-        //    private set;
-        //}
+        public String SourceName
+        {
+            get
+            {
+                return dsControl.SourceName;
+            }
+        }
 
         public int UpdateInterval
         {
@@ -66,8 +58,10 @@ namespace AniBox.Framework.Views
 
         public DataSource CurrentDataSource
         {
-            get;
-            set;
+            get
+            {
+                return dsControl.CurrentDataSource;
+            }
         }
 
         private void addFieldBtn_Click(object sender, RoutedEventArgs e)
@@ -95,16 +89,19 @@ namespace AniBox.Framework.Views
 
         private void delFieldBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (_fields.Count > 0)
+            {
+                _fields.RemoveAt(_fields.Count - 1);
+            }
         }
-
-
-
-
 
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            //this.SourceName = this.dsControl.txtSourceName.Text;
+            if (string.IsNullOrEmpty(SourceName))
+            {
+                MessageBox.Show("Source name can not be empty");
+                return;
+            }
 
             int interval = 10;
             if (int.TryParse(this.txtUpdateInterval.Text, out interval))
@@ -119,7 +116,6 @@ namespace AniBox.Framework.Views
         {
             this.DialogResult = false;
         }
-
 
     }
 }
