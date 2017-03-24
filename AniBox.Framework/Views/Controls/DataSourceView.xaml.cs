@@ -1,6 +1,7 @@
 ﻿using AniBox.Framework.App;
 using AniBox.Framework.Data;
 using AniBox.Framework.Data.Process;
+using AniBox.Framework.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,14 @@ namespace AniBox.Framework.Views.Controls
             get
             {
                 return IoCTypes.DataMatcherTypes;
+            }
+        }
+
+        public IEnumerable<DataSource> DataSourceTypes
+        {
+            get
+            {
+                return IoCTypes.DataSourceTypes;
             }
         }
 
@@ -115,7 +124,7 @@ namespace AniBox.Framework.Views.Controls
         private void btnSetSourcePath_Click(object sender, RoutedEventArgs e)
         {
             SetPathProcessorsView dlg = new SetPathProcessorsView();
-            dlg.Owner = this.Parent as Window;
+            dlg.Owner = UiSearchHelper.FindAnchestor<Window>(this);
             if (dlg.ShowDialog().Value)
             {
                 List<ProcessText> proces = dlg.SelectedProcessors.ToList<ProcessText>();
@@ -130,6 +139,11 @@ namespace AniBox.Framework.Views.Controls
         private void txtSourceName_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.SourceName = this.txtSourceName.Text;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            //comboDSTypes_SelectionChanged(null, null);
         }
     }
 }
