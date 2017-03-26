@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniBox.Controls.Html
+namespace AniBox.AniControls.Html
 {
     [Export(typeof(AniControl))]
     class SwitchImage_HorzPush : HtmlAniControl, IUpdateData
@@ -19,7 +19,7 @@ namespace AniBox.Controls.Html
         }
         protected override string HtmlResName
         {
-            get { return "AniBox.Controls.res.HorScroll.html"; }
+            get { return "AniBox.AniControls.res.HorScroll.html"; }
         }
 
         protected override List<HtmlResItem> HtmlReferedResources
@@ -27,8 +27,8 @@ namespace AniBox.Controls.Html
             get
             {
                 List<HtmlResItem> items = new List<HtmlResItem>();
-                items.Add(new HtmlResItem() { ResPath = "AniBox.Controls.res.overlap_1.jpg", FileName = "1.jpg" });
-                items.Add(new HtmlResItem() { ResPath = "AniBox.Controls.res.overlap_2.jpg", FileName = "2.jpg" });
+                items.Add(new HtmlResItem() { ResPath = "AniBox.AniControls.res.overlap_1.jpg", FileName = "1.jpg" });
+                items.Add(new HtmlResItem() { ResPath = "AniBox.AniControls.res.overlap_2.jpg", FileName = "2.jpg" });
                 return items;
             }
         }
@@ -40,7 +40,7 @@ namespace AniBox.Controls.Html
 
         public override string GetHtmlFile()
         {
-            //return @"C:\Users\willy\Documents\Visual Studio 2013\Projects\AniBox\AniBox.Controls\res\sprite_cog.htm";
+            //return @"C:\Users\willy\Documents\Visual Studio 2013\Projects\AniBox\AniBox.AniControls\res\sprite_cog.htm";
             string location = this.GetType().Assembly.Location;
             string dir = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(location), System.IO.Path.GetFileNameWithoutExtension(location) + ".hres");
             string html = System.IO.Path.Combine(dir, "HorScroll.html");

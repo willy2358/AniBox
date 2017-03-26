@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniBox.Controls
+namespace AniBox.AniControls
 {
     [Export(typeof(AniControl))]
     public class DynamicText : StaticText, IUpdateData
