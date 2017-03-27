@@ -31,6 +31,7 @@ using AniBox.Framework.Data;
 using AniBox.Framework.Interact;
 using AniBox.Framework.App;
 using AniBox.Framework.Data.Process;
+using Microsoft.Win32;
 
 namespace AniBox
 {
@@ -66,6 +67,8 @@ namespace AniBox
         private Point _StartRegionLstPoint;
         private Point _startTimerLstPoint;
         private Point _startDataSourceLastPoint;
+
+        private Project _curProject = new Project();
 
         private AniRegion _currentRegion = null;
 
@@ -157,6 +160,18 @@ namespace AniBox
             }
         }
 
+        public Project CurrentProject
+        {
+            get
+            {
+                return _curProject;
+            }
+            set
+            {
+                _curProject = value;
+            }
+        }
+
         private void SetupIoCFoundTypes()
         {
             IoCTypes.ProcessTypes = _processTypes;
@@ -220,6 +235,7 @@ namespace AniBox
 
             tabRegions.Items.Insert(0, tabItem);
             this.UserRegions.Insert(0, newRegion);
+            CurrentProject.InsertRegion(0, newRegion);
 
             tabRegions.SelectedItem = tabItem;
             this.CurrentRegion = newRegion;
@@ -527,6 +543,38 @@ namespace AniBox
                 // Initialize the drag & drop operation
                 DataObject dragData = new DataObject(CommConst.DRAGED_DATASOURCE, dataSupplier);
                 DragDrop.DoDragDrop(lstRegionDSs, dragData, DragDropEffects.Move);
+            }
+        }
+
+        private void menuNewProject_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuOpenProject_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openfileDlg = new OpenFileDialog();
+            openfileDlg.Filter = "AniBox工程|*.anb";
+            openfileDlg.Title = "打开工程";
+            if (openfileDlg.ShowDialog().Value)
+            {
+                Project project = Project.LoadProject(openfileDlg.FileName);
+                this.CurrentProject = project;
+            }
+        }
+
+        private void menuSaveProject_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+
+            saveFile.Filter = "AniBox工程|*.anb";
+            saveFile.Title = "保存工程";
+            string FileName = "MyProject";
+            saveFile.FileName = FileName;
+            saveFile.AddExtension = true;
+            if (saveFile.ShowDialog().Value)
+            {
+                CurrentProject.SaveAs(saveFile.FileName);
             }
         }
 
