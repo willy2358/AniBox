@@ -169,6 +169,21 @@ namespace AniBox
             set
             {
                 _curProject = value;
+                if (null != _curProject)
+                {
+                    this._userRegions.Clear();
+                    for(int i = 0; i < _curProject.Regions.Count; i++)
+                    {
+                        _userRegions.Add(_curProject.Regions[i]);
+                    }
+
+                    if (_userRegions.Count > 0)
+                    {
+                        this.tabRegions.SelectedItem = _userRegions[0];
+                    }
+                    
+                }
+ 
             }
         }
 
@@ -233,7 +248,6 @@ namespace AniBox
 
             SetNewCreateRegionSize(newRegion);
 
-            tabRegions.Items.Insert(0, tabItem);
             this.UserRegions.Insert(0, newRegion);
             CurrentProject.InsertRegion(0, newRegion);
 

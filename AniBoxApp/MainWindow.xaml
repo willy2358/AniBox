@@ -97,7 +97,7 @@
             </TabControl>
 
             <TabControl x:Name="tabRegions" Grid.Column="1" Drop="Grid_Drop" AllowDrop="True" Background="Transparent"
-                DragEnter="TabReions_DragEnter" SelectionChanged="tabRegions_SelectionChanged">
+                DragEnter="TabReions_DragEnter" SelectionChanged="tabRegions_SelectionChanged" ItemsSource="{Binding UserRegions}">
                 <TabControl.ItemContainerStyle>
                     <Style TargetType="TabItem">
                         <Setter Property="Header" Value="{Binding RegionName}"/>
@@ -108,11 +108,13 @@
                 
             </TabControl>
             <Grid Grid.Column="2">
+                <Border BorderThickness="1" BorderBrush="Gray">
                 <pg:PropertyGrid x:Name="lstProperties" PropertyFilterVisibility="Collapsed" 
                                  
                         PropertyChanged="lstProperties_PropertyChanged"
                         PropertyEditingFinished="lstProperties_PropertyEditingFinished"
                         PropertyValueChanged="lstProperties_PropertyValueChanged" ></pg:PropertyGrid>
+                </Border>
             </Grid>
            
         </Grid>

@@ -8,6 +8,7 @@ using System.Xml;
 using AniBox.Framework.Region;
 using System.Reflection;
 using AniBox.Framework.Controls;
+using System.Windows.Media;
 
 namespace AniBox
 {
@@ -33,6 +34,8 @@ namespace AniBox
                     AniRegion region = LoadRegion(nodeRegion);
                     
                     LoadRegionControls(nodeRegion, region);
+
+                    project.AddRegion(region);
                 }
 
                 return project;
@@ -43,11 +46,18 @@ namespace AniBox
             }
         }
 
+        public List<AniRegion> Regions
+        {
+            get
+            {
+                return _regions;
+            }
+        }
         private static AniRegion LoadRegion(XmlNode nodeRegion)
         {
             string regionName = nodeRegion.Attributes["TypeName"].Value;
             string assemblyName = nodeRegion.Attributes["Assembly"].Value;
-            Type type = FindType(regionName);
+            Type type = FindType(assemblyName, regionName);
             
             if (null == type)
             {
@@ -56,31 +66,54 @@ namespace AniBox
             AniRegion region = Activator.CreateInstance(type) as AniRegion;
             foreach(XmlAttribute attr in nodeRegion.Attributes)
             {
+                SetObjectProperty(region, attr);
+            }
+            return region;
+        }
+
+        private static void SetObjectProperty(Object obj, XmlAttribute attr)
+        {
+            try
+            {
+                Type type = obj.GetType();
                 PropertyInfo propInfo = type.GetProperty(attr.Name);
                 if (null != propInfo)
                 {
                     if (propInfo.PropertyType == typeof(int))
                     {
-                        propInfo.SetValue(region, Convert.ToInt32(attr.Value));
+                        propInfo.SetValue(obj, Convert.ToInt32(attr.Value));
                     }
                     else if (propInfo.PropertyType == typeof(double))
                     {
-                        propInfo.SetValue(region, Convert.ToDouble(attr.Value));
+                        propInfo.SetValue(obj, Convert.ToDouble(attr.Value));
                     }
                     else if (propInfo.PropertyType == typeof(string))
                     {
-                        propInfo.SetValue(region, attr.Value.ToString());
+                        propInfo.SetValue(obj, attr.Value.ToString());
+                    }
+                    else if (propInfo.PropertyType == typeof(Color))
+                    {
+                        propInfo.SetValue(obj, (Color)ColorConverter.ConvertFromString(attr.Value));
                     }
                 }
             }
-            return region;
+            catch(Exception ex)
+            {
+
+            }
+
         }
 
-        private static Type FindType(string type)
+        private static Type FindType(string assembly, string type)
         {
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach(var a in assemblies)
             {
+                if (a.FullName != assembly)
+                {
+                    continue;
+                }
+
                 Type[] ts = a.GetTypes();
                 foreach(Type t in ts)
                 {
@@ -116,7 +149,7 @@ namespace AniBox
         {
             string controlName = nodeControl.Attributes["TypeName"].Value;
             string assemblyName = nodeControl.Attributes["Assembly"].Value;
-            Type type = FindType(controlName);
+            Type type = FindType(assemblyName, controlName);
             if (null == type)
             {
                 return null;
@@ -124,22 +157,7 @@ namespace AniBox
             AniControl control = Activator.CreateInstance(type) as AniControl;
             foreach (XmlAttribute attr in nodeControl.Attributes)
             {
-                PropertyInfo propInfo = type.GetProperty(attr.Name);
-                if (null != propInfo)
-                {
-                    if (propInfo.PropertyType == typeof(int))
-                    {
-                        propInfo.SetValue(control, Convert.ToInt32(attr.Value));
-                    }
-                    else if (propInfo.PropertyType == typeof(double))
-                    {
-                        propInfo.SetValue(control, Convert.ToDouble(attr.Value));
-                    }
-                    else if (propInfo.PropertyType == typeof(string))
-                    {
-                        propInfo.SetValue(control, attr.Value.ToString());
-                    }
-                }
+                SetObjectProperty(control, attr);
             }
             return control;
         }
