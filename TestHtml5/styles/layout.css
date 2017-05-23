@@ -1,0 +1,114 @@
+body{
+		//background: url(./images/bg2.jpg);
+        //background-repeat: no-repeat;
+        //background-color: #FF00FF;
+        width: 1024px;
+        height: 768px;
+		//background-size: 100% 100%; 
+		//-o-background-size: 100% 100%;  
+		//-moz-background-size: 100% 100%; 
+		//-webkit-background-size: 100% 100%; 
+	}
+	.imgBg{
+		width: 1300px;
+		height: 768px;
+	}
+
+	div[class=bodyDiv]{
+
+		background-image: url(../images/bg_0.png);
+		width: 1920px;
+		height: 1080px;
+		position: relative;
+		left: 0;
+		top: 0;
+	}
+
+    div[class=divCanvas]{
+    	position: absolute;
+    	left: 20px;
+    	top: 50px;
+    	width: 1000px;
+    	height: 600px;
+    	//background-color: #FF00FF;
+
+    }
+
+	div[class=bookCover]{
+		float: left;
+        margin: 20px;
+	}
+
+    img[id=curBookCover]{
+        width: 200px;
+        height: 200px;
+        opacity: 1;
+        position:relative;
+        left: 10px;
+        top: 220px;          //max top: 450;   
+    }
+
+	img[class=bookCoverImg]{
+		
+		width: 340px;
+		height: 270px;
+    }
+
+    canvas[class=bookCoverCanvas]{
+        width: 340px;
+        height: 270px;
+    }
+
+    div[class=covers]{
+    	//background-color: #000f0f;
+    	position: absolute;
+    	left: 10px;
+    	bottom: 10px;
+    	//width: 1500px;
+    	height: 300px;
+    }
+    div[class=cover_1]{
+    	float: left;
+    	width:340px;
+    	height: 270px;
+    	margin-left: 10px;
+    	margin-top: 20px;
+
+    }
+
+    div[class=cover_2]{
+    	float: left;
+    	position: relative;
+        width:340px;
+        height: 270px;
+    	left:40px;
+		top:20px;
+    }
+
+    div[class=cover_3]{
+		position: relative;
+		float: left;
+        width:340px;
+        height: 270px;
+    	left:85px;
+		top:20px;
+    }
+
+    div[class=cover_4]{
+		float: left;
+    	position: relative;
+        width:340px;
+        height: 270px;
+    	left:125px;
+		top:20px;
+    }
+
+    div[class=cover_5]{
+		float: left;
+    	position: relative;
+        width:340px;
+        height: 270px;
+
+    	left:165px;
+		top:20px;
+    }

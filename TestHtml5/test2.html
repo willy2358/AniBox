@@ -1,0 +1,45 @@
+<!doctype html public "-//w3c//dtd xhtml 1.0 transitional//en" "http://www.w3.org/tr/xhtml1/dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312" />
+<title>untitled document</title>
+</head>
+<body>
+<div id="pic" style="filter:progid:dximagetransform.microsoft.alphaimageloader(sizingmethod=scale);width:300px;height:200px;color:red;"></div>
+<script>
+var count=255;
+var control=setinterval("showpic()",10);
+function showpic(){
+var errors=new array();
+for(i=0;i<count;i++){
+  errors.push(true);
+}
+var e;
+do{
+  e="success"
+  try{
+    var position=parseint(math.random()*count);
+    document.getelementbyid("pic").filters.item("dximagetransform.microsoft.alphaimageloader").src="img/"+position+".jpg";
+  }catch(e){
+    errors[position]=false;
+if(hasnothing(errors)){
+   document.getelementbyid("pic").filters.item("dximagetransform.microsoft.alphaimageloader").src="404.jpg";
+   clearinterval(control);
+   return;
+}
+  }
+}while(e!="success");
+error=null;
+e=null;
+} 
+function hasnothing(array){
+  for(var subscript in array){
+    if(array[subscript]){
+  return false;
+}
+  }
+  return true;
+}
+</script>
+</body>
+</html>

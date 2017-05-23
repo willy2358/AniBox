@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="./scripts/jquery-1.8.1.js"></script>
+    <script type="text/javascript" src="./scripts/aniutils.js"></script>
+	<style type="text/css">
+
+
+		.container {
+			  
+			  position:absolute;
+			  left:0;
+			  top:0;
+			  right: 100px;
+			  bottom: 100px;
+			  width: 200px;
+			}
+		.overlay {
+		  position: absolute;
+		  top: 0;
+		  bottom: 0;
+		  left: 0;
+		  right: 0;
+		  height: 100%;
+		  width: 100%;
+		  opacity: 0;
+		  transition: 0.5s ease;
+		  background-color: #008CBA;
+		}			
+
+	.container:hover .overlay {
+	  opacity: 1;
+	}
+	</style>
+    <script type="text/javascript">
+
+       function drawUserImage(img) {
+            var mycv = document.getElementById("myCanvas");
+            var myctx = mycv.getContext("2d");
+            //myctx.drawImage(beauty, 50, 50, 50, 50, 0, 0, 100, 100);
+            //myctx.drawImage(img, 0, 0, 500, 500, 0, 0, 100, 100);
+            //myctx.drawImage(img, 0, 0);
+            //myctx.drawImage(img, 0, 0, 256, 328, 0, 0, 128, 164);
+            myctx.drawImage(img, 0, 0);
+        }
+
+        function load() {
+            var img = new Image();
+            img.src = "./images/pic1.png";
+            if (img.complete) {
+                drawUserImage(img);
+            }
+            else {
+                img.onload = function () {
+                    var imgH = this.height;
+                    var imgW = this.width;
+                    //alert("origin size:" + imgW + ',' + imgH);
+                    drawUserImage(img);
+                };
+                img.onerror = function () {
+                    window.alert('image failed!, try again');
+                };
+            };
+
+        }//load
+
+
+
+
+
+
+
+        function beginAnimation() {
+            var newImage = new Image();
+            newImage.onload = function () {
+                drawImageBlock(newImage);
+            }
+            newImage.src = "./images/img1.png";
+        };
+
+        var mosaics = [];
+
+        function drawImageBlock(img) {
+            var mosaicSize = 10;
+            var updateFrequency = 100;  //100 ms
+            var switchSeconds = 3;
+            mosaics = createMosaicMatrix(img, mosaicSize);
+
+            var mycv = document.getElementById("myCanvas");
+            var myctx = mycv.getContext("2d");
+            //myctx.drawImage(img, 0, 0, 50, 50, 20, 20, 50, 50);
+
+            var timer = setInterval(function () {
+                if (mosaics.length < 1) {
+                    clearInterval(timer);
+                }
+                else {
+                    var pos = mosaics.shift();
+                    myctx.drawImage(img, pos.x * mosaicSize, pos.y * mosaicSize, mosaicSize, mosaicSize,
+                                    pos.x * mosaicSize, pos.y * mosaicSize, mosaicSize, mosaicSize);
+                }
+            }, 10);
+        };
+
+        function createMosaicMatrix(img, mosaicSize) {
+            var cols = Math.ceil(img.width / mosaicSize);
+            var rows = Math.ceil(img.height / mosaicSize);
+            var arr = [];
+            for (var c = 0; c < cols; c++) {
+                for (var r = 0; r < rows; r++) {
+                    arr.push({ x: r, y: c });
+                }
+            }
+            return shuffleArray(arr);
+        };
+
+
+
+        $(function () {
+
+            // var canvas = document.getElementById('myCanvas');
+            //             var ctx = canvas.getContext('2d');
+            //             drawTree(ctx, 100, 10, 60, -Math.PI / 2, 12, 12);
+            load();
+            //beginAnimation();
+        });
+    </script>
+
+</head>
+<body>
+    <div style="background-color:lightgray; width:128px;height:164px" >
+        <canvas id="myCanvas" width="128" height="164"></canvas>
+    </div>
+    <input type="button" value="test" name="test" style="width: 100px" onclick="beginAnimation();" />
+
+    <!--<div>
+        <input type="button" name="test" style="width: 100px">
+    </div>-->
+</body>
+</html>
