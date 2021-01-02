@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet"  type="text/css" href="./styles/layout.css"></link>
+<script type="text/javascript" src="./scripts/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="./scripts/aniutils.js"></script>
+<script type="text/javascript" src="./scripts/s2.js"></script>
+<script type="text/javascript" src="./scripts/move_along_path.js"></script>
+<script type="text/javascript" src="./scripts/image_ani.js"></script>
+
+<script type="text/javascript">
+    var config = {
+    	switch_pic_seconds: 5,
+    	update_covers_seconds:15,
+    	cover_num_per_page:5,
+    	fps : 60,
+    	image_bound:{
+    		 left:10, 
+             top:220, 
+             right:1000,
+             bottom:450
+    	},
+    	finalSize : {
+    		width: 300,
+    		height:300
+    	}
+    }
+    var percent = 0;
+
+   	var pt0 = {x:0, y:0};
+	var pt1 = {x:100, y:200};
+	var dir = 1;
+	var aniSeconds = 3;
+   	var fps = 60;
+   	var imgBound = {
+   		             left:10, 
+   		             top:220, 
+   		             right:1000,
+   		             bottom:450
+   		           };
+    var imgIdx = 0;
+
+   	var finalSize = {width: 300, height: 300};
+
+   	function switch_image(){
+   		var img = getNextImage();
+   		updateCurImage(img);
+
+   		pt0 = getRandomPt();
+   		pt1 = getRandomPt();
+
+   		beginCurBookCoverAnimation();
+
+   		setTimeout(function() {
+              requestAnimationFrame(switch_image);
+          }, config.switch_pic_seconds * 1000 );
+   	}
+
+
+
+   	function getNextImage(){
+   		imgIdx += 1;
+   		if (imgIdx > 5){
+   			imgIdx = 1;
+   		}
+   		var imgName = "book" + imgIdx + ".jpg";
+   		return "./images/" + imgName;
+   	}
+
+   	function updateCurImage(img){
+   		$('#curBookCover').attr("src", img);
+
+   	}
+   	//alert("11");
+    function beginCurBookCoverAnimation() {
+    	if (percent >= 100)	{
+    	}
+    	if (percent <= 0){
+    		dir = 1;
+    	}
+    	percent += dir;
+    	var centPerent = percent / 100.0;
+    	var pos = getLineXYatPercent(pt0, pt1, centPerent);
+    	var opa = 1 * centPerent;
+    	var wid = finalSize.width * centPerent;
+    	var hei = finalSize.height * centPerent;
+    	var newPosCss = {
+    		             left:'' + pos.x + 'px', 
+    	                 top:'' + pos.y + 'px',
+    	                 opacity: '' + opa,
+    	                 width:wid + 'px',
+    	                 height:hei + 'px'
+    	                };
+    	//console.log(newPosCss);
+    	$("#curBookCover").css(newPosCss);
+    	if (opa < 1){
+    		setTimeout(function() {
+              requestAnimationFrame(beginCurBookCoverAnimation);
+          }, 1000 / fps);
+    	}
+    	else{
+    		percent = 0;
+    	}
+    }
+
+
+	function getLineXYatPercent(startPt,endPt,percent) {
+	  var dx = endPt.x-startPt.x;
+	  var dy = endPt.y-startPt.y;
+	  var X = startPt.x + dx*percent;
+	  var Y = startPt.y + dy*percent;
+	  return( {x:X,y:Y} );
+	}
+
+	function getRandomPt() {
+		var x =  imgBound.left + Math.random() * (imgBound.right - imgBound.left);
+		var y = imgBound.top + Math.random() * (imgBound.bottom - imgBound.top);
+		return {x:x, y:y};
+	}
+
+	function beginAni() {
+	   	pt0.x = imgBound.left + Math.random() * (imgBound.right - imgBound.left);
+	   	pt0.y = imgBound.top + Math.random() * (imgBound.bottom - imgBound.top);
+65
+	   	pt1.x = imgBound.left + Math.random() * (imgBound.right - imgBound.left);
+	   	pt1.y = imgBound.top + Math.random() * (imgBound.bottom - imgBound.top);
+	   	beginCurBookCoverAnimation();
+	   }  
+    function test(){
+    	//$("#curBookCover").attr("src", "./images/shu2.png");
+    	beginTimerToUpdateBookCovers();
+    }
+    
+
+   function showBookCover(imgPath, canvasId) {
+        var canVas = document.getElementById(canvasId);
+        var width = 340;
+
+        var height = 270;
+
+        var canCtx = canVas.getContext("2d");
+        var img = new Image();
+        img.onload = function(){
+        	console.log('image width:' + img.width + ', height:' + img.height);
+        	//canCtx.drawImage(img,  0, 0, img.width, img.height, 0, 0, width, height);
+        	canCtx.drawImage(img, 0, 0, width, height);
+        }
+        img.src = imgPath;
+    }
+
+    function queryNextBatchBookCovers(){
+    	var imgs = [];
+    	imgs.push("./images/shu1.png");
+    	imgs.push("./images/shu2.png");
+    	imgs.push("./images/shu3.png");
+    	imgs.push("./images/shu4.png");
+    	imgs.push("./images/shu5.jpg");
+    	return shuffleArray(imgs);
+    }
+
+    function loadBookCovers() {
+    	var covers = queryNextBatchBookCovers();
+    	for(var i = 0; i < 5; i++){
+    		showBookCover(covers[i], "bookCoverCanvas" + (i + 1));
+    	}
+
+    	setTimeout(function() {
+              beginTimerToUpdateBookCovers();
+          }, config.update_covers_seconds * 1000);
+    }
+
+    function  MosaicAnimation(img, canvasId) {
+    	this.mosaicSize = 80;
+        this.updateFrequency = 100;  //100 ms
+        this.switchSeconds = 3;
+        this.mosaics = createMosaicMatrix(img, mosaicSize);
+        this.mosaics['canvasId'] = canvasId;
+        console.log('img:' + img.src + ', canvas:' + canvasId + ',blocks:' + mosaics.length);
+
+        var mycv = document.getElementById(canvasId);
+        var myctx = mycv.getContext("2d");
+        var canvasWid = mycv.width;
+        var canvasHeight = mycv.height;
+        var widFactor = canvasWid/img.width;
+        var heiFactor = canvasHeight/img.height;
+        var xFactor = (canvasWid/(img.width/mosaicSize));
+        var yFactor = (canvasHeight/(img.height/mosaicSize));
+    }
+
+	function drawImageBlock(img, canvasId) {
+		
+        var mosaicSize =10;
+        var updateFrequency = 100;  //100 ms
+        var switchSeconds = 3;
+        var mosaics = createMosaicMatrix(img, mosaicSize);
+        var myCanvasId = canvasId;
+        //mosaics['canvasId'] = canvasId;
+        console.log('img:' + img.src + ', canvas:' + canvasId + ',blocks:' + mosaics.length);
+
+        var mycv = document.getElementById(canvasId);
+        var myctx = mycv.getContext("2d");
+        var canvasWid = mycv.width;
+        var canvasHeight = mycv.height;
+        var widFactor = canvasWid/img.width;
+        var heiFactor = canvasHeight/img.height;
+        var xFactor = (canvasWid/(img.width/mosaicSize));
+        var yFactor = (canvasHeight/(img.height/mosaicSize));
+        var widInCanvas =  mosaicSize * widFactor;
+        var heiInCanvas = mosaicSize * heiFactor;
+        var obj = {
+        	'mosaics':mosaics,
+        	'mosaicSize' : mosaicSize,
+        	'xFactor' : xFactor,
+        	'yFactor' : yFactor,
+        	'widFactor': widFactor,
+        	'heiFactor' : heiFactor,
+        	'widInCanvas' :  mosaicSize * widFactor,
+        	'heiInCanvas' : mosaicSize * heiFactor,
+        	'img' : img,
+        	'canvasId' : canvasId,
+
+        	animation : function () {
+				var mycv = document.getElementById(canvasId);
+				var myctx = mycv.getContext("2d");
+			    // this['canvasCtx'] = myctx;
+
+				var timer = setInterval(function () {
+					console.log('timer:' + timer +', canvasId :' + myCanvasId + ',length:' + mosaics.length);
+		            if (mosaics.length < 1) {
+		            	console.log('clear interval ' + timer);
+		                clearInterval(timer);
+		            }
+		            else {
+		                var pos = mosaics.shift();
+		                
+		                var x = pos.x * mosaicSize;
+		                var y = pos.y * mosaicSize;
+		                var xInCanvas = pos.x * xFactor;
+		                var yInCanvas = pos.y * yFactor;
+		                //console.log('imgX:' + x + ',imgY:' + y + ',xInCanvas :' + xInCanvas + ', yInCanvas :' + yInCanvas );
+
+		                myctx.drawImage(img, x, y, mosaicSize, mosaicSize, xInCanvas, yInCanvas, widInCanvas, heiInCanvas);
+		                                //pos.x * mosaicSize * widFactor, pos.y * mosaicSize * heiFactor, mosaicSize * widFactor, mosaicSize * heiFactor);
+		            }
+        		}, 5);
+		        console.log('started timer :' + timer);
+        		this.mosaics['timer'] = timer;
+        	}
+        };
+
+        obj.animation();
+
+    };
+
+    function createMosaicMatrix(img, mosaicSize) {
+        var cols = Math.ceil(img.width / mosaicSize);
+        var rows = Math.ceil(img.height / mosaicSize);
+        var arr = [];
+        for (var c = 0; c < cols; c++) {
+            for (var r = 0; r < rows; r++) {
+                arr.push({ x: c, y: r });
+            }
+        }
+        return shuffleArray(arr);
+    };
+
+ 	function showBookCoverMosaicly(coverImg, canvasId) {
+        var img = new Image();
+        img.onload = function () {
+            drawImageBlock(img, canvasId);
+        }
+        img.src = coverImg;
+    }
+
+    function beginTimerToUpdateBookCovers(){
+
+    	var covers = queryNextBatchBookCovers();
+    	var images = [];
+    	for (var i = 0; i < config.cover_num_per_page; i++) {
+    	    var canvasId = "bookCoverCanvas" + (i + 1);
+    	    showBookCoverMosaicly(covers[i], canvasId);
+    	}
+
+    	setTimeout(function() {
+              beginTimerToUpdateBookCovers();
+          }, config.update_covers_seconds * 1000);
+    }
+
+	 $(function(){
+		switch_image();
+
+		loadBookCovers();
+	 });
+</script>
+</head>
+<body >
+	<div class="bodyDiv">
+        <div class="divCanvas" > 
+           <!-- <canvas id="myCanvas" width=600 height=300 background-color=red></canvas> -->
+            <img id="curBookCover" src="./images/shu1.png">
+        </div>
+
+<!--         <input type="button" name="TestButton" width="300" height="30" style="position: absolute;left:50px; top: 600px" value="test" onclick="test();" /> -->
+		<!--<img class="imgBg" src="./images/bg.png" >-->
+		<div class="covers" >
+	       <div class="cover_1">
+	         <!-- <img class="bookCoverImg" src="./images/shu1.png"> -->
+	         <canvas id="bookCoverCanvas1" calss="bookCoverCanvas" width="340" height="270"></canvas>
+	       </div>
+
+	       <div class="cover_2">
+	         <!-- <img class="bookCoverImg" src="./images/shu2.png"> -->
+	         <canvas id="bookCoverCanvas2" calss="bookCoverCanvas" width="340" height="270"></canvas>
+	       </div>
+
+	       <div class="cover_3">
+	         <!-- <img class="bookCoverImg" src="./images/shu1.png"> -->
+	         <canvas id="bookCoverCanvas3" calss="bookCoverCanvas" width="340" height="270"></canvas>
+	       </div>
+
+	       <div class="cover_4">
+	         <!-- <img class="bookCoverImg" src="./images/shu2.png"> -->
+	         <canvas id="bookCoverCanvas4" calss="bookCoverCanvas" width="340" height="270"></canvas>
+	       </div>
+
+	       <div class="cover_5">
+	         <!-- <img class="bookCoverImg" src="./images/shu1.png"> -->
+	         <canvas id="bookCoverCanvas5" calss="bookCoverCanvas" width="340" height="270"></canvas>
+	       </div>
+		</div>
+
+	</div>
+</body>
+</html>
