@@ -1,0 +1,63 @@
+﻿<Window x:Class="AniBox.Framework.Views.SetPathProcessorsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="clr-namespace:AniBox.Framework.Views.Controls"
+             xmlns:pg="clr-namespace:System.Windows.Controls.WpfPropertyGrid;assembly=System.Windows.Controls.WpfPropertyGrid"
+             mc:Ignorable="d" 
+             Title="文本处理"
+             d:DesignHeight="300" d:DesignWidth="300" Width="600" Height="500" WindowStartupLocation="CenterOwner">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"></RowDefinition>
+            <!--<RowDefinition></RowDefinition>-->
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Controls:SetTextProcessorView x:Name="processorCtrl" Grid.Row="0" Grid.ColumnSpan="2"></Controls:SetTextProcessorView>
+        <!--<TextBlock Grid.Row="0" Grid.Column="0">Types</TextBlock>
+        <ComboBox x:Name="comboProcessTypes" Grid.Row="0" Grid.Column="1" 
+                  ItemsSource="{Binding ProcessTypes}" DisplayMemberPath="Name"
+                  SelectionChanged="comboProcessTypes_SelectionChanged"></ComboBox>
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" BorderBrush="Gray" BorderThickness="1">
+            --><!--<pg:PropertyGrid x:Name="lstProperties" PropertyFilterVisibility="Collapsed" ></pg:PropertyGrid>--><!--
+        </Border>-->
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <!--<GroupBox Header="Link Type">
+                <StackPanel Orientation="Horizontal" >
+                    <RadioButton x:Name="radioLinkNone" Margin="5" GroupName="linktype" IsChecked="True" Checked="radioLinkNone_Checked">None</RadioButton>
+                    <RadioButton x:Name="radioLinkInsert" Margin="5"  GroupName="linktype" Checked="radioLinkInsert_Checked">Insert Ahead</RadioButton>
+                    <RadioButton x:Name="radioLinkAsInput" Margin="5"  GroupName="linktype" Checked="radioLinkAsInput_Checked">As Input</RadioButton>
+                    <RadioButton x:Name="radioLinkAppend" Margin="5"  GroupName="linktype" Checked="radioLinkAppend_Checked">Append End</RadioButton>
+                </StackPanel>
+            </GroupBox>-->
+            <Button x:Name="btnAddProcessor" HorizontalAlignment="Right"
+                Height="25" Width="60" Margin="10" Click="btnAddProcessor_Click">Add</Button>
+        </StackPanel>
+
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="dgProcessors" Grid.Column="0" ItemsSource="{Binding SelectedProcessors}" AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="100"> </DataGridTextColumn>
+                    <DataGridTextColumn Header="Result" Binding="{Binding Output}" Width="300"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            
+            <Button x:Name="btnRemoveProcess" Grid.Column="1" Height="25" Margin="10" Click="btnRemoveProcess_Click">Remove</Button>
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Right">
+            <Button x:Name="btnOK" Width="80" Click="btnOK_Click" Margin="10,0,10,0">OK</Button>
+            <Button x:Name="btnCancel" Width="80" Click="btnCancel_Click" >Cancel</Button>
+        </StackPanel>
+    </Grid>
+</Window>

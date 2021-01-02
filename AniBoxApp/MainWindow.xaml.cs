@@ -28,6 +28,10 @@ using AniBox.Framework.Controls;
 using AniBox.Framework.Utility;
 using AniBox.Framework.SyncUpdate;
 using AniBox.Framework.Data;
+using AniBox.Framework.Interact;
+using AniBox.Framework.App;
+using AniBox.Framework.Data.Process;
+using Microsoft.Win32;
 
 namespace AniBox
 {
@@ -42,6 +46,15 @@ namespace AniBox
         private CompositionContainer _container;
 
         [ImportMany]
+        IEnumerable<ProcessText> _processTypes = null;
+
+        [ImportMany]
+        IEnumerable<DataSource> _dataSourceTypes = null;
+
+        [ImportMany]
+        IEnumerable<DataMatcher> _dataMatcherTypes = null;
+
+        [ImportMany]
         IEnumerable<AniControl> _controlTypes = null;
 
         [ImportMany]
@@ -53,6 +66,9 @@ namespace AniBox
         private Point _startControlLstPoint;
         private Point _StartRegionLstPoint;
         private Point _startTimerLstPoint;
+        private Point _startDataSourceLastPoint;
+
+        private Project _curProject = new Project();
 
         private AniRegion _currentRegion = null;
 
@@ -120,6 +136,7 @@ namespace AniBox
 
             this.lstControls.ItemsSource = _controlTypes;
             this.lstRegions.ItemsSource = _regionTypes;
+            SetupIoCFoundTypes();
         }
 
         public ObservableCollection<AniRegion> UserRegions
@@ -141,6 +158,42 @@ namespace AniBox
                 SetProperty(ref _currentRegion, value, "CurrentRegion");
                 this.lstProperties.SelectedObject = _currentRegion;
             }
+        }
+
+        public Project CurrentProject
+        {
+            get
+            {
+                return _curProject;
+            }
+            set
+            {
+                _curProject = value;
+                if (null != _curProject)
+                {
+                    this._userRegions.Clear();
+                    for(int i = 0; i < _curProject.Regions.Count; i++)
+                    {
+                        _userRegions.Add(_curProject.Regions[i]);
+                    }
+
+                    if (_userRegions.Count > 0)
+                    {
+                        this.tabRegions.SelectedItem = _userRegions[0];
+                    }
+                    
+                }
+ 
+            }
+        }
+
+        private void SetupIoCFoundTypes()
+        {
+            IoCTypes.ProcessTypes = _processTypes;
+
+            IoCTypes.DataSourceTypes = _dataSourceTypes;
+
+            IoCTypes.DataMatcherTypes = _dataMatcherTypes;
         }
 
         private void InitializeAggregateCatalog()
@@ -195,8 +248,8 @@ namespace AniBox
 
             SetNewCreateRegionSize(newRegion);
 
-            tabRegions.Items.Insert(0, tabItem);
             this.UserRegions.Insert(0, newRegion);
+            CurrentProject.InsertRegion(0, newRegion);
 
             tabRegions.SelectedItem = tabItem;
             this.CurrentRegion = newRegion;
@@ -460,6 +513,82 @@ namespace AniBox
                 // Initialize the drag & drop operation
                 DataObject dragData = new DataObject(CommConst.DRAGED_TIMER_DATA, timer);
                 DragDrop.DoDragDrop(lstRegionTimers, dragData, DragDropEffects.Move);
+            }
+        }
+
+        private void radioMoveControl_Click(object sender, RoutedEventArgs e)
+        {
+            Service.CurrentOperation = Service.OP_Type.MoveControl;
+        }
+
+        private void radioSelect_Click(object sender, RoutedEventArgs e)
+        {
+            Service.CurrentOperation = Service.OP_Type.SelectControl;
+        }
+
+        private void lstRegionDSs_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _startDataSourceLastPoint = e.GetPosition(null);
+        }
+
+        private void lstRegionDSs_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (lstRegionDSs.SelectedItems.Count < 1)
+            {
+                return;
+            }
+
+            Point mousePos = e.GetPosition(null);
+            Vector diff = _startDataSourceLastPoint - mousePos;
+            if (e.LeftButton == MouseButtonState.Pressed
+                && (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance
+                    || Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+                )
+            {
+                ListBox listView = sender as ListBox;
+                ListBoxItem listViewItem = UiSearchHelper.FindAnchestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+                if (null == listViewItem)
+                {
+                    return;
+                }
+
+                DataSupplier dataSupplier = (DataSupplier)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
+
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject(CommConst.DRAGED_DATASOURCE, dataSupplier);
+                DragDrop.DoDragDrop(lstRegionDSs, dragData, DragDropEffects.Move);
+            }
+        }
+
+        private void menuNewProject_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuOpenProject_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openfileDlg = new OpenFileDialog();
+            openfileDlg.Filter = "AniBox工程|*.anb";
+            openfileDlg.Title = "打开工程";
+            if (openfileDlg.ShowDialog().Value)
+            {
+                Project project = Project.LoadProject(openfileDlg.FileName);
+                this.CurrentProject = project;
+            }
+        }
+
+        private void menuSaveProject_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+
+            saveFile.Filter = "AniBox工程|*.anb";
+            saveFile.Title = "保存工程";
+            string FileName = "MyProject";
+            saveFile.FileName = FileName;
+            saveFile.AddExtension = true;
+            if (saveFile.ShowDialog().Value)
+            {
+                CurrentProject.SaveAs(saveFile.FileName);
             }
         }
 

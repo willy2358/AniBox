@@ -81,6 +81,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Project.cs" />
+    <Compile Include="ProjectManager.cs" />
     <Compile Include="RegionsScreen.xaml.cs">
       <DependentUpon>RegionsScreen.xaml</DependentUpon>
     </Compile>

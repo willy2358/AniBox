@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace AniBox.Controls
+namespace AniBox.AniControls
 {
     [Export(typeof(AniControl))]
     public class StaticText : WPFAniControl

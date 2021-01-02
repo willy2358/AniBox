@@ -34,6 +34,7 @@ namespace AniBox.Framework.Controls
             if ((bool)e.NewValue)
             {
                 ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
+                browser.MenuHandler = new MenuHandler();
                 string html = GetHtmlFile();
                 if (string.IsNullOrEmpty(html))
                 {

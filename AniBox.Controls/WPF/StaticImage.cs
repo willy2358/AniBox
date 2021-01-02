@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace AniBox.Controls
+namespace AniBox.AniControls
 {
     [Export(typeof(AniControl))]
     public class StaticImage : WPFAniControl
@@ -39,7 +39,10 @@ namespace AniBox.Controls
             set
             {
                 _imageFile = value;
-                _imgControl.thisImage.Source = (new ImageSourceConverter()).ConvertFrom(_imageFile) as ImageSource;
+                if (System.IO.File.Exists(_imageFile))
+                {
+                    _imgControl.thisImage.Source = (new ImageSourceConverter()).ConvertFrom(_imageFile) as ImageSource;
+                }
             }
         }
     }

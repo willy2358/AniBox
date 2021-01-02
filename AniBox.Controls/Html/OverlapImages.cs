@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniBox.Controls.Html
+namespace AniBox.AniControls.Html
 {
     [Export(typeof(AniControl))]
     public class OverlapImages : HtmlAniControl
@@ -18,7 +18,7 @@ namespace AniBox.Controls.Html
         }
         protected override string HtmlResName
         {
-            get { return "AniBox.Controls.res.CasImgs.html"; }
+            get { return "AniBox.AniControls.res.CasImgs.html"; }
         }
 
         protected override List<HtmlResItem> HtmlReferedResources
@@ -26,9 +26,9 @@ namespace AniBox.Controls.Html
             get 
             {
                 List<HtmlResItem> items = new List<HtmlResItem>();
-                items.Add(new HtmlResItem() { ResPath = "AniBox.Controls.res.overlap_1.jpg", FileName = "1.jpg" });
-                items.Add(new HtmlResItem() { ResPath = "AniBox.Controls.res.overlap_2.jpg", FileName = "2.jpg" });
-                items.Add(new HtmlResItem() { ResPath = "AniBox.Controls.res.overlap_3.jpg", FileName = "3.jpg" });
+                items.Add(new HtmlResItem() { ResPath = "AniBox.AniControls.res.overlap_1.jpg", FileName = "1.jpg" });
+                items.Add(new HtmlResItem() { ResPath = "AniBox.AniControls.res.overlap_2.jpg", FileName = "2.jpg" });
+                items.Add(new HtmlResItem() { ResPath = "AniBox.AniControls.res.overlap_3.jpg", FileName = "3.jpg" });
                 return items;
             }
         }

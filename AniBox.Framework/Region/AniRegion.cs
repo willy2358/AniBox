@@ -1,10 +1,11 @@
 ﻿using AniBox.Framework.Attributes;
 using AniBox.Framework.Controls;
 using AniBox.Framework.Data;
-using AniBox.Framework.Events;
+using AniBox.Framework.AniEventArgs;
+using AniBox.Framework.Interact;
 using AniBox.Framework.Share;
 using AniBox.Framework.SyncUpdate;
-using AniBox.Framework.UI;
+using AniBox.Framework.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -36,8 +37,8 @@ namespace AniBox.Framework.Region
 
         private ObservableCollection<UITimer> _timers = new ObservableCollection<UITimer>();
 
-        private List<DataSource> _dataSourceTypes { set; get; }
-
+        private ObservableCollection<DataSupplier> _dataUpdaters = new ObservableCollection<DataSupplier>();
+        
         private double _regionWidth = 0;
         private double _regionHeight = 0;
 
@@ -62,6 +63,14 @@ namespace AniBox.Framework.Region
         {
             get;
             set;
+        }
+
+        public ObservableCollection<DataSupplier> DataSources
+        {
+            get
+            {
+                return _dataUpdaters;
+            }
         }
 
         public AniControl SelectedControl
@@ -90,14 +99,6 @@ namespace AniBox.Framework.Region
             get
             {
                 return _aniControls;
-            }
-        }
-
-        public List<DataSource> DataSourceTypes
-        {
-            get
-            {
-                return _dataSourceTypes;
             }
         }
 
@@ -176,14 +177,34 @@ namespace AniBox.Framework.Region
             ContextMenu ctxMenu = new ContextMenu();
 
             MenuItem menuItem = new MenuItem(){ Header = "Add Timer"};
-            menuItem.Click += menuItem_Click;
-            
+            menuItem.Click += AddTimer_Click;
+            ctxMenu.Items.Add(menuItem);
+
+            menuItem = new MenuItem() { Header = "Add DataSource" };
+            menuItem.Click += AddArrayItem_Click;
             ctxMenu.Items.Add(menuItem);
 
             return ctxMenu;
         }
 
-        void menuItem_Click(object sender, RoutedEventArgs e)
+        void AddArrayItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetRegionDataSourceView view = new SetRegionDataSourceView();
+            view.Owner = Application.Current.MainWindow;
+            bool? ret = view.ShowDialog();
+            if (ret.HasValue && ret.Value == true)
+            {
+                DataSupplier supplier = new DataSupplier();
+                supplier.Name = view.SourceName;
+                supplier.UpdateInterval = view.UpdateInterval;
+                supplier.Source = view.CurrentDataSource;
+                supplier.Fields = view.Fields.ToList<FieldEntry>();
+                supplier.StartUpdate();
+                _dataUpdaters.Add(supplier);
+            }
+        }
+
+        void AddTimer_Click(object sender, RoutedEventArgs e)
         {
             UITimer timer = new UITimer();
             timer.Name = "Timer" + (Timers.Count + 1).ToString();
@@ -263,7 +284,7 @@ namespace AniBox.Framework.Region
         void SetDataSource_Click(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
-            SetDataSourceWindow dlg = new SetDataSourceWindow();
+            SetControlDataSourceView dlg = new SetControlDataSourceView();
             bool? ret = dlg.ShowDialog();
             if (ret.HasValue && ret.Value)
             {
@@ -326,6 +347,27 @@ namespace AniBox.Framework.Region
                     timer.AddUptateControl(control as IUpdateData);
                     AddTimerIndicatorToControl(border.Child as Grid);
                     e.Handled = true;
+                }
+            }
+            else if (e.Data.GetDataPresent(CommConst.DRAGED_DATASOURCE))
+            {
+                DataSupplier ds = e.Data.GetData(CommConst.DRAGED_DATASOURCE) as DataSupplier;
+                SetControlToListenDataSourceFieldUpdate(sender, ds);
+            }
+        }
+
+        private void SetControlToListenDataSourceFieldUpdate(object sender, DataSupplier ds)
+        {
+            BindDataSupplierView view = new BindDataSupplierView();
+            view.Fields = ds.Fields;
+            view.Owner = Application.Current.MainWindow;
+            if (view.ShowDialog().Value)
+            {
+                Border border = sender as Border;
+                AniControl control = GetActualControl(border);
+                if (control is IUpdateData)
+                {
+                    view.SelectedField.ResultListener += (control as IUpdateData).OnFieldSourceUpdated;
                 }
             }
         }
@@ -400,11 +442,15 @@ namespace AniBox.Framework.Region
 
         void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            FrameworkElement fEle = sender as FrameworkElement;
-            isDragDropInEffect = true;
-            _movePos = e.GetPosition(null);
-            fEle.CaptureMouse();
-            fEle.Cursor = Cursors.Hand;
+            if (Service.CurrentOperation == Service.OP_Type.MoveControl)
+            {
+                FrameworkElement fEle = sender as FrameworkElement;
+                isDragDropInEffect = true;
+                _movePos = e.GetPosition(null);
+                fEle.CaptureMouse();
+                fEle.Cursor = Cursors.Hand;
+            }
+
         }
 
         void Element_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

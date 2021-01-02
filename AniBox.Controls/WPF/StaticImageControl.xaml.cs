@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AniBox.Controls
+namespace AniBox.AniControls
 {
     /// <summary>
     /// StaticImageControl.xaml 的交互逻辑

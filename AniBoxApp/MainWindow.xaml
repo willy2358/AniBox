@@ -5,111 +5,38 @@
         xmlns:cefsharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         Title="MainWindow" Height="350" Width="800" WindowState="Maximized" KeyDown="Window_KeyDown">
     <Window.Resources>
-        <!--<Style x:Key="TabControlStyle" TargetType="{x:Type TabControl}">
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="Padding" Value="4,4,4,4"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
-            <Setter Property="Background" Value="#F9F9F9"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabControl}">
-                        <Grid ClipToBounds="true" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="true">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="ColumnDefinition0"/>
-                                <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
-                                <RowDefinition x:Name="RowDefinition1" Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TabPanel
-            x:Name="HeaderPanel"
-            Grid.Column="0"
-            Grid.Row="0"
-            Margin="2,2,2,0"
-            Panel.ZIndex="1"
-            IsItemsHost="true"
-            KeyboardNavigation.TabIndex="1"/>
-                            <Border
-            x:Name="ContentPanel"
-            Grid.Column="0"
-            Grid.Row="1"
-            Background="{TemplateBinding Background}"
-            BorderBrush="{TemplateBinding BorderBrush}"
-            BorderThickness="{TemplateBinding BorderThickness}"
-            KeyboardNavigation.DirectionalNavigation="Contained"
-            KeyboardNavigation.TabIndex="2"
-            KeyboardNavigation.TabNavigation="Local">
-                                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                                <ContentPresenter
-              x:Name="PART_SelectedContentHost"
-              Margin="{TemplateBinding Padding}"
-              ContentSource="SelectedContent"
-              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                </ScrollViewer>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="TabStripPlacement" Value="Bottom">
-                                <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="1"/>
-                                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0"/>
-                                <Setter TargetName="RowDefinition0" Property="Height" Value="*"/>
-                                <Setter TargetName="RowDefinition1" Property="Height" Value="Auto"/>
-                                <Setter TargetName="HeaderPanel" Property="Margin" Value="2,0,2,2"/>
-                            </Trigger>
-                            <Trigger Property="TabStripPlacement" Value="Left">
-                                <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0"/>
-                                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0"/>
-                                <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="0"/>
-                                <Setter TargetName="ContentPanel" Property="Grid.Column" Value="1"/>
-                                <Setter TargetName="ColumnDefinition0" Property="Width" Value="Auto"/>
-                                <Setter TargetName="ColumnDefinition1" Property="Width" Value="*"/>
-                                <Setter TargetName="RowDefinition0" Property="Height" Value="*"/>
-                                <Setter TargetName="RowDefinition1" Property="Height" Value="0"/>
-                                <Setter TargetName="HeaderPanel" Property="Margin" Value="2,2,0,2"/>
-                            </Trigger>
-                            <Trigger Property="TabStripPlacement" Value="Right">
-                                <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0"/>
-                                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0"/>
-                                <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="1"/>
-                                <Setter TargetName="ContentPanel" Property="Grid.Column" Value="0"/>
-                                <Setter TargetName="ColumnDefinition0" Property="Width" Value="*"/>
-                                <Setter TargetName="ColumnDefinition1" Property="Width" Value="Auto"/>
-                                <Setter TargetName="RowDefinition0" Property="Height" Value="*"/>
-                                <Setter TargetName="RowDefinition1" Property="Height" Value="0"/>
-                                <Setter TargetName="HeaderPanel" Property="Margin" Value="0,2,2,2"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
+        
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-
-        <DockPanel Grid.Row="0">
+        <Menu Grid.Row="0">
+            <MenuItem Header="Project">
+                <MenuItem x:Name="menuNewProject" Header="New" Click="menuNewProject_Click"></MenuItem>
+                <MenuItem x:Name="menuOpenProject" Header="Open" Click="menuOpenProject_Click"></MenuItem>
+                <Separator></Separator>
+                <MenuItem x:Name="menuSaveProject" Header="Save" Click="menuSaveProject_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <DockPanel Grid.Row="1">
             <ToolBar DockPanel.Dock="Top">
                 <Button x:Name="testRun" Click="testRun_Click" ToolTip="ESC退出测试">测试运行</Button>
                 <Button x:Name="deployRun" Click="deployRun_Click" ToolTip="ESC关闭程序">部署运行</Button>
+                
+                <RadioButton x:Name="radioMoveControl" GroupName="MouseFunc" Click="radioMoveControl_Click" Width="100">Move</RadioButton>
+                <RadioButton x:Name="radioSelect" GroupName="MouseFunc" Click="radioSelect_Click" Width="100">Select</RadioButton>
             </ToolBar>
         </DockPanel>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <!--<ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>-->
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="240"></ColumnDefinition>
 
             </Grid.ColumnDefinitions>
 
@@ -148,8 +75,9 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"></RowDefinition>
-                            <RowDefinition Height="4*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="3*"></RowDefinition>
+                            <RowDefinition Height="1.5*"></RowDefinition>
+                            <RowDefinition Height="1.5*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <ListBox x:Name="lstUserRegions" Grid.Row="0" DisplayMemberPath="RegionName" 
                                  ItemsSource="{Binding UserRegions}" ></ListBox>
@@ -160,12 +88,16 @@
                                  PreviewMouseLeftButtonDown="lstRegionTimers_PreviewMouseLeftButtonDown"
                                  PreviewMouseMove="lstRegionTimers_PreviewMouseMove"
                                  DisplayMemberPath="Name"></ListBox>
+                        <ListBox x:Name="lstRegionDSs" Grid.Row="2" ItemsSource="{Binding CurrentRegion.DataSources}"
+                                 PreviewMouseLeftButtonDown="lstRegionDSs_PreviewMouseLeftButtonDown"
+                                 PreviewMouseMove="lstRegionDSs_PreviewMouseMove"
+                                 DisplayMemberPath="Name"></ListBox>
                     </Grid>
                 </TabItem>
             </TabControl>
 
             <TabControl x:Name="tabRegions" Grid.Column="1" Drop="Grid_Drop" AllowDrop="True" Background="Transparent"
-                DragEnter="TabReions_DragEnter" SelectionChanged="tabRegions_SelectionChanged">
+                DragEnter="TabReions_DragEnter" SelectionChanged="tabRegions_SelectionChanged" ItemsSource="{Binding UserRegions}">
                 <TabControl.ItemContainerStyle>
                     <Style TargetType="TabItem">
                         <Setter Property="Header" Value="{Binding RegionName}"/>
@@ -175,10 +107,16 @@
 
                 
             </TabControl>
-            <pg:PropertyGrid x:Name="lstProperties" Grid.Column="2" PropertyFilterVisibility="Collapsed" Width="240"
+            <Grid Grid.Column="2">
+                <Border BorderThickness="1" BorderBrush="Gray">
+                <pg:PropertyGrid x:Name="lstProperties" PropertyFilterVisibility="Collapsed" 
+                                 
                         PropertyChanged="lstProperties_PropertyChanged"
                         PropertyEditingFinished="lstProperties_PropertyEditingFinished"
                         PropertyValueChanged="lstProperties_PropertyValueChanged" ></pg:PropertyGrid>
+                </Border>
+            </Grid>
+           
         </Grid>
     </Grid>
 </Window>

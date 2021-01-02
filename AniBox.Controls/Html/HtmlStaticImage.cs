@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniBox.Controls
+namespace AniBox.AniControls
 {
     [Export(typeof(AniControl))]
     class HtmlStaticImage : HtmlAniControl
@@ -38,7 +38,7 @@ namespace AniBox.Controls
 
         protected override string HtmlResName
         {
-            get { return "AniBox.Controls.res." + "StaticImage.html"; }
+            get { return "AniBox.AniControls.res." + "StaticImage.html"; }
         }
 
         protected override List<HtmlResItem> HtmlReferedResources

@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Net;
+using AniBox.Framework.Utility;
+
 namespace AniBox.Framework.Data
 {
     [Export(typeof(DataSource))]
@@ -13,8 +16,7 @@ namespace AniBox.Framework.Data
         private string _address = "http://";
         public override String QueryData()
         {
-            //throw new NotImplementedException();
-            return "";
+            return HttpHelper.GetHtmlOfUrl(_address, GetEncoding());
         }
 
         public override string SourceTypeName

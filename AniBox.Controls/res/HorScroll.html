@@ -1,0 +1,79 @@
+<html>
+<head>
+<script src="jquery/jquery-3.1.1.min.js"></script>
+<style type="text/css">
+#box{
+position:absolute;
+left:0px;
+top:100px;
+}
+#myimg{
+position:absolute;
+left:50px;
+top:0px;
+width=200px;
+}
+.myimg{
+	width:200px;
+	height:240px;
+}
+#img1_box{
+	float:left;
+	width:200px;
+	height:240px;
+}
+
+#img2_box{
+float:left;
+width:200px;
+height:240px;
+}
+
+#img1{
+position:absolute;
+left:0px;
+top:0px;
+}
+
+#img2{
+position:absolute;
+left:200px; 
+top:0px;
+}
+
+.clear_float{
+clear:both;
+}
+</style>
+<script type="text/javascript">
+var state = 1;
+function testJquery(){
+    //alert("hello");
+	if (state == 1){
+	    $("#img2").css({"left":"200px"});
+		$("#img1").animate({left:'-200px'},200);
+		$("#img2").animate({left:'0px'},200);
+		state = 2;
+	}
+	else if (state == 2){
+	    $("#img1").css({"left":"200px"});
+		$("#img2").animate({left:'-200px'},200);
+		$("#img1").animate({left:'0px'},200);
+		
+		state = 1;
+	}
+	//$("#box").hide();
+}
+</script>
+
+</head>
+<body>
+	<div id="img1_box"><img src="1.jpg" id="img1" class="myimg"></div>
+	<div id="img2_box"><img  src="2.jpg" id="img2" class="myimg"></div>
+	<!--<div style="float:left"><img  src="overlap_3.jpg" class="myimg"></div>-->
+	<div class="clear_float"></div>
+	<div>
+	<input type="button" width="100px" onclick="testJquery()" value="test"/>
+	</div>
+</body>
+</html>

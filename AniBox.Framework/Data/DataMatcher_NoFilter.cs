@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AniBox.Framework.Data
 {
+     [Export(typeof(DataMatcher))]
     class DataMatcher_NoFilter : DataMatcher
     {
-        public override string FilterData(string inData)
+        public override Object FilterData(string inData)
         {
             return inData;
         }

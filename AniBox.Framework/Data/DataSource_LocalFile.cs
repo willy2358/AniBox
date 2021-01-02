@@ -13,7 +13,14 @@ namespace AniBox.Framework.Data
         string _localPath = "";
         public override String QueryData()
         {
-            return "";
+            try
+            {
+                return System.IO.File.ReadAllText(SourceSetting, GetEncoding());
+            }
+            catch(Exception ex)
+            {
+                return "";
+            }
         }
 
         public override string SourceTypeName

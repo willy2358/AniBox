@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniBox.Framework", "AniBox.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfPropertyGrid", "WpfPropertyGrid\WpfPropertyGrid.csproj", "{5A48B67F-1E7E-4ED6-A201-F6CC8E7E6788}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{4B530220-969D-4C39-B799-08F94FFAB9EC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AniControls", "AniControls", "{4B530220-969D-4C39-B799-08F94FFAB9EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniBox.Controls", "AniBox.Controls\AniBox.Controls.csproj", "{4DFA3300-CE05-4F5A-A495-6ADF29222F10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniBox.AniControls", "AniBox.Controls\AniBox.AniControls.csproj", "{4DFA3300-CE05-4F5A-A495-6ADF29222F10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
